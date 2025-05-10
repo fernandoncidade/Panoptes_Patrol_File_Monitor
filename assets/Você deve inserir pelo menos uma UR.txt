@@ -1,0 +1,173 @@
+Você deve inserir pelo menos uma URL segura com versão apontando para o pacote do aplicativo (MSI/EXE) hospedado em sua CDN. Um exemplo de URL segura com controle de versão é o . Quando o cliente instala seu aplicativo da Loja, a Loja baixa o pacote dessa URL. Você precisa seguir as boas práticas de CDN e garantir que esse URL seja eficiente, confiável e disponível com base em sua seleção de mercado.
+
+Por exemplo: https://www.contoso.com/downloads/1.1/setup.exe
+
+Uma captura de tela da seção Pacotes, onde você pode fornecer os detalhes da URL do pacote.
+
+Se você precisar atualizar a URL do pacote, poderá usar a opção Atualizar envio no Partner Center para especificar uma nova URL do pacote.
+
+O binário na URL do pacote não deve ser alterado depois de enviado para garantir que apenas binários certificados sejam instalados pelos usuários. A Loja manterá cópias de seus pacotes de aplicativos mais recentes para distribuir caso o instalador do aplicativo hospedado por você em um serviço de hospedagem separado, como uma CDN (rede de distribuição de conteúdo), seja trocado por novos pacotes de instalador de aplicativo sem envio por meio do Partner Center ou da API. A Loja também baixará os novos pacotes de aplicativos e iniciará o processo de certificação. Se as atualizações passarem nos testes de certificação, a Loja as disponibilizará para os usuários finais. Se as atualizações falharem nos testes de certificação, as Lojas notificarão você para enviar as atualizações por meio do Partner Center ou da API.
+
+Você deve enviar um instalador autônomo/offline e não um downloader que baixa binários quando invocado. Isso é necessário para certificar que os binários instalados são os mesmos que passaram no processo de certificação.
+
+
+___________________________________________________________________________________________
+
+
+
+Conforme as orientações fornecidas, você pode hospedar o seu aplicativo (MSI/EXE) em uma **CDN (Rede de Distribuição de Conteúdo)**, que é uma solução amplamente recomendada por sua eficiência e confiabilidade. As plataformas de hospedagem mais comuns e adequadas para esse propósito incluem:
+
+1. **Azure CDN** - A solução da Microsoft oferece alta escalabilidade, desempenho e segurança, ideal para hospedar pacotes de aplicativos.
+2. **Amazon CloudFront** - Parte da AWS, oferece ampla distribuição e confiabilidade global.
+3. **Google Cloud CDN** - Outra alternativa popular, com integração nativa aos serviços da Google Cloud.
+4. **Akamai** - Uma das líderes em serviços de CDN, conhecida por oferecer alta performance e disponibilidade.
+5. **Cloudflare** - Famosa por sua facilidade de uso e foco em segurança e desempenho.
+
+Ao escolher uma CDN, é importante considerar:
+- **Segurança**: Assegure-se de que a URL seja segura (usando HTTPS) e inclui controle de versão para os pacotes.
+- **Disponibilidade global**: Isso garante uma experiência consistente para os usuários, independentemente de sua localização.
+- **Confiabilidade**: Escolha uma plataforma com boa reputação para minimizar interrupções.
+
+Se precisar de ajuda para configurar o uso de uma CDN para o seu aplicativo ou mais orientações sobre as melhores práticas, é só me chamar! 😊
+
+
+___________________________________________________________________________________________
+
+
+
+Para assinar digitalmente um binário no formato "exe", você pode seguir estas etapas:
+
+1. **Obtenha um Certificado Digital**:
+   - Adquira um certificado de assinatura de código de uma autoridade certificadora confiável, como DigiCert ou Symantec. Certificados do tipo "Code Signing" são necessários para garantir a validade e segurança do binário.
+
+2. **Instale a Ferramenta SignTool**:
+   - Baixe e instale o SDK do Windows, que inclui a ferramenta SignTool.exe. Essa ferramenta é usada para anexar a assinatura digital ao binário.
+
+3. **Assine o Binário**:
+   - Use o comando abaixo no Prompt de Comando para assinar o arquivo:
+     ```bash
+     "C:\Program Files (x86)\Windows Kits\10\bin\x64\signtool.exe" sign /f MyCert.pfx /p MyPassword /t http://timestamp.verisign.com/scripts/timstamp.dll "c:\path\to\your\binary.exe"
+     ```
+     - `/f MyCert.pfx`: Especifica o arquivo do certificado.
+     - `/p MyPassword`: Define a senha do certificado.
+     - `/t`: Adiciona um carimbo de tempo para validar a assinatura.
+
+4. **Teste a Assinatura**:
+   - Execute o binário em um ambiente de teste para verificar se a assinatura foi aplicada corretamente e se não há alertas de segurança.
+
+Se precisar de mais detalhes ou ajuda com o processo, é só me chamar! 😊
+
+
+___________________________________________________________________________________________
+
+
+
+Prompt Command:
+
+
+"C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x64\signtool.exe" sign /fd sha256 /tr http://ts.ssl.com /td sha256 /sha1 043bca8ef3041d9dd836cd1bdf88583a2aa55de1 "C:\Users\ferna\WORK\Projetos_Python\File-Folder-Manager\Panoptes_Patrol_File_Monitor\dist\Panoptes_Patrol\Panoptes_Patrol.exe"
+
+"C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x64\signtool.exe" sign /fd SHA256 /f "C:\Users\ferna\WORK\Projetos_Python\File-Folder-Manager\Panoptes_Patrol_File_Monitor\certificado.pfx" /p "#@Brahe@#16&03#@Kepler@#19&86#@Higgs@#" /tr http://timestamp.digicert.com /td SHA256 "C:\Users\ferna\WORK\Projetos_Python\File-Folder-Manager\Panoptes_Patrol_File_Monitor\dist\Panoptes_Patrol\Panoptes_Patrol.exe"
+
+Power Shell:
+
+& "C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x64\signtool.exe" sign /fd SHA256 /f "C:\Users\ferna\WORK\Projetos_Python\File-Folder-Manager\Panoptes_Patrol_File_Monitor\certificado.pfx" /p "#@Brahe@#16&03#@Kepler@#19&86#@Higgs@#" /tr http://timestamp.digicert.com /td SHA256 "C:\Users\ferna\WORK\Projetos_Python\File-Folder-Manager\Panoptes_Patrol_File_Monitor\dist\Panoptes_Patrol\Panoptes_Patrol.exe"
+
+
+___________________________________________________________________________________________
+
+
+
+Para hospedar seu aplicativo ".exe" e compartilhar um link na Microsoft Partner Network (ou Microsoft Partner Center) que atenda aos requisitos mencionados — como uma URL segura com controle de versão, eficiente, confiável e disponível —, você precisa de uma plataforma que funcione como um **CDN (Content Delivery Network)** ou um serviço de armazenamento em nuvem que permita hospedar arquivos binários e fornecer URLs públicas confiáveis. Abaixo, explico as melhores opções e como elas se alinham ao seu objetivo de publicar um aplicativo na Microsoft Store via Partner Center:
+
+---
+
+### **Plataformas recomendadas**
+
+#### **1. Amazon S3 (Simple Storage Service) + CloudFront (CDN da AWS)**
+- **Por que usar?**
+  - O Amazon S3 é um serviço de armazenamento em nuvem amplamente utilizado para hospedar arquivos estáticos, como seu ".exe".
+  - Combinado com o CloudFront (CDN da AWS), ele oferece entrega rápida e global, atendendo às boas práticas de CDN exigidas pelo Microsoft Partner Center.
+  - Você pode criar URLs versionadas, como `https://seusite.s3.amazonaws.com/downloads/1.1/setup.exe`.
+- **Como fazer?**
+  1. Crie um bucket no S3 e envie seu arquivo ".exe".
+  2. Configure permissões públicas ou use uma política de acesso controlado.
+  3. Ative o CloudFront para o bucket e obtenha uma URL como `https://d1234.cloudfront.net/downloads/1.1/setup.exe`.
+  4. Use essa URL no Partner Center ao submeter seu aplicativo.
+- **Vantagens**: Escalabilidade, confiabilidade global e suporte a versionamento.
+- **Custo**: Plano gratuito da AWS cobre 5 GB de armazenamento e 20.000 solicitações GET por mês; custos adicionais são acessíveis para uso leve.
+
+#### **2. Google Cloud Storage + CDN**
+- **Por que usar?**
+  - Similar ao S3, o Google Cloud Storage permite hospedar arquivos binários e fornece URLs públicas versionadas, como `https://storage.googleapis.com/seubucket/downloads/1.1/setup.exe`.
+  - Pode ser integrado ao Google Cloud CDN para melhor desempenho.
+- **Como fazer?**
+  1. Crie um bucket no Google Cloud Storage.
+  2. Faça upload do ".exe" e torne-o público ou configure acesso assinado.
+  3. (Opcional) Ative o Google Cloud CDN para o bucket.
+  4. Copie a URL gerada e use-a no Partner Center.
+- **Vantagens**: Fácil integração, alta disponibilidade e suporte a versionamento.
+- **Custo**: Oferece 5 GB gratuitos no primeiro ano; depois, preços são competitivos.
+
+#### **3. Microsoft Azure Blob Storage + Azure CDN**
+- **Por que usar?**
+  - O Azure Blob Storage é uma opção nativa da Microsoft, ideal para integração com o Partner Center.
+  - Com o Azure CDN, você obtém uma URL versionada, como `https://seuapp.blob.core.windows.net/downloads/1.1/setup.exe`.
+  - Como é um serviço Microsoft, pode ser mais alinhado ao ecossistema da Microsoft Store.
+- **Como fazer?**
+  1. Crie uma conta de armazenamento no Azure.
+  2. Crie um contêiner e envie o ".exe".
+  3. Configure acesso público ou use SAS (Shared Access Signature) para segurança.
+  4. (Opcional) Integre ao Azure CDN para desempenho global.
+  5. Use a URL gerada no Partner Center.
+- **Vantagens**: Integração direta com serviços Microsoft, confiabilidade e suporte a versionamento.
+- **Custo**: Plano gratuito inclui 5 GB por 12 meses; custos adicionais são razoáveis.
+
+#### **4. Cloudflare (com armazenamento externo ou R2)**
+- **Por que usar?**
+  - A Cloudflare é uma CDN líder, mas não hospeda arquivos diretamente. Você pode combiná-la com um armazenamento como o Cloudflare R2 (semelhante ao S3) ou outro serviço (ex.: S3, Azure).
+  - Exemplo de URL: `https://seusite.com/downloads/1.1/setup.exe` (com proxy da Cloudflare).
+- **Como fazer?**
+  1. Hospede o ".exe" em um serviço como S3 ou Azure Blob Storage.
+  2. Configure um domínio na Cloudflare e aponte para o armazenamento.
+  3. Use a Cloudflare como proxy para entregar o arquivo.
+  4. Alternativamente, use o Cloudflare R2 (armazenamento nativo) e gere a URL.
+  5. Insira a URL no Partner Center.
+- **Vantagens**: Desempenho otimizado pela CDN, segurança adicional (DDoS protection) e flexibilidade.
+- **Custo**: Plano gratuito da Cloudflare é suficiente para tráfego básico; R2 tem preços competitivos.
+
+---
+
+### **Requisitos do Microsoft Partner Center**
+Ao submeter seu aplicativo no Partner Center para a Microsoft Store, você deve:
+- Fornecer uma **URL segura (HTTPS)** com controle de versão (ex.: `1.1` no caminho).
+- Garantir que o arquivo seja um instalador offline independente (não um downloader que busca outros binários).
+- Manter o binário inalterado após o envio para certificação.
+- Seguir boas práticas de CDN: desempenho, confiabilidade e disponibilidade global.
+
+Todas as plataformas acima atendem a esses critérios quando configuradas corretamente.
+
+---
+
+### **Recomendação para você**
+Como você é um desenvolvedor individual e mencionou recursos limitados anteriormente, recomendo começar com o **Azure Blob Storage**:
+- **Motivo**: Integração direta com o ecossistema Microsoft, facilidade de uso e camada gratuita inicial (5 GB por 12 meses).
+- **Exemplo prático**:
+  1. Crie uma conta no Azure (use o teste gratuito se disponível).
+  2. Crie um contêiner chamado "downloads" no Blob Storage.
+  3. Faça upload do "setup.exe" em uma pasta como "1.1" (para versionamento).
+  4. Obtenha a URL pública: `https://seuapp.blob.core.windows.net/downloads/1.1/setup.exe`.
+  5. No Partner Center, na seção "Packages", insira essa URL ao enviar seu aplicativo ".exe".
+
+Se preferir uma alternativa gratuita a longo prazo, o **Amazon S3 com CloudFront** também é excelente e amplamente aceito.
+
+---
+
+### **Passos no Microsoft Partner Center**
+1. Acesse o Partner Center (partner.microsoft.com).
+2. Crie um novo produto (selecione "EXE app").
+3. Na seção "Packages", insira a URL gerada por uma das plataformas acima.
+4. Configure os parâmetros do instalador (ex.: silent switch como `/quiet` ou `/s`, se necessário).
+5. Envie para certificação.
+
+Se precisar de ajuda para configurar alguma dessas plataformas ou submeter no Partner Center, é só perguntar!

@@ -1,0 +1,127 @@
+Italiano:
+
+Progetto: PANOPTES PATROL
+Versione: 0.0.1
+Autori: Fernando Nillsson Cidade
+
+Descrizione:
+Questo progetto è un gestore di file e cartelle che monitora i cambiamenti in una directory specifica e visualizza questi cambiamenti in un'interfaccia grafica. È in grado di rilevare operazioni come l'aggiunta, l'eliminazione, la modifica, la ridenominazione e lo spostamento di file e cartelle. Inoltre, il progetto offre funzionalità per filtrare, esportare dati e generare statistiche sulle operazioni effettuate.
+
+MANUALE DI UTILIZZO RAPIDO:
+
+Come utilizzare:
+1. Esegui l'applicazione per avviare l'interfaccia grafica.
+2. Seleziona una directory da monitorare.
+3. Utilizza i pulsanti e i menu per avviare/interrompere il monitoraggio, applicare filtri, esportare dati e visualizzare statistiche.
+
+MANUALE DI UTILIZZO DETTAGLIATO:
+
+Requisiti di Sistema:
+    - Sistema Operativo: Windows 10 o superiore.
+
+Installazione:
+    - Installa il file eseguibile del programma, segui le istruzioni dell'installatore ed esegui il programma.
+
+Configurazione Iniziale:
+    - L'interfaccia verrà visualizzata con la tabella di monitoraggio vuota.
+    - La lingua predefinita sarà selezionata in base alla configurazione del sistema.
+    - Osserva la barra laterale sinistra per accedere alle funzioni principali.
+
+Monitoraggio delle Directory:
+    1. Selezionare una Directory:
+       - Fai clic sul pulsante "Seleziona Directory" o seleziona "File → Seleziona Directory"
+       - Il percorso della directory selezionata sarà visualizzato sopra la tabella
+
+    2. Avviare/Interrompere il Monitoraggio:
+       - Fai clic sul pulsante "Avvia/Interrompi" o seleziona "File → Avvia/Interrompi"
+       - Verrà eseguita una scansione iniziale della directory con una barra di progresso
+       - Per interrompere il monitoraggio, fai nuovamente clic sullo stesso pulsante
+
+Interfaccia Principale:
+    - Barra dei Menu: Accesso a tutte le funzioni del programma
+    - Barra Laterale: Pulsanti di azioni rapide
+    - Etichetta Directory: Visualizza la directory monitorata
+    - Etichetta Risultato: Mostra lo stato attuale dell'operazione
+    - Tabella Dati: Visualizza tutti gli eventi di monitoraggio
+    - Barra di Progresso: Visibile durante le operazioni di lunga durata
+
+    Campi predefiniti della tabella:
+    - Tipo di Operazione: Aggiunto, Eliminato, Modificato, Rinominato o Spostato
+    - Nome: Nome del file
+    - Directory Precedente: Posizione originale del file (quando applicabile)
+    - Directory Attuale: Posizione attuale del file
+    - Data di Creazione: Data in cui il file è stato creato
+    - Data di Modifica: Data dell'ultima modifica
+    - Tipo: Tipo/estensione del file
+
+Filtri e Ricerca:
+    1. Filtri Rapidi:
+       - Nel menu "Impostazioni → Filtri", seleziona/deseleziona i tipi di operazioni
+         (Spostato, Rinominato, Aggiunto, Eliminato, Modificato)
+
+    2. Filtri Avanzati:
+       - Accedi a "Impostazioni → Filtri → Filtri Avanzati"
+       - Filtro Operazione: Seleziona i tipi di operazioni da visualizzare
+       - Ricerca: Cerca testo nei nomi e nelle directory
+       - Filtro per Estensione: Filtra per tipi specifici di file
+       - Filtro Data: Definisci il periodo per gli eventi
+       - Usa il pulsante calendario per la selezione delle date
+       - "Cancella Filtri" ripristina tutte le impostazioni
+
+Visualizzazione delle Statistiche:
+    - Accedi tramite il pulsante "Statistiche" o "File → Statistiche"
+    - Grafici disponibili:
+      * Distribuzione delle Operazioni: Proporzione di ciascun tipo di operazione
+      * Top 10 Tipi di File: Tipi di file più comuni
+      * Timeline delle Operazioni: Linea temporale degli eventi
+      * Mappa ad Albero: Visualizzazione delle dimensioni per tipo
+      * Distribuzione per Ora: Orari con più operazioni
+      * Analisi di Pareto: Frequenza e percentuale cumulativa
+      * Operazioni per Giorno: Operazioni raggruppate per data
+    - Salvare i grafici: Fai clic su "Salva Tutti" e seleziona la destinazione
+
+Esportazione dei Dati:
+    - Fai clic su "Salva Come" o "File → Salva Come"
+    - Formati disponibili:
+      * Excel (.xlsx)
+      * CSV (.csv)
+      * Testo (.txt)
+      * JSON (.json)
+      * XML (.xml)
+      * Database (.db)
+    - Per esportazioni future dello stesso insieme, utilizza "File → Salva"
+
+Configurazione delle Colonne:
+    - Accedi a "Impostazioni → Configura Colonne"
+    - Seleziona/deseleziona le colonne desiderate nella tabella:
+      (Tipo di Operazione, Nome, Directory Precedente, Directory Attuale, ecc.)
+    - Le modifiche sono applicate immediatamente
+    - Ripristino predefinito: "Impostazioni → Configura Colonne → Reimposta Colonne"
+
+Cambio di Lingua:
+    - Accedi a "Opzioni → Lingua" e seleziona la lingua desiderata
+    - Il programma verrà riavviato con la nuova lingua dopo la conferma
+
+Risoluzione dei Problemi:
+    1. Il monitoraggio non si avvia:
+       - Verifica i permessi di accesso alla directory
+       - Assicurati che non ci siano altri programmi che monitorano la stessa directory
+       - Riavvia l'applicazione
+
+    2. Gli eventi non appaiono:
+       - Verifica che il monitoraggio sia attivo
+       - Controlla che i filtri non stiano nascondendo gli eventi
+       - Prova modificando manualmente un file
+
+    3. Elevato consumo di risorse:
+       - Evita di monitorare directory di sistema o con migliaia di file
+       - Monitora sottodirectory specifiche invece di directory root
+
+    4. Errori nelle statistiche:
+       - Assicurati che ci siano eventi sufficienti per generare grafici
+       - Verifica che tutte le librerie siano correttamente installate
+
+Autori:
+- Fernando Nillsson Cidade
+
+

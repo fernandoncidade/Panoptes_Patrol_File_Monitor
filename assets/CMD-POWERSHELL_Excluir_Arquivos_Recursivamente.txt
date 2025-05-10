@@ -1,0 +1,74 @@
+PowerShell
+
+O PowerShell oferece uma maneira eficiente e segura de realizar essa tarefa.​
+Comando:
+
+Get-ChildItem -Path "D:\ACADEMICO\CURSOS_Udemy.Material.Aula\PROJETOS\Projetos_Python\File-Folder-Manager\API_Windows" -Recurse -Filter "colunas_config.json" -File | Remove-Item -Force
+Get-ChildItem -Path "D:\ACADEMICO\CURSOS_Udemy.Material.Aula\PROJETOS\Projetos_Python\File-Folder-Manager\API_Windows" -Recurse -Filter "monitoramento.db" -File | Remove-Item -Force
+Get-ChildItem -Path "D:\ACADEMICO\CURSOS_Udemy.Material.Aula\PROJETOS\Projetos_Python\File-Folder-Manager\API_Windows" -Recurse -Filter "language_config.json" -File | Remove-Item -Force
+Get-ChildItem -Path "D:\ACADEMICO\CURSOS_Udemy.Material.Aula\PROJETOS\Projetos_Python\File-Folder-Manager\API_Windows" -Recurse -Directory -Filter "__pycache__" | Remove-Item -Recurse -Force
+
+EXCLUSÃO EM VOLUME:
+
+# Defina o caminho base
+$basePath = "D:\ACADEMICO\CURSOS_Udemy.Material.Aula\PROJETOS\Projetos_Python\File-Folder-Manager\API_Windows"
+
+# Exclui arquivos específicos
+Get-ChildItem -Path $basePath -Recurse -File | Where-Object {
+    $_.Name -in @("colunas_config.json", "monitoramento.db", "language_config.json")
+} | Remove-Item -Force -Verbose -Confirm
+
+# Exclui diretórios '__pycache__'
+Get-ChildItem -Path $basePath -Recurse -Directory | Where-Object {
+    $_.Name -eq "__pycache__"
+} | Remove-Item -Recurse -Force -Verbose -Confirm
+
+
+
+Dica de Segurança:
+Antes de executar a exclusão, é recomendável verificar quais arquivos serão afetados:
+
+Get-ChildItem -Path "D:\ACADEMICO\CURSOS_Udemy.Material.Aula\PROJETOS\Projetos_Python\File-Folder-Manager\API_Windows" -Recurse -Filter "colunas_config.json" -File
+Get-ChildItem -Path "D:\ACADEMICO\CURSOS_Udemy.Material.Aula\PROJETOS\Projetos_Python\File-Folder-Manager\API_Windows" -Recurse -Filter "monitoramento.db" -File
+Get-ChildItem -Path "D:\ACADEMICO\CURSOS_Udemy.Material.Aula\PROJETOS\Projetos_Python\File-Folder-Manager\API_Windows" -Recurse -Filter "language_config.json" -File
+Get-ChildItem -Path "D:\ACADEMICO\CURSOS_Udemy.Material.Aula\PROJETOS\Projetos_Python\File-Folder-Manager\API_Windows" -Recurse -Directory -Filter "__pycache__"
+
+VERIFICAÇÃO DE SEGURANÇA EM VOLUME:
+
+# Defina o caminho base
+$basePath = "D:\ACADEMICO\CURSOS_Udemy.Material.Aula\PROJETOS\Projetos_Python\File-Folder-Manager\API_Windows"
+
+# Simula a exclusão de arquivos específicos
+Get-ChildItem -Path $basePath -Recurse -File | Where-Object {
+    $_.Name -in @("colunas_config.json", "monitoramento.db", "language_config.json")
+} | Remove-Item -Force -WhatIf
+
+# Simula a exclusão de diretórios '__pycache__'
+Get-ChildItem -Path $basePath -Recurse -Directory | Where-Object {
+    $_.Name -eq "__pycache__"
+} | Remove-Item -Recurse -Force -WhatIf
+
+
+
+
+
+
+Prompt de Comando (CMD)
+
+No CMD, você pode utilizar o comando for para percorrer os subdiretórios e excluir os arquivos desejados.​
+Comando:
+
+for /R "D:\ACADEMICO\CURSOS_Udemy.Material.Aula\PROJETOS\Projetos_Python\File-Folder-Manager\API_Windows" %f in (colunas_config.json) do del /F /Q "%f"
+for /R "D:\ACADEMICO\CURSOS_Udemy.Material.Aula\PROJETOS\Projetos_Python\File-Folder-Manager\API_Windows" %f in (monitoramento.db) do del /F /Q "%f"
+for /R "D:\ACADEMICO\CURSOS_Udemy.Material.Aula\PROJETOS\Projetos_Python\File-Folder-Manager\API_Windows" %f in (language_config.json) do del /F /Q "%f"
+for /d /r "D:\ACADEMICO\CURSOS_Udemy.Material.Aula\PROJETOS\Projetos_Python\File-Folder-Manager\API_Windows" %d in (__pycache__) do rd /s /q "%d"
+
+
+
+Observação:
+Se estiver inserindo esse comando dentro de um arquivo em lote (.bat), duplique o símbolo % para %%f:
+
+for /R "D:\ACADEMICO\CURSOS_Udemy.Material.Aula\PROJETOS\Projetos_Python\File-Folder-Manager\API_Windows" %%f in (colunas_config.json) do del /F /Q "%%f"
+for /R "D:\ACADEMICO\CURSOS_Udemy.Material.Aula\PROJETOS\Projetos_Python\File-Folder-Manager\API_Windows" %%f in (monitoramento.db) do del /F /Q "%%f"
+for /R "D:\ACADEMICO\CURSOS_Udemy.Material.Aula\PROJETOS\Projetos_Python\File-Folder-Manager\API_Windows" %%f in (language_config.json) do del /F /Q "%%f"
+for /d /r "D:\ACADEMICO\CURSOS_Udemy.Material.Aula\PROJETOS\Projetos_Python\File-Folder-Manager\API_Windows" %%d in (__pycache__) do rd /s /q "%%d"

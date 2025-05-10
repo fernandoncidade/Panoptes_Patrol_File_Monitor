@@ -1,0 +1,110 @@
+# POLÍTICA DE PRIVACIDAD DE PANOPTES PATROL (versión 0.0.1)
+
+## 1. Introducción
+
+Esta Política de Privacidad explica cómo PANOPTES PATROL (versión 0.0.1) recopila, utiliza, almacena y protege la información obtenida durante el uso del software. Al utilizar este software, usted acepta las prácticas descritas en este documento.
+
+## 2. Recopilación de Información
+
+### 2.1 Datos recopilados durante la monitorización
+
+PANOPTES PATROL recopila la siguiente información sobre los archivos y carpetas monitorizados:
+
+- Nombres de archivos y carpetas
+- Rutas completas de directorios
+- Fechas de creación, modificación y acceso a archivos
+- Metadatos de archivos (tamaño, tipo, extensión, atributos)
+- Operaciones realizadas (adición, eliminación, modificación, cambio de nombre, movimiento)
+- Información técnica adicional como dimensiones de imágenes, duración de archivos multimedia y otros metadatos específicos por tipo de archivo
+
+### 2.2 Datos del sistema
+
+El software puede recopilar datos básicos del sistema para funcionar correctamente, como:
+
+- Sistema operativo
+- Configuración de idioma del sistema
+- Información de permisos de acceso a directorios
+- Registros de errores para diagnóstico de problemas
+
+## 3. Almacenamiento de Datos
+
+### 3.1 Almacenamiento local
+
+Todos los datos recopilados por PANOPTES PATROL se almacenan **exclusivamente** en su computadora local:
+
+- En una base de datos SQLite local (archivo monitoreo.db)
+- En archivos de registro en el directorio de logs de la aplicación
+- En archivos exportados por el usuario (si utiliza la función de exportación)
+
+### 3.2 Retención de datos
+
+Los datos recopilados se mantienen hasta que el usuario:
+- Borre manualmente los datos a través de la función "Borrar Datos"
+- Desinstale la aplicación
+- Elimine manualmente los archivos de base de datos y registros
+
+## 4. Uso de la Información
+
+PANOPTES PATROL utiliza la información recopilada para:
+
+- Proporcionar la funcionalidad principal de monitorización de archivos y carpetas
+- Mostrar los cambios detectados en la interfaz gráfica
+- Generar estadísticas y visualizaciones sobre las operaciones de archivos
+- Permitir el filtrado y búsqueda de eventos específicos
+- Posibilitar la exportación de datos a varios formatos
+- Diagnosticar y corregir problemas técnicos
+
+## 5. Compartición de Datos
+
+PANOPTES PATROL **no comparte** ninguna información recopilada con terceros o servicios externos. Todos los datos permanecen exclusivamente en su computadora local.
+
+## 6. Seguridad
+
+Implementamos medidas técnicas para proteger su información, incluyendo:
+
+- Almacenamiento exclusivamente local, sin transmisión por internet
+- Acceso limitado a los recursos del sistema solo cuando sea necesario
+- Permisos basados en la configuración de su sistema operativo
+
+## 7. Sus Derechos y Controles
+
+Usted tiene control total sobre sus datos, pudiendo:
+
+- Elegir qué directorios serán monitorizados
+- Iniciar y detener la monitorización en cualquier momento
+- Aplicar filtros para visualizar solo información específica
+- Exportar los datos recopilados en varios formatos
+- Borrar los datos recopilados a través de la función "Borrar Datos"
+- Desinstalar la aplicación y eliminar todos los datos asociados
+
+## 8. Datos de Menores
+
+PANOPTES PATROL no está destinado a menores y no recopila intencionalmente información personal de individuos menores de 13 años.
+
+## 9. Cambios en esta Política
+
+Podemos actualizar esta Política de Privacidad ocasionalmente. Los cambios serán comunicados a través de:
+
+- Notificaciones dentro de la aplicación
+- Cambios en el número de versión del software
+- Actualizaciones en el archivo de documentación incluido en el software
+
+## 10. Consideraciones sobre Monitorización
+
+Al utilizar PANOPTES PATROL para monitorizar directorios compartidos o en entornos de trabajo, considere:
+
+- Obtener el consentimiento apropiado antes de monitorizar carpetas compartidas
+- Informar a otras personas que utilizan el sistema sobre la monitorización
+- Respetar las políticas de privacidad de su organización
+- No monitorizar contenido protegido por derechos de autor sin permiso
+
+## 11. Contacto
+
+Para preguntas relacionadas con esta política de privacidad o el tratamiento de sus datos, contacte con:
+
+Fernando Nillsson Cidade (autor)  
+E-mail: fernando.n.cidade@outlook.com
+
+---
+
+*PANOPTES PATROL versión 0.0.1*

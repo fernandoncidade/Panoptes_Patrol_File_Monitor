@@ -1,0 +1,126 @@
+Deutsch:
+
+Projekt: PANOPTES PATROL
+Version: 0.0.1
+Autoren: Fernando Nillsson Cidade
+
+Beschreibung:
+Dieses Projekt ist ein Datei- und Ordner-Manager, der Änderungen in einem bestimmten Verzeichnis überwacht und diese Änderungen in einer grafischen Benutzeroberfläche anzeigt. Es kann Operationen wie Hinzufügen, Löschen, Ändern, Umbenennen und Verschieben von Dateien und Ordnern erkennen. Darüber hinaus bietet das Projekt Funktionen zum Filtern, Exportieren von Daten und Generieren von Statistiken über durchgeführte Operationen.
+
+KURZANLEITUNG:
+
+Verwendung:
+1. Führen Sie die Anwendung aus, um die grafische Benutzeroberfläche zu starten.
+2. Wählen Sie ein zu überwachendes Verzeichnis aus.
+3. Verwenden Sie die Schaltflächen und Menüs, um die Überwachung zu starten/stoppen, Filter anzuwenden, Daten zu exportieren und Statistiken anzuzeigen.
+
+AUSFÜHRLICHE BEDIENUNGSANLEITUNG:
+
+Systemanforderungen:
+    - Betriebssystem: Windows 10 oder höher.
+
+Installation:
+    - Installieren Sie die ausführbare Programmdatei, folgen Sie den Anweisungen des Installationsprogramms und führen Sie das Programm aus.
+
+Erste Einrichtung:
+    - Die Benutzeroberfläche wird mit einer leeren Überwachungstabelle angezeigt.
+    - Die Standardsprache wird entsprechend der Systemkonfiguration ausgewählt.
+    - Beachten Sie die linke Seitenleiste, um auf die Hauptfunktionen zuzugreifen.
+
+Verzeichnisüberwachung:
+    1. Verzeichnis auswählen:
+       - Klicken Sie auf die Schaltfläche "Verzeichnis auswählen" oder wählen Sie "Datei → Verzeichnis auswählen"
+       - Der Pfad des ausgewählten Verzeichnisses wird über der Tabelle angezeigt
+
+    2. Überwachung starten/stoppen:
+       - Klicken Sie auf die Schaltfläche "Starten/Stoppen" oder wählen Sie "Datei → Starten/Stoppen"
+       - Eine erste Überprüfung des Verzeichnisses wird mit einem Fortschrittsbalken durchgeführt
+       - Um die Überwachung zu unterbrechen, klicken Sie erneut auf dieselbe Schaltfläche
+
+Hauptschnittstelle:
+    - Menüleiste: Zugriff auf alle Programmfunktionen
+    - Seitenleiste: Schnellaktionsschaltflächen
+    - Verzeichnisbezeichnung: Zeigt das überwachte Verzeichnis an
+    - Ergebnisbezeichnung: Zeigt den aktuellen Status des Vorgangs
+    - Datentabelle: Zeigt alle Überwachungsereignisse an
+    - Fortschrittsbalken: Sichtbar während langwieriger Operationen
+
+    Standardfelder der Tabelle:
+    - Operationstyp: Hinzugefügt, Gelöscht, Geändert, Umbenannt oder Verschoben
+    - Name: Dateiname
+    - Vorheriges Verzeichnis: Ursprünglicher Speicherort der Datei (falls zutreffend)
+    - Aktuelles Verzeichnis: Aktueller Speicherort der Datei
+    - Erstellungsdatum: Datum, an dem die Datei erstellt wurde
+    - Änderungsdatum: Datum der letzten Änderung
+    - Typ: Dateityp/Erweiterung
+
+Filter und Suche:
+    1. Schnellfilter:
+       - Im Menü "Einstellungen → Filter" können Sie Operationstypen markieren/demarkieren
+         (Verschoben, Umbenannt, Hinzugefügt, Gelöscht, Geändert)
+
+    2. Erweiterte Filter:
+       - Zugriff über "Einstellungen → Filter → Erweiterte Filter"
+       - Operationsfilter: Wählen Sie anzuzeigende Operationstypen
+       - Suche: Suchen Sie nach Text in Namen und Verzeichnissen
+       - Erweiterungsfilter: Filtern Sie nach bestimmten Dateitypen
+       - Datumsfilter: Definieren Sie den Zeitraum für Ereignisse
+       - Verwenden Sie die Kalenderschaltfläche zur Datumsauswahl
+       - "Filter zurücksetzen" setzt alle Einstellungen zurück
+
+Statistikanzeige:
+    - Zugriff über die Schaltfläche "Statistik" oder "Datei → Statistik"
+    - Verfügbare Diagramme:
+      * Operationsverteilung: Anteil jedes Operationstyps
+      * Top 10 Dateitypen: Häufigste Dateitypen
+      * Operationszeitleiste: Zeitachse der Ereignisse
+      * Baumkarte: Größenvisualisierung nach Typen
+      * Stundenverteilung: Uhrzeiten mit den meisten Operationen
+      * Pareto-Analyse: Häufigkeit und kumulierter Prozentsatz
+      * Operationen pro Tag: Nach Datum gruppierte Operationen
+    - Diagramme speichern: Klicken Sie auf "Alle speichern" und wählen Sie das Ziel
+
+Datenexport:
+    - Klicken Sie auf "Speichern unter" oder "Datei → Speichern unter"
+    - Verfügbare Formate:
+      * Excel (.xlsx)
+      * CSV (.csv)
+      * Text (.txt)
+      * JSON (.json)
+      * XML (.xml)
+      * Datenbank (.db)
+    - Für zukünftige Exporte desselben Datensatzes verwenden Sie "Datei → Speichern"
+
+Spaltenkonfiguration:
+    - Zugriff über "Einstellungen → Spalten konfigurieren"
+    - Markieren/demarkieren Sie gewünschte Spalten in der Tabelle:
+      (Operationstyp, Name, Vorheriges Verzeichnis, Aktuelles Verzeichnis usw.)
+    - Änderungen werden sofort angewendet
+    - Standardwiederherstellung: "Einstellungen → Spalten konfigurieren → Spalten zurücksetzen"
+
+Sprachänderung:
+    - Zugriff über "Optionen → Sprache" und wählen Sie die gewünschte Sprache
+    - Das Programm wird nach Bestätigung mit der neuen Sprache neu gestartet
+
+Fehlerbehebung:
+    1. Überwachung startet nicht:
+       - Überprüfen Sie die Zugriffsberechtigungen für das Verzeichnis
+       - Stellen Sie sicher, dass kein anderes Programm dasselbe Verzeichnis überwacht
+       - Starten Sie die Anwendung neu
+
+    2. Ereignisse erscheinen nicht:
+       - Überprüfen Sie, ob die Überwachung aktiv ist
+       - Überprüfen Sie, ob Filter Ereignisse ausblenden
+       - Testen Sie durch manuelle Änderung einer Datei
+
+    3. Hoher Ressourcenverbrauch:
+       - Vermeiden Sie die Überwachung von Systemverzeichnissen oder Verzeichnissen mit Tausenden von Dateien
+       - Überwachen Sie spezifische Unterverzeichnisse anstelle von Stammverzeichnissen
+
+    4. Fehler in Statistiken:
+       - Stellen Sie sicher, dass genügend Ereignisse zur Diagrammgenerierung vorhanden sind
+       - Überprüfen Sie, ob alle Bibliotheken korrekt installiert sind
+
+Autoren:
+- Fernando Nillsson Cidade
+

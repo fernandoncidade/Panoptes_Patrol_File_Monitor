@@ -1,0 +1,31 @@
+Windows Registry Editor Version 5.00
+
+; Registro do aplicativo
+[HKEY_LOCAL_MACHINE\SOFTWARE\Panoptes Patrol]
+"InstallPath"="C:\\Program Files\\Panoptes Patrol"
+"Version"="0.0.1"
+
+; Menu de contexto para pastas
+[HKEY_CLASSES_ROOT\Directory\shell\Panoptes Patrol]
+@="Monitorar com Panoptes Patrol"
+"Icon"="C:\\Program Files\\Panoptes Patrol\\_internal\\icones\\manager_files1.ico"
+
+[HKEY_CLASSES_ROOT\Directory\shell\Panoptes Patrol\command]
+@="\"C:\\Program Files\\Panoptes Patrol\\Panoptes_Patrol.exe\" \"%1\""
+
+; Menu de contexto para o fundo do Explorer
+[HKEY_CLASSES_ROOT\Directory\Background\shell\Panoptes Patrol]
+@="Abrir Panoptes Patrol"
+"Icon"="C:\\Program Files\\Panoptes Patrol\\_internal\\icones\\manager_files1.ico"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\Panoptes Patrol\command]
+@="\"C:\\Program Files\\Panoptes Patrol\\Panoptes_Patrol.exe\""
+
+; Informações para desinstalação
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Panoptes Patrol]
+"DisplayName"="Panoptes Patrol"
+"UninstallString"="C:\\Program Files\\Panoptes Patrol\\uninstall.exe"
+"DisplayIcon"="C:\\Program Files\\Panoptes Patrol\\_internal\\icones\\manager_files1.ico"
+"Publisher"="fernandoncidade"
+"DisplayVersion"="0.0.1"
+"EstimatedSize"=dword:23904256

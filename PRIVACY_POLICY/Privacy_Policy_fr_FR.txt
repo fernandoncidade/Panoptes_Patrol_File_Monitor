@@ -1,0 +1,110 @@
+# POLITIQUE DE CONFIDENTIALITÉ DE PANOPTES PATROL (version 0.0.1)
+
+## 1. Introduction
+
+Cette Politique de Confidentialité explique comment PANOPTES PATROL (version 0.0.1) collecte, utilise, stocke et protège les informations obtenues lors de l'utilisation du logiciel. En utilisant ce logiciel, vous acceptez les pratiques décrites dans ce document.
+
+## 2. Collecte d'Informations
+
+### 2.1 Données collectées pendant la surveillance
+
+PANOPTES PATROL collecte les informations suivantes sur les fichiers et dossiers surveillés :
+
+- Noms des fichiers et dossiers
+- Chemins complets des répertoires
+- Dates de création, modification et d'accès aux fichiers
+- Métadonnées des fichiers (taille, type, extension, attributs)
+- Opérations effectuées (ajout, suppression, modification, renommage, déplacement)
+- Informations techniques supplémentaires comme les dimensions d'images, la durée des fichiers média et autres métadonnées spécifiques par type de fichier
+
+### 2.2 Données système
+
+Le logiciel peut collecter des données système de base pour fonctionner correctement, telles que :
+
+- Système d'exploitation
+- Paramètres de langue du système
+- Informations sur les permissions d'accès aux répertoires
+- Journaux d'erreurs pour le diagnostic de problèmes
+
+## 3. Stockage des Données
+
+### 3.1 Stockage local
+
+Toutes les données collectées par PANOPTES PATROL sont stockées **exclusivement** sur votre ordinateur local :
+
+- Dans une base de données SQLite locale (fichier surveillance.db)
+- Dans des fichiers journaux dans le répertoire des logs de l'application
+- Dans des fichiers exportés par l'utilisateur (si vous utilisez la fonction d'exportation)
+
+### 3.2 Conservation des données
+
+Les données collectées sont conservées jusqu'à ce que l'utilisateur :
+- Efface manuellement les données via la fonction "Effacer les Données"
+- Désinstalle l'application
+- Supprime manuellement les fichiers de base de données et de journaux
+
+## 4. Utilisation des Informations
+
+PANOPTES PATROL utilise les informations collectées pour :
+
+- Fournir la fonctionnalité principale de surveillance des fichiers et dossiers
+- Afficher les changements détectés dans l'interface graphique
+- Générer des statistiques et des visualisations sur les opérations de fichiers
+- Permettre le filtrage et la recherche d'événements spécifiques
+- Permettre l'exportation de données dans divers formats
+- Diagnostiquer et corriger des problèmes techniques
+
+## 5. Partage de Données
+
+PANOPTES PATROL **ne partage pas** les informations collectées avec des tiers ou des services externes. Toutes les données restent exclusivement sur votre ordinateur local.
+
+## 6. Sécurité
+
+Nous mettons en œuvre des mesures techniques pour protéger vos informations, notamment :
+
+- Stockage exclusivement local, sans transmission par internet
+- Accès limité aux ressources du système uniquement selon les besoins
+- Permissions basées sur les paramètres de votre système d'exploitation
+
+## 7. Vos Droits et Contrôles
+
+Vous avez un contrôle total sur vos données et pouvez :
+
+- Choisir quels répertoires seront surveillés
+- Démarrer et arrêter la surveillance à tout moment
+- Appliquer des filtres pour visualiser uniquement des informations spécifiques
+- Exporter les données collectées dans divers formats
+- Effacer les données collectées via la fonction "Effacer les Données"
+- Désinstaller l'application et supprimer toutes les données associées
+
+## 8. Données des Enfants
+
+PANOPTES PATROL n'est pas destiné aux enfants et ne collecte pas intentionnellement d'informations personnelles d'individus de moins de 13 ans.
+
+## 9. Modifications de cette Politique
+
+Nous pouvons mettre à jour cette Politique de Confidentialité occasionnellement. Les changements seront communiqués par :
+
+- Des notifications dans l'application
+- Des changements dans le numéro de version du logiciel
+- Des mises à jour dans le fichier de documentation inclus avec le logiciel
+
+## 10. Considérations sur la Surveillance
+
+Lorsque vous utilisez PANOPTES PATROL pour surveiller des répertoires partagés ou dans des environnements de travail, considérez :
+
+- Obtenir le consentement approprié avant de surveiller des dossiers partagés
+- Informer les autres personnes qui utilisent le système de la surveillance
+- Respecter les politiques de confidentialité de votre organisation
+- Ne pas surveiller du contenu protégé par des droits d'auteur sans permission
+
+## 11. Contact
+
+Pour les questions liées à cette politique de confidentialité ou au traitement de vos données, contactez :
+
+Fernando Nillsson Cidade (auteur)  
+E-mail : fernando.n.cidade@outlook.com
+
+---
+
+*PANOPTES PATROL version 0.0.1*

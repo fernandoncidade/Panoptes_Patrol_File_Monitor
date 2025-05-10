@@ -1,0 +1,64 @@
+// Aviso de Licenças e Atribuições de Software de Terceiros
+
+Este documento contém informações sobre licenças de componentes de terceiros utilizados no projeto Panoptes_Patrol_File_Monitor.
+
+PySide6 (Qt para Python) - Licença LGPL v3
+
+O PySide6 é distribuído sob a Licença Pública Geral Menor GNU (LGPL) versão 3.
+
+Conformidade com LGPL
+
+Para atender aos requisitos da licença LGPL, fornecemos as seguintes informações:
+
+1. Código-fonte: O código-fonte completo do PySide6 está disponível gratuitamente em:
+   - Repositório oficial: https://github.com/qt/pyside
+   - Site oficial: https://www.qt.io/qt-for-python
+
+2. Substituição da biblioteca:
+   Este aplicativo foi compilado de forma que as bibliotecas LGPL (incluindo PySide6) são mantidas como DLLs separadas.
+   Para substituir estas bibliotecas:
+   - Localize os arquivos DLL do PySide6 no diretório de instalação (pasta `PySide6`)
+   - Substitua os arquivos DLL pelas suas versões alternativas ou modificadas
+   - Certifique-se de que as novas DLLs sejam compatíveis com a versão do PySide6 utilizada (6.6.0+)
+
+3. Oferta por escrito:
+   Se você não conseguir acessar o código-fonte pelo link acima, mediante solicitação, podemos fornecer uma cópia completa do código-fonte correspondente à versão utilizada neste aplicativo. Para solicitar, entre em contato pelo e-mail: [fernando.nillsson.cidade@outlook.com]
+
+Versão do PySide6
+Este aplicativo utiliza PySide6 versão 6.6.0 ou superior.
+
+Outras Bibliotecas
+
+Bibliotecas de Análise de Dados e Visualização:
+- Pandas, NumPy, Matplotlib, Seaborn (Licença BSD 3-Clause)
+- Squarify (Licença MIT) - Para visualizações de treemap
+
+Processamento de Documentos e Arquivos:
+- OpenPyXL, XlsxWriter, python-docx, python-pptx (Licença MIT) - Para manipulação de documentos Office
+- PyPDF2/PyPDF4 (Licença BSD 3-Clause) - Para processamento de PDFs
+- Pillow (Licença PIL) - Para processamento de imagens
+- psd_tools (Licença MIT) - Para arquivos Photoshop
+- rawpy (Licença MIT) - Para arquivos RAW de câmeras
+- imageio (Licença BSD 2-Clause) - Para formatos HEIF/HEIC
+
+Metadados e Mídia:
+- pymediainfo (Licença MIT) - Para metadados de arquivos multimídia
+- TinyTag (Licença MIT) - Para metadados de arquivos de áudio
+- olefile (Licença BSD 3-Clause) - Para arquivos Microsoft OLE
+
+Compressão e Arquivamento:
+- rarfile (Licença ISC) - Para manipulação de arquivos RAR
+- py7zr, zipfile (Licença padrão Python) - Para outros formatos comprimidos
+
+Utilidades e Sistema:
+- psutil (Licença BSD 3-Cláusulas) - Para informações do sistema
+- pywin32 (Licença PSF) - Para APIs do Windows
+- python-magic (Licença MIT) - Para detecção de tipos de arquivo
+- chardet (Licença LGPLv2.1) - Para detecção de codificação de caracteres
+
+Segurança:
+- pyOpenSSL (Licença Apache 2.0) - Para funcionalidades SSL/TLS
+
+Todas as bibliotecas mencionadas são usadas sob os termos de suas respectivas licenças, como detalhado no arquivo LICENSE.txt incluído com este software. A maioria destas bibliotecas é distribuída sob licenças permissivas (MIT, BSD, Apache, PSF) que permitem uso comercial e redistribuição.
+
+Para uma lista completa de todas as bibliotecas e suas licenças específicas, consulte o arquivo LICENSE.txt.

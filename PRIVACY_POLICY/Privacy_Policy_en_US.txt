@@ -1,0 +1,110 @@
+# PANOPTES PATROL Privacy Policy (version 0.0.1)
+
+## 1. Introduction
+
+This Privacy Policy explains how PANOPTES PATROL (version 0.0.1) collects, uses, stores, and protects information obtained during the use of the software. By using this software, you agree to the practices described in this document.
+
+## 2. Information Collection
+
+### 2.1 Data collected during monitoring
+
+PANOPTES PATROL collects the following information about monitored files and folders:
+
+- File and folder names
+- Complete directory paths
+- File creation, modification, and access dates
+- File metadata (size, type, extension, attributes)
+- Operations performed (addition, deletion, modification, renaming, movement)
+- Additional technical information such as image dimensions, media file duration, and other file-type specific metadata
+
+### 2.2 System data
+
+The software may collect basic system data to function correctly, such as:
+
+- Operating system
+- System language settings
+- Directory access permission information
+- Error logs for problem diagnosis
+
+## 3. Data Storage
+
+### 3.1 Local storage
+
+All data collected by PANOPTES PATROL is stored **exclusively** on your local computer:
+
+- In a local SQLite database (monitoring.db file)
+- In log files in the application's log directory
+- In files exported by the user (if using the export function)
+
+### 3.2 Data retention
+
+The collected data is kept until the user:
+- Manually clears the data through the "Clear Data" function
+- Uninstalls the application
+- Manually deletes the database and log files
+
+## 4. Use of Information
+
+PANOPTES PATROL uses the collected information to:
+
+- Provide the main functionality of file and folder monitoring
+- Display detected changes in the graphical interface
+- Generate statistics and visualizations about file operations
+- Allow filtering and searching for specific events
+- Enable data export to various formats
+- Diagnose and fix technical problems
+
+## 5. Data Sharing
+
+PANOPTES PATROL **does not share** any collected information with third parties or external services. All data remains exclusively on your local computer.
+
+## 6. Security
+
+We implement technical measures to protect your information, including:
+
+- Exclusively local storage, with no internet transmission
+- Limited access to system resources only as necessary
+- Permissions based on your operating system settings
+
+## 7. Your Rights and Controls
+
+You have complete control over your data and can:
+
+- Choose which directories will be monitored
+- Start and stop monitoring at any time
+- Apply filters to view only specific information
+- Export collected data in various formats
+- Clear collected data through the "Clear Data" function
+- Uninstall the application and remove all associated data
+
+## 8. Children's Data
+
+PANOPTES PATROL is not intended for children and does not intentionally collect personal information from individuals under 13 years of age.
+
+## 9. Changes to this Policy
+
+We may update this Privacy Policy occasionally. Changes will be communicated through:
+
+- In-app notifications
+- Changes in the software version number
+- Updates to the documentation file included with the software
+
+## 10. Monitoring Considerations
+
+When using PANOPTES PATROL to monitor shared directories or in work environments, consider:
+
+- Obtaining appropriate consent before monitoring shared folders
+- Informing other people who use the system about the monitoring
+- Respecting your organization's privacy policies
+- Not monitoring content protected by copyright without permission
+
+## 11. Contact
+
+For questions related to this privacy policy or the handling of your data, contact:
+
+Fernando Nillsson Cidade (author)  
+E-mail: fernando.n.cidade@outlook.com
+
+---
+
+*PANOPTES PATROL version 0.0.1*

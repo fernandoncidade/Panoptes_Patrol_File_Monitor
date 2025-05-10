@@ -1,0 +1,196 @@
+LICENÇA DE SOFTWARE PROPRIETÁRIO - Panoptes Patrol
+Versão 0.0.1, Abril de 2025
+
+Copyright (c) 2025 Fernando Nillsson Cidade. Todos os direitos reservados.
+
+TERMOS E CONDIÇÕES PARA USO, REPRODUÇÃO E DISTRIBUIÇÃO:
+
+1. DEFINIÇÕES
+   "Licenciador" refere-se ao proprietário dos direitos autorais do Software.
+   "Software" refere-se ao programa File Folder Manager e toda sua documentação.
+   "Licenciado" refere-se à pessoa física ou jurídica que adquiriu licença de uso do Software.
+
+2. CONCESSÃO DE LICENÇA
+   Sujeito aos termos e condições desta Licença, o Licenciador concede ao Licenciado uma licença
+   não exclusiva, não transferível, revogável para usar o Software para fins comerciais conforme
+   especificado no contrato de licenciamento associado.
+
+3. RESTRIÇÕES
+   O Licenciado não poderá:
+   a) Copiar, modificar, adaptar ou criar trabalhos derivados do Software;
+   b) Realizar engenharia reversa, descompilar ou desmontar o Software;
+   c) Remover ou alterar quaisquer avisos de direitos autorais ou marcas registradas;
+   d) Alugar, arrendar, emprestar, sublicenciar ou transferir o Software;
+   e) Usar o Software de maneira que viole leis ou regulamentos aplicáveis.
+
+4. PROPRIEDADE INTELECTUAL
+   O Software é protegido por leis de direitos autorais e tratados internacionais. Todos os títulos,
+   direitos autorais e outros direitos de propriedade intelectual relativos ao Software pertencem
+   exclusivamente ao Licenciador.
+
+5. ATUALIZAÇÕES E SUPORTE
+   O Licenciador pode fornecer atualizações ou upgrades do Software. O uso de tais atualizações
+   está sujeito aos termos desta Licença, a menos que novos termos sejam fornecidos com a atualização.
+   O suporte técnico será fornecido conforme especificado no contrato de licenciamento associado.
+
+6. PRAZO E RESCISÃO
+   Esta Licença permanecerá em vigor até ser rescindida pelo Licenciado ou pelo Licenciador.
+   O Licenciador pode rescindir esta Licença se o Licenciado violar qualquer de seus termos.
+   Após a rescisão, o Licenciado deve cessar todo uso do Software e destruir todas as suas cópias.
+
+7. GARANTIA LIMITADA
+   O Software é fornecido "NO ESTADO EM QUE SE ENCONTRA", sem garantias de qualquer tipo,
+   expressas ou implícitas, incluindo, mas não se limitando a, garantias de comercialização,
+   adequação a uma finalidade específica e não violação.
+
+8. LIMITAÇÃO DE RESPONSABILIDADE
+   Em nenhuma circunstância o Licenciador será responsável por quaisquer danos diretos, indiretos,
+   incidentais, especiais, exemplares ou consequenciais (incluindo, mas não se limitando a, perda
+   de uso, dados ou lucros, ou interrupção de negócios) decorrentes do uso ou da impossibilidade
+   de usar o Software.
+
+9. CONFORMIDADE COM EXPORTAÇÃO
+   O Licenciado deve cumprir todas as leis e regulamentos de exportação aplicáveis relacionados
+   ao Software.
+
+10. LEI APLICÁVEL
+    Esta Licença será regida e interpretada de acordo com as leis da República Federativa do Brasil,
+    sem consideração aos seus princípios de conflito de leis.
+
+11. ACORDO COMPLETO
+    Esta Licença constitui o acordo completo entre as partes em relação ao objeto aqui tratado
+    e substitui todos os entendimentos, acordos ou representações anteriores.
+
+Ao instalar, copiar ou utilizar de outra forma o Software, você concorda em estar vinculado
+pelos termos desta Licença. Se você não concordar com os termos desta Licença, não instale
+nem use o Software.
+
+
+
+CONTRATO DE LICENCIAMENTO ASSOCIADO - PANOPTES PATROL
+Versão 0.0.1, Abril de 2025
+
+Este Contrato de Licenciamento ("Contrato") é celebrado entre:
+
+LICENCIADOR: Fernando Nillsson Cidade, doravante designado apenas como "LICENCIADOR".
+
+e
+
+LICENCIADO: A pessoa física ou jurídica que adquire a licença do Software, doravante designada apenas como "LICENCIADO".
+
+Este Contrato complementa os termos da Licença de Software Proprietário - Panoptes Patrol e estabelece os termos específicos para uso comercial do software.
+
+1. OBJETO DO CONTRATO
+
+1.1 O presente Contrato tem por objeto a concessão, pelo LICENCIADOR ao LICENCIADO, de licença de uso do software denominado "Panoptes Patrol" ("Software"), conforme modalidade de licenciamento adquirida.
+
+1.2 O Software consiste em um sistema para monitoramento e gerenciamento de arquivos e pastas, desenvolvido para uso em ambiente Windows.
+
+2. MODALIDADES DE LICENCIAMENTO
+
+2.1 Licença Individual
+   a) Permite a instalação do Software em até 2 (dois) dispositivos pertencentes ao mesmo LICENCIADO.
+   b) Inclui atualizações por 1 (um) ano a partir da data de aquisição.
+   c) Inclui suporte técnico básico por e-mail por 1 (um) ano.
+
+2.2 Licença Empresarial
+   a) Permite a instalação do Software em até [NÚMERO_ESTAÇÕES] estações de trabalho dentro da mesma organização.
+   b) Inclui atualizações por 1 (um) ano a partir da data de aquisição.
+   c) Inclui suporte técnico prioritário por e-mail e telefone por 1 (um) ano.
+   d) Permite personalização básica da interface conforme necessidades do cliente.
+
+2.3 Licença Corporativa
+   a) Permite a instalação do Software em número ilimitado de estações de trabalho dentro da mesma organização.
+   b) Inclui atualizações por 2 (dois) anos a partir da data de aquisição.
+   c) Inclui suporte técnico premium 24/7 por e-mail, telefone e acesso remoto.
+   d) Inclui personalização avançada e integração com sistemas existentes.
+   e) Inclui treinamento para equipe.
+
+3. PAGAMENTO
+
+3.1 O LICENCIADO pagará ao LICENCIADOR o valor correspondente à modalidade de licenciamento escolhida, conforme tabela de preços vigente na data da contratação.
+
+3.2 Os pagamentos poderão ser efetuados através de boleto bancário, cartão de crédito, transferência bancária ou PIX.
+
+3.3 Em caso de atraso no pagamento, incidirão juros de mora de 1% ao mês, acrescidos de multa de 2% sobre o valor total da licença.
+
+4. PRAZO E RENOVAÇÃO
+
+4.1 Este Contrato vigorará pelo prazo especificado na modalidade de licenciamento adquirida.
+
+4.2 Caso o LICENCIADO deseje renovar o contrato, deverá manifestar sua intenção com pelo menos 30 (trinta) dias de antecedência do término da vigência.
+
+4.3 A renovação será realizada mediante pagamento do valor vigente à época, com desconto de 10% para renovações sem intervalo.
+
+5. SUPORTE TÉCNICO
+
+5.1 O suporte técnico será prestado conforme a modalidade de licenciamento adquirida, observando-se os seguintes níveis:
+
+   a) Básico: Atendimento por e-mail em até 48 horas úteis.
+   b) Prioritário: Atendimento por e-mail em até 24 horas úteis e telefônico em até 48 horas úteis.
+   c) Premium: Atendimento por e-mail em até 8 horas úteis, telefônico em até 4 horas úteis e acesso remoto em até 24 horas úteis.
+
+5.2 O suporte técnico limita-se a questões relacionadas à instalação, configuração e funcionalidades do Software.
+
+5.3 Não está incluso no suporte técnico:
+   a) Treinamento extensivo de usuários (exceto na Licença Corporativa);
+   b) Configuração de outros softwares ou sistemas operacionais;
+   c) Recuperação de dados perdidos por mau uso do Software;
+   d) Adaptações personalizadas não previstas na modalidade de licenciamento.
+
+6. ATUALIZAÇÕES
+
+6.1 Durante a vigência do Contrato, o LICENCIADO terá direito a receber todas as atualizações e melhorias lançadas para a versão do Software adquirida.
+
+6.2 As atualizações serão disponibilizadas automaticamente através do sistema de atualização do próprio Software, ou mediante download no site oficial.
+
+6.3 O LICENCIADOR se compromete a corrigir bugs e falhas de segurança identificados durante a vigência do Contrato.
+
+7. PERSONALIZAÇÃO E CONSULTORIA
+
+7.1 Para as modalidades de licenciamento que incluem personalização, serão realizadas reuniões de levantamento de requisitos para definição das adaptações necessárias.
+
+7.2 O prazo para entrega das personalizações será acordado entre as partes após o levantamento de requisitos.
+
+7.3 Personalizações adicionais não previstas na modalidade de licenciamento serão orçadas separadamente.
+
+8. CONFIDENCIALIDADE
+
+8.1 As partes se comprometem a manter sigilo sobre todas as informações confidenciais a que tiverem acesso em razão deste Contrato.
+
+8.2 São consideradas informações confidenciais: dados de clientes, estratégias comerciais, códigos-fonte, documentação técnica e quaisquer outras informações identificadas como confidenciais.
+
+8.3 A obrigação de confidencialidade permanecerá em vigor por 5 (cinco) anos após o término deste Contrato.
+
+9. PROTEÇÃO DE DADOS
+
+9.1 O LICENCIADOR se compromete a tratar os dados pessoais do LICENCIADO em conformidade com a Lei Geral de Proteção de Dados (Lei 13.709/2018).
+
+9.2 Os dados coletados serão utilizados exclusivamente para execução deste Contrato, suporte técnico e comunicações relacionadas ao Software.
+
+9.3 O LICENCIADOR implementará medidas técnicas e organizacionais adequadas para garantir a segurança dos dados.
+
+10. RESCISÃO
+
+10.1 Este Contrato poderá ser rescindido:
+    a) Por comum acordo entre as partes;
+    b) Em caso de violação de qualquer cláusula contratual;
+    c) Em caso de falência, recuperação judicial ou dissolução de qualquer das partes;
+    d) Nas hipóteses previstas na Licença de Software Proprietário.
+
+10.2 Em caso de rescisão por violação contratual pelo LICENCIADO, não haverá devolução de valores pagos.
+
+11. FORO
+
+11.1 As partes elegem o foro da Comarca de SÃO JOSÉ DOS PINHAIS, Estado de PARANÁ, para dirimir quaisquer dúvidas ou litígios oriundos deste Contrato, com renúncia expressa a qualquer outro, por mais privilegiado que seja.
+
+E por estarem justas e contratadas, as partes assinam o presente Contrato eletronicamente.
+
+Brasil, Paraná, São José dos Pinhais, 13/04/2025
+
+Fernando Nillsson Cidade
+______________________________
+LICENCIADOR
+
+______________________________
+LICENCIADO

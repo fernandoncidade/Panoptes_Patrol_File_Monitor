@@ -1,0 +1,110 @@
+# DATENSCHUTZRICHTLINIE VON PANOPTES PATROL (Version 0.0.1)
+
+## 1. Einleitung
+
+Diese Datenschutzrichtlinie erläutert, wie PANOPTES PATROL (Version 0.0.1) Informationen während der Nutzung der Software sammelt, verwendet, speichert und schützt. Durch die Nutzung dieser Software stimmen Sie den in diesem Dokument beschriebenen Praktiken zu.
+
+## 2. Informationserfassung
+
+### 2.1 Während der Überwachung erfasste Daten
+
+PANOPTES PATROL sammelt die folgenden Informationen über überwachte Dateien und Ordner:
+
+- Datei- und Ordnernamen
+- Vollständige Verzeichnispfade
+- Erstellungs-, Änderungs- und Zugriffsdaten von Dateien
+- Dateimetadaten (Größe, Typ, Erweiterung, Attribute)
+- Durchgeführte Operationen (Hinzufügen, Löschen, Ändern, Umbenennen, Verschieben)
+- Zusätzliche technische Informationen wie Bildabmessungen, Dauer von Mediendateien und andere dateityp-spezifische Metadaten
+
+### 2.2 Systemdaten
+
+Die Software kann grundlegende Systemdaten sammeln, um korrekt zu funktionieren, wie:
+
+- Betriebssystem
+- Spracheinstellungen des Systems
+- Informationen zu Verzeichniszugriffsberechtigungen
+- Fehlerprotokolle zur Problemdiagnose
+
+## 3. Datenspeicherung
+
+### 3.1 Lokale Speicherung
+
+Alle von PANOPTES PATROL gesammelten Daten werden **ausschließlich** auf Ihrem lokalen Computer gespeichert:
+
+- In einer lokalen SQLite-Datenbank (Überwachung.db-Datei)
+- In Protokolldateien im Log-Verzeichnis der Anwendung
+- In vom Benutzer exportierten Dateien (bei Verwendung der Exportfunktion)
+
+### 3.2 Datenspeicherung
+
+Die gesammelten Daten werden aufbewahrt, bis der Benutzer:
+- Die Daten manuell über die Funktion "Daten löschen" löscht
+- Die Anwendung deinstalliert
+- Die Datenbank- und Protokolldateien manuell löscht
+
+## 4. Verwendung der Informationen
+
+PANOPTES PATROL verwendet die gesammelten Informationen, um:
+
+- Die Hauptfunktion der Datei- und Ordnerüberwachung bereitzustellen
+- Erkannte Änderungen in der grafischen Benutzeroberfläche anzuzeigen
+- Statistiken und Visualisierungen zu Dateioperationen zu erstellen
+- Die Filterung und Suche nach bestimmten Ereignissen zu ermöglichen
+- Den Datenexport in verschiedene Formate zu ermöglichen
+- Technische Probleme zu diagnostizieren und zu beheben
+
+## 5. Datenweitergabe
+
+PANOPTES PATROL **gibt keine** gesammelten Informationen an Dritte oder externe Dienste weiter. Alle Daten verbleiben ausschließlich auf Ihrem lokalen Computer.
+
+## 6. Sicherheit
+
+Wir implementieren technische Maßnahmen zum Schutz Ihrer Informationen, darunter:
+
+- Ausschließlich lokale Speicherung, ohne Übertragung über das Internet
+- Begrenzter Zugriff auf Systemressourcen nur nach Bedarf
+- Berechtigungen basierend auf den Einstellungen Ihres Betriebssystems
+
+## 7. Ihre Rechte und Kontrollen
+
+Sie haben vollständige Kontrolle über Ihre Daten und können:
+
+- Auswählen, welche Verzeichnisse überwacht werden
+- Die Überwachung jederzeit starten und stoppen
+- Filter anwenden, um nur bestimmte Informationen anzuzeigen
+- Gesammelte Daten in verschiedene Formate exportieren
+- Gesammelte Daten über die Funktion "Daten löschen" löschen
+- Die Anwendung deinstallieren und alle zugehörigen Daten entfernen
+
+## 8. Daten von Kindern
+
+PANOPTES PATROL ist nicht für Kinder bestimmt und sammelt nicht absichtlich persönliche Informationen von Personen unter 13 Jahren.
+
+## 9. Änderungen dieser Richtlinie
+
+Wir können diese Datenschutzrichtlinie gelegentlich aktualisieren. Änderungen werden kommuniziert durch:
+
+- Benachrichtigungen innerhalb der Anwendung
+- Änderungen in der Softwareversion
+- Aktualisierungen in der mit der Software gelieferten Dokumentationsdatei
+
+## 10. Überwachungshinweise
+
+Bei der Verwendung von PANOPTES PATROL zur Überwachung gemeinsam genutzter Verzeichnisse oder in Arbeitsumgebungen beachten Sie bitte:
+
+- Holen Sie vor der Überwachung gemeinsam genutzter Ordner eine entsprechende Einwilligung ein
+- Informieren Sie andere Personen, die das System nutzen, über die Überwachung
+- Respektieren Sie die Datenschutzrichtlinien Ihrer Organisation
+- Überwachen Sie keine urheberrechtlich geschützten Inhalte ohne Erlaubnis
+
+## 11. Kontakt
+
+Für Fragen zu dieser Datenschutzrichtlinie oder zur Verarbeitung Ihrer Daten wenden Sie sich an:
+
+Fernando Nillsson Cidade (Autor)  
+E-Mail: fernando.n.cidade@outlook.com
+
+---
+
+*PANOPTES PATROL Version 0.0.1*

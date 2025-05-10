@@ -1,0 +1,59 @@
+PARAMETROS E CODIGOS DE RETORNO
+
+/VERYSILENT /SUPPRESSMSGBOXES /SP- /NORESTART
+
+
+
+Power Shell
+
+Start-Process -FilePath "C:\Users\ferna\WORK\Projetos_Python\File-Folder-Manager\Panoptes_Patrol_File_Monitor\dist\Panoptes_Patrol\Panoptes_Patrol_Windows_x64_setup_v0.0.1.exe" -ArgumentList "/VERYSILENT /SUPPRESSMSGBOXES /SP- /NORESTART" -Wait
+
+
+
+CMD
+
+start /wait "" "C:\Users\ferna\WORK\Projetos_Python\File-Folder-Manager\Panoptes_Patrol_File_Monitor\dist\Panoptes_Patrol\Panoptes_Patrol_Windows_x64_setup_v0.0.1.exe" /VERYSILENT /SUPPRESSMSGBOXES /SP- /NORESTART
+
+
+
+[ReturnCodes]
+; Instalação cancelada pelo usuário
+6000=UserCancelled
+
+; O aplicativo já existe
+6001=AppAlreadyExists
+
+; Instalação já em andamento
+6002=AnotherInstallationRunning
+
+; O espaço em disco está cheio
+6003=DiskSpaceFull
+
+; Reinicialização necessária
+6004=RebootRequired
+
+; Falha de rede (Exemplo - adicione mais códigos conforme necessário)
+6005=NetworkFailure_DownloadError
+6006=NetworkFailure_ConnectionLost
+
+; Pacote rejeitado durante a instalação
+6007=PackageRejectedByPolicy
+
+; Instalação bem-sucedida (O código 0 geralmente indica sucesso, mas podemos adicionar um específico se o instalador retornar outro)
+0=Success
+
+
+
+Códigos de Retorno Definidos
+Código	Descrição	Cenário
+6000	UserCancelled	Instalação cancelada pelo usuário
+6001	AppAlreadyExists	O aplicativo já existe
+6002	AnotherInstallationRunning	Instalação já em andamento
+6003	DiskSpaceFull	O espaço em disco está cheio
+6004	RebootRequired	Reinicialização necessária
+6005	NetworkFailure_DownloadError	Falha de rede (erro de download)
+6006	NetworkFailure_ConnectionLost	Falha de rede (conexão perdida)
+6007	PackageRejectedByPolicy	Pacote rejeitado durante a instalação
+0	Success	Instalação bem-sucedida
+
+

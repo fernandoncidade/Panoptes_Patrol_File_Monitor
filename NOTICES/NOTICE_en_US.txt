@@ -1,0 +1,65 @@
+// Third-Party Software Licenses and Attributions Notice
+
+This document contains information about third-party component licenses used in the Panoptes_Patrol_File_Monitor project.
+
+PySide6 (Qt for Python) - LGPL v3 License
+
+PySide6 is distributed under the GNU Lesser General Public License (LGPL) version 3.
+
+LGPL Compliance
+
+To meet the requirements of the LGPL license, we provide the following information:
+
+1. Source code: The complete source code for PySide6 is freely available at:
+   - Official repository: https://github.com/qt/pyside
+   - Official website: https://www.qt.io/qt-for-python
+
+2. Library replacement:
+   This application has been compiled so that LGPL libraries (including PySide6) are maintained as separate DLLs.
+   To replace these libraries:
+   - Locate the PySide6 DLL files in the installation directory (folder `PySide6`)
+   - Replace the DLL files with your alternative or modified versions
+   - Ensure that the new DLLs are compatible with the PySide6 version used (6.6.0+)
+
+3. Written offer:
+   If you cannot access the source code through the link above, upon request, we can provide a complete copy of the source code corresponding to the version used in this application. To request, contact us by email: [fernando.nillsson.cidade@outlook.com]
+
+PySide6 Version
+This application uses PySide6 version 6.6.0 or higher.
+
+Other Libraries
+
+Data Analysis and Visualization Libraries:
+- Pandas, NumPy, Matplotlib, Seaborn (BSD 3-Clause License)
+- Squarify (MIT License) - For treemap visualizations
+
+Document and File Processing:
+- OpenPyXL, XlsxWriter, python-docx, python-pptx (MIT License) - For Office document manipulation
+- PyPDF2/PyPDF4 (BSD 3-Clause License) - For PDF processing
+- Pillow (PIL License) - For image processing
+- psd_tools (MIT License) - For Photoshop files
+- rawpy (MIT License) - For camera RAW files
+- imageio (BSD 2-Clause License) - For HEIF/HEIC formats
+
+Metadata and Media:
+- pymediainfo (MIT License) - For multimedia file metadata
+- TinyTag (MIT License) - For audio file metadata
+- olefile (BSD 3-Clause License) - For Microsoft OLE files
+
+Compression and Archiving:
+- rarfile (ISC License) - For RAR file handling
+- py7zr, zipfile (Standard Python License) - For other compressed formats
+
+Utilities and System:
+- psutil (BSD 3-Clause License) - For system information
+- pywin32 (PSF License) - For Windows APIs
+- python-magic (MIT License) - For file type detection
+- chardet (LGPLv2.1 License) - For character encoding detection
+
+Security:
+- pyOpenSSL (Apache 2.0 License) - For SSL/TLS functionality
+
+All mentioned libraries are used under the terms of their respective licenses, as detailed in the LICENSE.txt file included with this software. Most of these libraries are distributed under permissive licenses (MIT, BSD, Apache, PSF) that allow commercial use and redistribution.
+
+For a complete list of all libraries and their specific licenses, please refer to the LICENSE.txt file.
+

@@ -1,0 +1,127 @@
+Español:
+
+Proyecto: PANOPTES PATROL
+Versión: 0.0.1
+Autores: Fernando Nillsson Cidade
+
+Descripción:
+Este proyecto es un gestor de archivos y carpetas que monitoriza cambios en un directorio específico y muestra estos cambios en una interfaz gráfica. Es capaz de detectar operaciones como adición, eliminación, modificación, renombramiento y movimiento de archivos y carpetas. Además, el proyecto ofrece funcionalidades para filtrar, exportar datos y generar estadísticas sobre las operaciones realizadas.
+
+MANUAL DE USO RÁPIDO:
+
+Cómo usar:
+1. Ejecute la aplicación para iniciar la interfaz gráfica.
+2. Seleccione un directorio para monitorizar.
+3. Utilice los botones y menús para iniciar/detener el monitoreo, aplicar filtros, exportar datos y visualizar estadísticas.
+
+MANUAL DE USO DETALLADO:
+
+Requisitos del Sistema:
+    - Sistema Operativo: Windows 10 o superior.
+
+Instalación:
+    - Instale el archivo ejecutable del programa, siga las instrucciones del instalador y ejecute el programa.
+
+Configuración Inicial:
+    - La interfaz se mostrará con la tabla de monitoreo vacía.
+    - El idioma predeterminado se seleccionará de acuerdo con la configuración del sistema.
+    - Observe la barra lateral izquierda para acceder a las funciones principales.
+
+Monitorización de Directorios:
+    1. Seleccionar un Directorio:
+       - Haga clic en el botón "Seleccionar Directorio" o seleccione "Archivo → Seleccionar Directorio"
+       - La ruta del directorio seleccionado se mostrará encima de la tabla
+
+    2. Iniciar/Detener Monitoreo:
+       - Haga clic en el botón "Iniciar/Detener" o seleccione "Archivo → Iniciar/Detener"
+       - Se realizará un escaneo inicial del directorio con una barra de progreso
+       - Para interrumpir el monitoreo, haga clic nuevamente en el mismo botón
+
+Interfaz Principal:
+    - Barra de Menú: Acceso a todas las funciones del programa
+    - Barra Lateral: Botones de acciones rápidas
+    - Etiqueta de Directorio: Muestra el directorio monitoreado
+    - Etiqueta de Resultado: Muestra el estado actual de la operación
+    - Tabla de Datos: Muestra todos los eventos de monitoreo
+    - Barra de Progreso: Visible durante operaciones de larga duración
+
+    Campos predeterminados de la tabla:
+    - Tipo de Operación: Añadido, Eliminado, Modificado, Renombrado o Movido
+    - Nombre: Nombre del archivo
+    - Directorio Anterior: Ubicación original del archivo (cuando aplica)
+    - Directorio Actual: Ubicación actual del archivo
+    - Fecha de Creación: Fecha en que se creó el archivo
+    - Fecha de Modificación: Fecha de la última modificación
+    - Tipo: Tipo/extensión del archivo
+
+Filtros y Búsqueda:
+    1. Filtros Rápidos:
+       - En el menú "Configuración → Filtros", marque/desmarque tipos de operaciones
+         (Movido, Renombrado, Añadido, Eliminado, Modificado)
+
+    2. Filtros Avanzados:
+       - Acceda a "Configuración → Filtros → Filtros Avanzados"
+       - Filtro de Operación: Seleccione tipos de operaciones a visualizar
+       - Búsqueda: Busque por texto en nombre y directorios
+       - Filtro por Extensión: Filtre por tipos específicos de archivo
+       - Filtro de Fecha: Defina el período para los eventos
+       - Use el botón de calendario para selección de fechas
+       - "Limpiar Filtros" restablece todas las configuraciones
+
+Visualización de Estadísticas:
+    - Acceda mediante el botón "Estadísticas" o "Archivo → Estadísticas"
+    - Gráficos disponibles:
+      * Distribución de Operaciones: Proporción de cada tipo de operación
+      * Top 10 Tipos de Archivo: Tipos de archivo más comunes
+      * Línea de Tiempo de Operaciones: Cronología de eventos
+      * Mapa de Árbol: Visualización de tamaño por tipos
+      * Distribución por Hora: Horarios con más operaciones
+      * Análisis de Pareto: Frecuencia y porcentaje acumulado
+      * Operaciones por Día: Operaciones agrupadas por fecha
+    - Guardar gráficos: Haga clic en "Guardar Todos" y seleccione destino
+
+Exportación de Datos:
+    - Haga clic en "Guardar Como" o "Archivo → Guardar Como"
+    - Formatos disponibles:
+      * Excel (.xlsx)
+      * CSV (.csv)
+      * Texto (.txt)
+      * JSON (.json)
+      * XML (.xml)
+      * Base de Datos (.db)
+    - Para exportaciones futuras del mismo conjunto, use "Archivo → Guardar"
+
+Configuración de Columnas:
+    - Acceda a "Configuración → Configurar Columnas"
+    - Marque/desmarque columnas deseadas en la tabla:
+      (Tipo de Operación, Nombre, Directorio Anterior, Directorio Actual, etc.)
+    - Los cambios se aplican inmediatamente
+    - Restauración predeterminada: "Configuración → Configurar Columnas → Restablecer Columnas"
+
+Cambio de Idioma:
+    - Acceda a "Opciones → Idioma" y seleccione el idioma deseado
+    - El programa se reiniciará con el nuevo idioma tras confirmación
+
+Resolución de Problemas:
+    1. El monitoreo no se inicia:
+       - Verifique los permisos de acceso al directorio
+       - Asegúrese de que no hay otro programa monitorizando el mismo directorio
+       - Reinicie la aplicación
+
+    2. Los eventos no aparecen:
+       - Verifique si el monitoreo está activo
+       - Compruebe que los filtros no están ocultando eventos
+       - Pruebe modificando un archivo manualmente
+
+    3. Alto consumo de recursos:
+       - Evite monitorizar directorios del sistema o con miles de archivos
+       - Monitorice subdirectorios específicos en lugar de directorios raíz
+
+    4. Errores en las estadísticas:
+       - Asegúrese de que hay eventos suficientes para generar gráficos
+       - Verifique que todas las bibliotecas están correctamente instaladas
+
+Autores:
+- Fernando Nillsson Cidade
+
+

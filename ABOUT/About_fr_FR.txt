@@ -1,0 +1,127 @@
+Français:
+
+Projet: PANOPTES PATROL
+Version: 0.0.1
+Auteurs: Fernando Nillsson Cidade
+
+Description:
+Ce projet est un gestionnaire de fichiers et de dossiers qui surveille les changements dans un répertoire spécifique et affiche ces changements dans une interface graphique. Il est capable de détecter des opérations telles que l'ajout, la suppression, la modification, le renommage et le déplacement de fichiers et de dossiers. De plus, le projet offre des fonctionnalités pour filtrer, exporter des données et générer des statistiques sur les opérations effectuées.
+
+MANUEL D'UTILISATION RAPIDE:
+
+Comment utiliser:
+1. Exécutez l'application pour lancer l'interface graphique.
+2. Sélectionnez un répertoire à surveiller.
+3. Utilisez les boutons et les menus pour démarrer/arrêter la surveillance, appliquer des filtres, exporter des données et visualiser des statistiques.
+
+MANUEL D'UTILISATION DÉTAILLÉ:
+
+Exigences du Système:
+    - Système d'exploitation: Windows 10 ou supérieur.
+
+Installation:
+    - Installez le fichier exécutable du programme, suivez les instructions de l'installateur et exécutez le programme.
+
+Configuration Initiale:
+    - L'interface s'affichera avec le tableau de surveillance vide.
+    - La langue par défaut sera sélectionnée en fonction de la configuration du système.
+    - Observez la barre latérale gauche pour accéder aux fonctions principales.
+
+Surveillance des Répertoires:
+    1. Sélectionner un Répertoire:
+       - Cliquez sur le bouton "Sélectionner Répertoire" ou sélectionnez "Fichier → Sélectionner Répertoire"
+       - Le chemin du répertoire sélectionné sera affiché au-dessus du tableau
+
+    2. Démarrer/Arrêter la Surveillance:
+       - Cliquez sur le bouton "Démarrer/Arrêter" ou sélectionnez "Fichier → Démarrer/Arrêter"
+       - Un balayage initial du répertoire sera effectué avec une barre de progression
+       - Pour interrompre la surveillance, cliquez à nouveau sur le même bouton
+
+Interface Principale:
+    - Barre de Menu: Accès à toutes les fonctions du programme
+    - Barre Latérale: Boutons d'actions rapides
+    - Étiquette de Répertoire: Affiche le répertoire surveillé
+    - Étiquette de Résultat: Montre l'état actuel de l'opération
+    - Tableau de Données: Affiche tous les événements de surveillance
+    - Barre de Progression: Visible pendant les opérations de longue durée
+
+    Champs par défaut du tableau:
+    - Type d'Opération: Ajouté, Supprimé, Modifié, Renommé ou Déplacé
+    - Nom: Nom du fichier
+    - Répertoire Précédent: Emplacement d'origine du fichier (le cas échéant)
+    - Répertoire Actuel: Emplacement actuel du fichier
+    - Date de Création: Date à laquelle le fichier a été créé
+    - Date de Modification: Date de la dernière modification
+    - Type: Type/extension du fichier
+
+Filtres et Recherche:
+    1. Filtres Rapides:
+       - Dans le menu "Paramètres → Filtres", cochez/décochez les types d'opérations
+         (Déplacé, Renommé, Ajouté, Supprimé, Modifié)
+
+    2. Filtres Avancés:
+       - Accédez à "Paramètres → Filtres → Filtres Avancés"
+       - Filtre d'Opération: Sélectionnez les types d'opérations à visualiser
+       - Recherche: Recherchez du texte dans les noms et répertoires
+       - Filtre par Extension: Filtrez par types spécifiques de fichier
+       - Filtre de Date: Définissez la période pour les événements
+       - Utilisez le bouton de calendrier pour la sélection des dates
+       - "Effacer les Filtres" réinitialise toutes les configurations
+
+Visualisation des Statistiques:
+    - Accédez via le bouton "Statistiques" ou "Fichier → Statistiques"
+    - Graphiques disponibles:
+      * Distribution des Opérations: Proportion de chaque type d'opération
+      * Top 10 Types de Fichier: Types de fichier les plus courants
+      * Chronologie des Opérations: Ligne du temps des événements
+      * Carte Arborescente: Visualisation de taille par types
+      * Distribution par Heure: Heures avec le plus d'opérations
+      * Analyse de Pareto: Fréquence et pourcentage cumulé
+      * Opérations par Jour: Opérations groupées par date
+    - Enregistrer les graphiques: Cliquez sur "Tout Enregistrer" et sélectionnez la destination
+
+Exportation des Données:
+    - Cliquez sur "Enregistrer Sous" ou "Fichier → Enregistrer Sous"
+    - Formats disponibles:
+      * Excel (.xlsx)
+      * CSV (.csv)
+      * Texte (.txt)
+      * JSON (.json)
+      * XML (.xml)
+      * Base de Données (.db)
+    - Pour les exportations futures du même ensemble, utilisez "Fichier → Enregistrer"
+
+Configuration des Colonnes:
+    - Accédez à "Paramètres → Configurer Colonnes"
+    - Cochez/décochez les colonnes souhaitées dans le tableau:
+      (Type d'Opération, Nom, Répertoire Précédent, Répertoire Actuel, etc.)
+    - Les modifications sont appliquées immédiatement
+    - Restauration par défaut: "Paramètres → Configurer Colonnes → Réinitialiser Colonnes"
+
+Changement de Langue:
+    - Accédez à "Options → Langue" et sélectionnez la langue souhaitée
+    - Le programme redémarrera avec la nouvelle langue après confirmation
+
+Résolution des Problèmes:
+    1. La surveillance ne démarre pas:
+       - Vérifiez les permissions d'accès au répertoire
+       - Assurez-vous qu'aucun autre programme ne surveille le même répertoire
+       - Redémarrez l'application
+
+    2. Les événements n'apparaissent pas:
+       - Vérifiez si la surveillance est active
+       - Vérifiez que les filtres ne masquent pas les événements
+       - Testez en modifiant manuellement un fichier
+
+    3. Haute consommation de ressources:
+       - Évitez de surveiller les répertoires système ou contenant des milliers de fichiers
+       - Surveillez des sous-répertoires spécifiques plutôt que des répertoires racines
+
+    4. Erreurs dans les statistiques:
+       - Assurez-vous qu'il y a suffisamment d'événements pour générer des graphiques
+       - Vérifiez que toutes les bibliothèques sont correctement installées
+
+Auteurs:
+- Fernando Nillsson Cidade
+
+
