@@ -1,4 +1,4 @@
-#**Português Brasileiro:**
+# **Português Brasileiro:**
 
 Projeto: PANOPTES PATROL
 Versão: 0.0.1
@@ -125,7 +125,7 @@ Autores:
 - Fernando Nillsson Cidade
 
 
-#**English:**
+# **English:**
 
 Project: PANOPTES PATROL
 Version: 0.0.1
