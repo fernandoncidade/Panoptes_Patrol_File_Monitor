@@ -16,14 +16,16 @@ class AdministradorFiltros:
             "op_renamed": 0, 
             "op_added": 0,
             "op_deleted": 0,
-            "op_modified": 0
+            "op_modified": 0,
+            "op_scanned": 0
         }
         self.contadores_originais = {
             "op_moved": 0,
             "op_renamed": 0, 
             "op_added": 0,
             "op_deleted": 0,
-            "op_modified": 0
+            "op_modified": 0,
+            "op_scanned": 0
         }
 
         from PySide6.QtWidgets import QApplication
@@ -110,7 +112,8 @@ class AdministradorFiltros:
                 self.parent.loc.get_text("op_renamed"): "op_renamed",
                 self.parent.loc.get_text("op_added"): "op_added", 
                 self.parent.loc.get_text("op_deleted"): "op_deleted",
-                self.parent.loc.get_text("op_modified"): "op_modified"
+                self.parent.loc.get_text("op_modified"): "op_modified",
+                self.parent.loc.get_text("op_scanned"): "op_scanned"
             }
 
             for row in range(tabela.rowCount()):
@@ -179,7 +182,10 @@ class AdministradorFiltros:
                     elif chave_operacao == "op_modified" and hasattr(self.parent, 'ignorar_data_modificados') and self.parent.ignorar_data_modificados.isChecked():
                         pass
 
-                    elif chave_operacao == "op_moved" or chave_operacao == "op_renamed" or chave_operacao == "op_added" or chave_operacao == "op_deleted" or chave_operacao == "op_modified":
+                    elif chave_operacao == "op_scanned" and hasattr(self.parent, 'ignorar_escaneados') and self.parent.ignorar_escaneados.isChecked():
+                        pass
+
+                    elif chave_operacao == "op_moved" or chave_operacao == "op_renamed" or chave_operacao == "op_added" or chave_operacao == "op_deleted" or chave_operacao == "op_modified" or chave_operacao == "op_scanned":
                         data_item = None
                         for campo_data in ["data_modificacao", "data_criacao"]:
                             if campo_data in indices_colunas:
@@ -273,6 +279,9 @@ class AdministradorFiltros:
         if hasattr(self.parent, 'ignorar_data_modificados'):
             self.parent.ignorar_data_modificados.setChecked(True)
 
+        if hasattr(self.parent, 'ignorar_escaneados'):
+            self.parent.ignorar_escaneados.setChecked(True)
+
         for row in range(self.parent.tabela_dados.rowCount()):
             self.parent.tabela_dados.setRowHidden(row, False)
 
@@ -365,7 +374,8 @@ class AdministradorFiltros:
             self.parent.loc.get_text("op_renamed"): "op_renamed",
             self.parent.loc.get_text("op_added"): "op_added",
             self.parent.loc.get_text("op_deleted"): "op_deleted",
-            self.parent.loc.get_text("op_modified"): "op_modified"
+            self.parent.loc.get_text("op_modified"): "op_modified",
+            self.parent.loc.get_text("op_scanned"): "op_scanned"
         }
 
         checkbox_key = operacao_para_checkbox.get(tipo_operacao_traduzido)

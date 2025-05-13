@@ -78,7 +78,6 @@ class Configurador:
 
     @staticmethod
     def setup_menu_bar(interface):
-        """Configura a barra de menu da aplicação"""
         logger = logging.getLogger('FileManager')
         logger.debug("Configurando barra de menu")
         interface.gerenciador_menus_ui.criar_menu_principal()

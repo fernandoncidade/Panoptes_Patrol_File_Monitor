@@ -35,7 +35,8 @@ class BaseEvento:
             self.observador.loc.get_text("op_added"): self.observador.loc.get_text("op_added"),
             self.observador.loc.get_text("op_deleted"): self.observador.loc.get_text("op_deleted"),
             self.observador.loc.get_text("op_modified"): self.observador.loc.get_text("op_modified"),
-            self.observador.loc.get_text("op_moved"): self.observador.loc.get_text("op_moved")
+            self.observador.loc.get_text("op_moved"): self.observador.loc.get_text("op_moved"),
+            self.observador.loc.get_text("op_scanned"): self.observador.loc.get_text("op_scanned")
         }
 
         self.eventos_excluidos = 0
@@ -48,7 +49,7 @@ class BaseEvento:
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
 
-            tabelas_eventos = ['monitoramento', 'adicionado', 'excluido', 'modificado', 'renomeado', 'movido']
+            tabelas_eventos = ['monitoramento', 'adicionado', 'excluido', 'modificado', 'renomeado', 'movido', 'escaneado']
             colunas_padrao = [
                 ("tipo_operacao", "TEXT"),
                 ("nome", "TEXT"),
@@ -120,7 +121,7 @@ class BaseEvento:
             cursor.execute("PRAGMA journal_mode = WAL")
             cursor.execute("PRAGMA synchronous = NORMAL")
             cursor.execute("PRAGMA temp_store = MEMORY")
-            
+
             cursor.execute("PRAGMA cache_size = 100000")
             cursor.execute("PRAGMA page_size = 16384")
             cursor.execute("PRAGMA mmap_size = 4294967296")
@@ -152,9 +153,9 @@ class BaseEvento:
                         m.timestamp
                     FROM monitoramento m
                     WHERE m.nome = ?
-                    
+
                     UNION ALL
-                    
+
                     SELECT 
                         NULL as tipo_operacao,
                         s.nome,
@@ -463,7 +464,8 @@ class BaseEvento:
                 self.observador.loc.get_text("op_deleted"): "excluido",
                 self.observador.loc.get_text("op_modified"): "modificado", 
                 self.observador.loc.get_text("op_renamed"): "renomeado",
-                self.observador.loc.get_text("op_moved"): "movido"
+                self.observador.loc.get_text("op_moved"): "movido",
+                self.observador.loc.get_text("op_scanned"): "escaneado"
             }
 
             tipo_operacao_original = evento["tipo_operacao"]
@@ -547,7 +549,6 @@ class BaseEvento:
             print(f"Erro ao registrar evento no banco: {e}")
 
     def _atualizar_interface_apos_evento(self, evento):
-        """Atualiza a interface após qualquer tipo de evento."""
         try:
             interface = None
             if self.callback and hasattr(self.callback, '__self__'):
@@ -606,7 +607,8 @@ class BaseEvento:
                     'excluido',
                     'modificado',
                     'renomeado',
-                    'movido'
+                    'movido',
+                    'escaneado'
                     ]
 
                 for tabela in tabelas:

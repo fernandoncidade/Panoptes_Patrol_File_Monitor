@@ -49,9 +49,10 @@ class GeradorEstatisticas:
                 self.loc.get_text("op_added") if self.loc else 'Adicionado': gerenciador_cores.obter_cor_hex("op_added"),
                 self.loc.get_text("op_deleted") if self.loc else 'Excluído': gerenciador_cores.obter_cor_hex("op_deleted"),
                 self.loc.get_text("op_modified") if self.loc else 'Modificado': gerenciador_cores.obter_cor_hex("op_modified"),
-                self.loc.get_text("op_moved") if self.loc else 'Movido': gerenciador_cores.obter_cor_hex("op_moved")
+                self.loc.get_text("op_moved") if self.loc else 'Movido': gerenciador_cores.obter_cor_hex("op_moved"),
+                self.loc.get_text("op_scanned") if self.loc else 'Escaneado': gerenciador_cores.obter_cor_hex("op_scanned"),
             }
-    
+
             print(f"Cores atualizadas do gerenciador: {self.cores_operacoes}")
 
         else:
@@ -60,7 +61,8 @@ class GeradorEstatisticas:
                 self.loc.get_text("op_added") if self.loc else 'Adicionado': '#0000ff',
                 self.loc.get_text("op_deleted") if self.loc else 'Excluído': '#ff0000',
                 self.loc.get_text("op_modified") if self.loc else 'Modificado': '#ff6200',
-                self.loc.get_text("op_moved") if self.loc else 'Movido': '#ff00ff'
+                self.loc.get_text("op_moved") if self.loc else 'Movido': '#ff00ff',
+                self.loc.get_text("op_scanned") if self.loc else 'Escaneado': '#808080',
             }
 
             print("Usando cores padrão para gráficos (sem acesso ao gerenciador)")
@@ -81,31 +83,37 @@ class GeradorEstatisticas:
                 "Modified": self.loc.get_text("op_modified"),
                 "Renamed": self.loc.get_text("op_renamed"),
                 "Moved": self.loc.get_text("op_moved"),
+                "Scanned": self.loc.get_text("op_scanned"),
                 "Adicionado": self.loc.get_text("op_added"),
                 "Excluído": self.loc.get_text("op_deleted"),
                 "Modificado": self.loc.get_text("op_modified"),
                 "Renomeado": self.loc.get_text("op_renamed"),
                 "Movido": self.loc.get_text("op_moved"),
+                "Escaneado": self.loc.get_text("op_scanned"),
                 "Añadido": self.loc.get_text("op_added"),
                 "Eliminado": self.loc.get_text("op_deleted"),
                 "Modificado": self.loc.get_text("op_modified"),
                 "Renombrado": self.loc.get_text("op_renamed"),
                 "Movido": self.loc.get_text("op_moved"),
+                "Escaneado": self.loc.get_text("op_scanned"),
                 "Ajouté": self.loc.get_text("op_added"),
                 "Supprimé": self.loc.get_text("op_deleted"),
                 "Modifié": self.loc.get_text("op_modified"),
                 "Renommé": self.loc.get_text("op_renamed"),
                 "Déplacé": self.loc.get_text("op_moved"),
+                "Numérisé": self.loc.get_text("op_scanned"),
                 "Aggiunto": self.loc.get_text("op_added"),
                 "Eliminato": self.loc.get_text("op_deleted"),
                 "Modificato": self.loc.get_text("op_modified"),
                 "Rinominato": self.loc.get_text("op_renamed"),
                 "Spostato": self.loc.get_text("op_moved"),
+                "Scansionato": self.loc.get_text("op_scanned"),
                 "Hinzugefügt": self.loc.get_text("op_added"),
                 "Gelöscht": self.loc.get_text("op_deleted"),
                 "Geändert": self.loc.get_text("op_modified"),
                 "Umbenannt": self.loc.get_text("op_renamed"),
-                "Verschoben": self.loc.get_text("op_moved")
+                "Verschoben": self.loc.get_text("op_moved"),
+                "Gescannt": self.loc.get_text("op_scanned")
             }
 
             # Espanhol
@@ -114,7 +122,8 @@ class GeradorEstatisticas:
                 "Eliminado": self.loc.get_text("op_deleted"),
                 "Modificado": self.loc.get_text("op_modified"),
                 "Renombrado": self.loc.get_text("op_renamed"),
-                "Movido": self.loc.get_text("op_moved")
+                "Movido": self.loc.get_text("op_moved"),
+                "Escaneado": self.loc.get_text("op_scanned")
             })
 
             # Francês
@@ -123,7 +132,8 @@ class GeradorEstatisticas:
                 "Supprimé": self.loc.get_text("op_deleted"),
                 "Modifié": self.loc.get_text("op_modified"),
                 "Renommé": self.loc.get_text("op_renamed"),
-                "Déplacé": self.loc.get_text("op_moved")
+                "Déplacé": self.loc.get_text("op_moved"),
+                "Numérisé": self.loc.get_text("op_scanned")
             })
 
             # Italiano
@@ -132,7 +142,8 @@ class GeradorEstatisticas:
                 "Eliminato": self.loc.get_text("op_deleted"),
                 "Modificato": self.loc.get_text("op_modified"),
                 "Rinominato": self.loc.get_text("op_renamed"),
-                "Spostato": self.loc.get_text("op_moved")
+                "Spostato": self.loc.get_text("op_moved"),
+                "Scansionato": self.loc.get_text("op_scanned")
             })
 
             # Alemão
@@ -141,7 +152,8 @@ class GeradorEstatisticas:
                 "Gelöscht": self.loc.get_text("op_deleted"),
                 "Geändert": self.loc.get_text("op_modified"),
                 "Umbenannt": self.loc.get_text("op_renamed"),
-                "Verschoben": self.loc.get_text("op_moved")
+                "Verschoben": self.loc.get_text("op_moved"),
+                "Gescannt": self.loc.get_text("op_scanned")
             })
 
             df['tipo_operacao'] = df['tipo_operacao'].map(lambda x: mapeamento_operacoes.get(x, x))

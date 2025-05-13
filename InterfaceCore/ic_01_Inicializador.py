@@ -80,7 +80,8 @@ class Inicializador:
             "op_added": interface.loc.get_text("op_added"),
             "op_deleted": interface.loc.get_text("op_deleted"),
             "op_modified": interface.loc.get_text("op_modified"),
-            "op_moved": interface.loc.get_text("op_moved")
+            "op_moved": interface.loc.get_text("op_moved"),
+            "op_scanned": interface.loc.get_text("op_scanned")
         }
 
         logger.debug("Gerenciadores inicializados com sucesso")

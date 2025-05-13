@@ -80,6 +80,83 @@ class DiretorioScanner(QObject):
                             datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                         ))
 
+                        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                        cursor.execute("""
+                            INSERT INTO escaneado (
+                                    tipo_operacao,
+                                    nome,
+                                    dir_anterior,
+                                    dir_atual,
+                                    data_criacao,
+                                    data_modificacao,
+                                    data_acesso,
+                                    tipo,
+                                    tamanho,
+                                    atributos,
+                                    autor,
+                                    dimensoes,
+                                    duracao,
+                                    taxa_bits,
+                                    protegido,
+                                    timestamp
+                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        """, (
+                            self.observador.loc.get_text("op_scanned"),
+                            nome,
+                            "",
+                            caminho,
+                            metadados.get("data_criacao", ""),
+                            metadados.get("data_modificacao", ""),
+                            metadados.get("data_acesso", ""),
+                            tipo,
+                            metadados.get("tamanho", ""),
+                            metadados.get("atributos", ""),
+                            metadados.get("autor", ""),
+                            metadados.get("dimensoes", ""),
+                            metadados.get("duracao", ""),
+                            metadados.get("taxa_bits", ""),
+                            metadados.get("protegido", ""),
+                            timestamp
+                        ))
+
+                        cursor.execute("""
+                            INSERT INTO monitoramento (
+                                    tipo_operacao,
+                                    nome,
+                                    dir_anterior,
+                                    dir_atual,
+                                    data_criacao,
+                                    data_modificacao,
+                                    data_acesso,
+                                    tipo,
+                                    tamanho,
+                                    atributos,
+                                    autor,
+                                    dimensoes,
+                                    duracao,
+                                    taxa_bits,
+                                    protegido,
+                                    timestamp
+                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        """, (
+                            self.observador.loc.get_text("op_scanned"),
+                            nome,
+                            "",
+                            caminho,
+                            metadados.get("data_criacao", ""),
+                            metadados.get("data_modificacao", ""),
+                            metadados.get("data_acesso", ""),
+                            tipo,
+                            metadados.get("tamanho", ""),
+                            metadados.get("atributos", ""),
+                            metadados.get("autor", ""),
+                            metadados.get("dimensoes", ""),
+                            metadados.get("duracao", ""),
+                            metadados.get("taxa_bits", ""),
+                            metadados.get("protegido", ""),
+                            timestamp
+                        ))
+
                         self.contador_processados += 1
                         if self.contador_processados % self.intervalo_atualizacao == 0:
                             self._atualizar_progresso()

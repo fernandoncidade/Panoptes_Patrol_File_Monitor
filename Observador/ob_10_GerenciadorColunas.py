@@ -235,7 +235,8 @@ class GerenciadorColunas:
                         self.loc.get_text("op_added"): QColor(0, 0, 255), 
                         self.loc.get_text("op_deleted"): QColor(255, 0, 0),
                         self.loc.get_text("op_modified"): QColor(255, 98, 0),
-                        self.loc.get_text("op_moved"): QColor(255, 0, 255)
+                        self.loc.get_text("op_moved"): QColor(255, 0, 255),
+                        self.loc.get_text("op_scanned"): QColor(128, 128, 128)
                     }
 
                     item.setBackground(cores.get(valor, QColor(255, 255, 255)))

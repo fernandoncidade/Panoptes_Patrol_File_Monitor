@@ -36,8 +36,10 @@ class GerenciadorMonitoramento:
             if hasattr(self.interface, 'processador_evento'):
                 try:
                     self.interface.processador_evento.evento_processado.disconnect()
+
                 except:
                     pass
+
                 self.interface.processador_evento = None
 
             if hasattr(self.interface, 'evento_base'):

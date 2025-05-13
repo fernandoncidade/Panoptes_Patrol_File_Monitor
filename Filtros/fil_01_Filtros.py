@@ -51,7 +51,7 @@ class Filtros(QWidget):
         grupo_operacao = QGroupBox(self.loc.get_text("operation_filter"))
         layout_operacao = QVBoxLayout()
         self.checkboxes_operacao = {}
-        for op in ["op_moved", "op_renamed", "op_added", "op_deleted", "op_modified"]:
+        for op in ["op_moved", "op_renamed", "op_added", "op_deleted", "op_modified", "op_scanned"]:
             cb = QCheckBox(self.loc.get_text(op))
             cb.setChecked(True)
             cb.stateChanged.connect(self.on_filtro_alterado)
@@ -102,6 +102,11 @@ class Filtros(QWidget):
         self.ignorar_data_modificados.setChecked(True)
         self.ignorar_data_modificados.stateChanged.connect(self.administrador_filtros.aplicar_filtros)
         layout_data.addRow(self.ignorar_data_modificados)
+
+        self.ignorar_escaneados = QCheckBox(self.loc.get_text("ignore_scanned_filter"))
+        self.ignorar_escaneados.setChecked(True)
+        self.ignorar_escaneados.stateChanged.connect(self.administrador_filtros.aplicar_filtros)
+        layout_data.addRow(self.ignorar_escaneados)
 
         container_data_inicial = QHBoxLayout()
         self.data_inicial = QDateTimeEdit()
@@ -229,6 +234,9 @@ class Filtros(QWidget):
 
         if hasattr(self, 'ignorar_data_modificados'):
             self.ignorar_data_modificados.setText(self.loc.get_text("ignore_modified_filter"))
+
+        if hasattr(self, 'ignorar_escaneados'):
+            self.ignorar_escaneados.setText(self.loc.get_text("ignore_scanned_filter"))
 
     def limpar_filtros(self):
         self.administrador_filtros.limpar_filtros()

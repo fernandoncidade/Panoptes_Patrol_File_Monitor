@@ -4,7 +4,8 @@ def traduzir_tipo_operacao(localizador, valor, idioma_origem=None):
         "op_added": ["op_added", "added", "adicionado", "añadido", "ajouté", "aggiunto", "hinzugefügt"],
         "op_deleted": ["op_deleted", "deleted", "excluído", "eliminado", "supprimé", "eliminato", "gelöscht"],
         "op_modified": ["op_modified", "modified", "modificado", "modificado", "modifié", "modificato", "geändert"],
-        "op_moved": ["op_moved", "moved", "movido", "movido", "déplacé", "spostato", "verschoben"]
+        "op_moved": ["op_moved", "moved", "movido", "movido", "déplacé", "spostato", "verschoben"],
+        "op_scanned": ["op_scanned", "scanned", "escaneado", "escanneado", "numérisé", "scansionato", "gescannt"]
     }
 
     operacao_normalizada = None
@@ -286,6 +287,7 @@ def traduzir_metadados(localizador, valor, campo):
     elif campo == "protegido":
         if valor.lower() in ["sim", "yes", "sí", "oui", "ja"]:
             return localizador.get_text("yes")
+
         elif valor.lower() in ["não", "no", "non", "nein"]:
             return localizador.get_text("no")
 

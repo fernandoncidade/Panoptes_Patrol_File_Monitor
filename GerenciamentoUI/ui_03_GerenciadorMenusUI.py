@@ -31,7 +31,8 @@ class GerenciadorCores:
             "op_added": "#0000ff",      # Azul
             "op_deleted": "#ff0000",    # Vermelho
             "op_modified": "#ff6200",   # Laranja
-            "op_moved": "#ff00ff"       # Roxo
+            "op_moved": "#ff00ff",       # Roxo
+            "op_scanned": "#808080"      # Cinza
         }
 
         self.carregar_cores()
@@ -157,7 +158,7 @@ class GerenciadorMenusUI:
         grupo_filtros = QActionGroup(self.interface)
         grupo_filtros.setExclusive(False)
 
-        for op in ["op_moved", "op_renamed", "op_added", "op_deleted", "op_modified"]:
+        for op in ["op_moved", "op_renamed", "op_added", "op_deleted", "op_modified", "op_scanned"]:
             acao_filtro = QAction(self.loc.get_text(op), self.interface)
             acao_filtro.setCheckable(True)
             acao_filtro.setChecked(True)
@@ -196,7 +197,8 @@ class GerenciadorMenusUI:
             "op_added": self.loc.get_text("op_added"),
             "op_deleted": self.loc.get_text("op_deleted"),
             "op_modified": self.loc.get_text("op_modified"),
-            "op_moved": self.loc.get_text("op_moved")
+            "op_moved": self.loc.get_text("op_moved"),
+            "op_scanned": self.loc.get_text("op_scanned")
         }
 
         for op_key, op_text in tipos_operacoes.items():
@@ -267,7 +269,8 @@ class GerenciadorMenusUI:
                 "op_added": "#0000ff",      # Azul
                 "op_deleted": "#ff0000",    # Vermelho
                 "op_modified": "#ff6200",   # Laranja
-                "op_moved": "#ff00ff"       # Roxo
+                "op_moved": "#ff00ff",       # Roxo
+                "op_scanned": "#808080"      # Cinza
             }
 
             mensagem = self.loc.get_text("reset_colors_confirm") if "reset_colors_confirm" in self.loc.traducoes.get(self.loc.idioma_atual, {}) else "Deseja restaurar todas as cores para os valores padrão?"

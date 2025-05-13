@@ -254,7 +254,8 @@ def _adicionar_item_tabela(interfaceMonitor, evento, atualizar_interface=True):
             interfaceMonitor.loc.get_text("op_added"): QColor(0, 0, 255),
             interfaceMonitor.loc.get_text("op_deleted"): QColor(255, 0, 0),
             interfaceMonitor.loc.get_text("op_modified"): QColor(255, 98, 0),
-            interfaceMonitor.loc.get_text("op_moved"): QColor(255, 0, 255)
+            interfaceMonitor.loc.get_text("op_moved"): QColor(255, 0, 255),
+            interfaceMonitor.loc.get_text("op_scanned"): QColor(128, 128, 128)
         }
 
         for col, (key, coluna) in enumerate(colunas_visiveis):

@@ -181,7 +181,8 @@ class GerenciadorTabela:
                             self.interface.loc.get_text("op_added"): gerenciador_cores.obter_cor_qcolor("op_added"), 
                             self.interface.loc.get_text("op_deleted"): gerenciador_cores.obter_cor_qcolor("op_deleted"),
                             self.interface.loc.get_text("op_modified"): gerenciador_cores.obter_cor_qcolor("op_modified"),
-                            self.interface.loc.get_text("op_moved"): gerenciador_cores.obter_cor_qcolor("op_moved")
+                            self.interface.loc.get_text("op_moved"): gerenciador_cores.obter_cor_qcolor("op_moved"),
+                            self.interface.loc.get_text("op_scanned"): gerenciador_cores.obter_cor_qcolor("op_scanned")
                         }
 
                     else:
@@ -190,7 +191,8 @@ class GerenciadorTabela:
                             self.interface.loc.get_text("op_added"): QColor(0, 0, 255),
                             self.interface.loc.get_text("op_deleted"): QColor(255, 0, 0),
                             self.interface.loc.get_text("op_modified"): QColor(255, 98, 0),
-                            self.interface.loc.get_text("op_moved"): QColor(255, 0, 255)
+                            self.interface.loc.get_text("op_moved"): QColor(255, 0, 255),
+                            self.interface.loc.get_text("op_scanned"): QColor(128, 128, 128)
                         }
 
                     cor_padrao = QColor(255, 255, 255)
@@ -307,7 +309,8 @@ class GerenciadorTabela:
                             self.interface.loc.get_text("op_added"): gerenciador_cores.obter_cor_qcolor("op_added"), 
                             self.interface.loc.get_text("op_deleted"): gerenciador_cores.obter_cor_qcolor("op_deleted"),
                             self.interface.loc.get_text("op_modified"): gerenciador_cores.obter_cor_qcolor("op_modified"),
-                            self.interface.loc.get_text("op_moved"): gerenciador_cores.obter_cor_qcolor("op_moved")
+                            self.interface.loc.get_text("op_moved"): gerenciador_cores.obter_cor_qcolor("op_moved"),
+                            self.interface.loc.get_text("op_scanned"): gerenciador_cores.obter_cor_qcolor("op_scanned")
                         }
 
                     else:
@@ -316,7 +319,8 @@ class GerenciadorTabela:
                             self.interface.loc.get_text("op_added"): QColor(0, 0, 255),
                             self.interface.loc.get_text("op_deleted"): QColor(255, 0, 0),
                             self.interface.loc.get_text("op_modified"): QColor(255, 98, 0),
-                            self.interface.loc.get_text("op_moved"): QColor(255, 0, 255)
+                            self.interface.loc.get_text("op_moved"): QColor(255, 0, 255),
+                            self.interface.loc.get_text("op_scanned"): QColor(128, 128, 128)
                         }
 
                     cor_padrao = QColor(255, 255, 255)
