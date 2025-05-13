@@ -1,0 +1,62 @@
+{
+    "tipo_operacao": {
+        "visivel": true,
+        "ordem": 0
+    },
+    "nome": {
+        "visivel": true,
+        "ordem": 1
+    },
+    "dir_anterior": {
+        "visivel": true,
+        "ordem": 2
+    },
+    "dir_atual": {
+        "visivel": true,
+        "ordem": 3
+    },
+    "data_criacao": {
+        "visivel": true,
+        "ordem": 4
+    },
+    "data_modificacao": {
+        "visivel": true,
+        "ordem": 6
+    },
+    "data_acesso": {
+        "visivel": true,
+        "ordem": 7
+    },
+    "tipo": {
+        "visivel": true,
+        "ordem": 8
+    },
+    "tamanho": {
+        "visivel": true,
+        "ordem": 9
+    },
+    "atributos": {
+        "visivel": true,
+        "ordem": 10
+    },
+    "autor": {
+        "visivel": true,
+        "ordem": 11
+    },
+    "dimensoes": {
+        "visivel": true,
+        "ordem": 12
+    },
+    "duracao": {
+        "visivel": true,
+        "ordem": 13
+    },
+    "taxa_bits": {
+        "visivel": true,
+        "ordem": 14
+    },
+    "protegido": {
+        "visivel": true,
+        "ordem": 15
+    }
+}
