@@ -28,11 +28,12 @@ def extrair_metadados_dados_estruturados(caminho, loc):
                 for tamanho in tamanhos_comuns:
                     if tamanho_arquivo % tamanho == 0 and tamanho_arquivo > 0:
                         registros_estimados = tamanho_arquivo // tamanho
-                        metadados['dimensoes'] = f"{registros_estimados} {loc.get_text('records_estimated')}, {tamanho} {loc.get_text('bytes_per_record')}"
+                        metadados['registros'] = str(registros_estimados)
+                        metadados['bytes_por_registro'] = str(tamanho)
                         break
 
-                if 'dimensoes' not in metadados:
-                    metadados['dimensoes'] = f"{tamanho_arquivo} {loc.get_text('bytes')}"
+                if 'registros' not in metadados:
+                    metadados['binario'] = f"{tamanho_arquivo} {loc.get_text('bytes')}"
 
             else:
                 encoding_result = chardet.detect(sample)
@@ -61,22 +62,23 @@ def extrair_metadados_dados_estruturados(caminho, loc):
 
                         if colunas > 1:
                             metadados['formato'] = f"Arquivo de dados delimitado ({delimitador})"
-                            metadados['dimensoes'] = f"{linhas} {loc.get_text('records')}, {colunas} {loc.get_text('columns')}"
+                            metadados['registros'] = str(linhas)
+                            metadados['colunas'] = str(colunas)
 
                         else:
                             metadados['formato'] = "Arquivo de dados de texto"
-                            metadados['dimensoes'] = f"{linhas} {loc.get_text('lines')}"
+                            metadados['linhas'] = str(linhas)
 
                     else:
                         metadados['formato'] = "Arquivo de dados de texto"
-                        metadados['dimensoes'] = f"{tamanho_arquivo} {loc.get_text('bytes')}"
+                        metadados['binario'] = f"{tamanho_arquivo} {loc.get_text('bytes')}"
 
                 except:
                     metadados['formato'] = "Arquivo de dados"
-                    metadados['dimensoes'] = f"{tamanho_arquivo} {loc.get_text('bytes')}"
+                    metadados['binario'] = f"{tamanho_arquivo} {loc.get_text('bytes')}"
 
     except Exception as e:
         print(f"Erro ao extrair metadados de arquivo de dados {caminho}: {e}")
-        metadados['dimensoes'] = f"{tamanho_arquivo} {loc.get_text('bytes')}"
+        metadados['binario'] = f"{tamanho_arquivo} {loc.get_text('bytes')}"
 
     return metadados

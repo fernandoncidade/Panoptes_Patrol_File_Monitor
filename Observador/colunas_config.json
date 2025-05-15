@@ -58,5 +58,65 @@
     "protegido": {
         "visivel": true,
         "ordem": 15
+    },
+    "paginas": {
+        "visivel": true,
+        "ordem": 16
+    },
+    "linhas": {
+        "visivel": true,
+        "ordem": 17
+    },
+    "palavras": {
+        "visivel": true,
+        "ordem": 18
+    },
+    "paginas_estimadas": {
+        "visivel": true,
+        "ordem": 19
+    },
+    "linhas_codigo": {
+        "visivel": true,
+        "ordem": 20
+    },
+    "total_linhas": {
+        "visivel": true,
+        "ordem": 21
+    },
+    "slides_estimados": {
+        "visivel": true,
+        "ordem": 22
+    },
+    "arquivos": {
+        "visivel": true,
+        "ordem": 23
+    },
+    "descompactados": {
+        "visivel": true,
+        "ordem": 24
+    },
+    "slides": {
+        "visivel": true,
+        "ordem": 25
+    },
+    "binario": {
+        "visivel": true,
+        "ordem": 26
+    },
+    "planilhas": {
+        "visivel": true,
+        "ordem": 27
+    },
+    "colunas": {
+        "visivel": true,
+        "ordem": 28
+    },
+    "registros": {
+        "visivel": true,
+        "ordem": 29
+    },
+    "tabelas": {
+        "visivel": true,
+        "ordem": 30
     }
 }

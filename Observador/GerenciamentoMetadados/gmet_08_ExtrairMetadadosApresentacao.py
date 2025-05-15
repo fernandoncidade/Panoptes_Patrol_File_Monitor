@@ -14,7 +14,6 @@ def extrair_metadados_apresentacao(caminho, loc):
 
                     slides = len(prs.slides)
                     metadados['slides'] = slides
-                    metadados['dimensoes'] = f"{slides} {loc.get_text("slides")}"
 
                     if prs.core_properties:
                         props = prs.core_properties
@@ -37,7 +36,7 @@ def extrair_metadados_apresentacao(caminho, loc):
                 elif ext == '.ppt':
                     try:
                         ppt_metadados = extrair_metadados_olefile(caminho)
-                        if ppt_metadados and 'dimensoes' in ppt_metadados:
+                        if ppt_metadados and 'slides' in ppt_metadados:
                             metadados.update(ppt_metadados)
 
                         else:
@@ -51,7 +50,6 @@ def extrair_metadados_apresentacao(caminho, loc):
                             with olefile.OleFile(caminho) as ole:
                                 tamanho = os.path.getsize(caminho)
                                 slides_estimados = max(1, tamanho // 100000)
-                                metadados['dimensoes'] = f"{slides_estimados} {loc.get_text("slides_estimated")}"
 
                                 if ole.exists('\x05DocumentSummaryInformation'):
                                     info = ole.getproperties('\x05DocumentSummaryInformation')

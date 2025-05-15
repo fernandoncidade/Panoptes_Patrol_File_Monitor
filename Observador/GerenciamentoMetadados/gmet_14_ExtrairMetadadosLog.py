@@ -69,7 +69,6 @@ def extrair_metadados_log(caminho, loc):
                 linhas += 1
 
         metadados['linhas'] = f"{linhas:,}".replace(',', '.')
-        metadados['dimensoes'] = f"{linhas:,} {loc.get_text('lines')}".replace(',', '.')
 
         tipos_log = {
             "apache": ["apache", "httpd", "access.log", "error.log"],

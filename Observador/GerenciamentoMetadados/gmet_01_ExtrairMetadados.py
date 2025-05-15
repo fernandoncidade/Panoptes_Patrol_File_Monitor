@@ -50,7 +50,6 @@ def extrair_metadados(caminho, loc):
                         from PyPDF2 import PdfReader
                         reader = PdfReader(caminho)
                         pages = len(reader.pages)
-                        metadados['dimensoes'] = f"{pages} {loc.get_text("pages")}"
 
                     except Exception as pe:
                         print(f"Erro ao ler PDF: {pe}")

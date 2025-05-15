@@ -234,7 +234,8 @@ class GerenciadorTabela:
                                     if key == "tipo_operacao" and valor:
                                         valor = self.loc.traduzir_tipo_operacao(valor)
 
-                                    elif key in ["tipo", "atributos", "autor", "dimensoes", "duracao", "taxa_bits", "protegido"]:
+                                    elif key in ["tipo", "atributos", "autor", "dimensoes", "duracao", "taxa_bits", "protegido", "paginas", "linhas", "palavras", "palavras_estimadas", 
+                                                 "linhas_codigo", "total_linhas", "slides_estimados", "arquivos", "descompactados", "slides", "binario", "planilhas", "colunas", "registros", "tabelas"]:
                                         valor = self.loc.traduzir_metadados(valor, key)
 
                                     if key in ["dir_anterior", "dir_atual"] and valor:
@@ -336,7 +337,8 @@ class GerenciadorTabela:
                             if key == "tipo_operacao" and valor:
                                 valor = self.loc.traduzir_tipo_operacao(valor)
 
-                            elif key in ["tipo", "atributos", "autor", "dimensoes", "duracao", "taxa_bits", "protegido"]:
+                            elif key in ["tipo", "atributos", "autor", "dimensoes", "duracao", "taxa_bits", "protegido", "paginas", "linhas", "palavras", "palavras_estimadas", 
+                                         "linhas_codigo", "total_linhas", "slides_estimados", "arquivos", "descompactados", "slides", "binario", "planilhas", "colunas", "registros", "tabelas"]:
                                 valor = self.loc.traduzir_metadados(valor, key)
 
                             if key in ["dir_anterior", "dir_atual"] and valor:

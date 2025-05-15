@@ -21,6 +21,38 @@ from GerenciamentoUI.Localizacoes.tr_08_OpcoesSobre import (
 logger = logging.getLogger('FileManager')
 
 
+class MenuPersistente(QMenu):
+    def __init__(self, titulo, parent=None):
+        super().__init__(titulo, parent)
+        self.setAttribute(Qt.WA_DeleteOnClose, False)
+        self.setMouseTracking(True)
+
+    def mousePressEvent(self, event):
+        action = self.actionAt(event.pos())
+        if action and action.isEnabled():
+            if not action.menu():
+                action.trigger()
+                event.accept()
+                return
+
+        super().mousePressEvent(event)
+
+    def leaveEvent(self, event):
+        pos = self.mapFromGlobal(self.parent().cursor().pos())
+        if not self.rect().contains(pos):
+            self.close()
+
+        super().leaveEvent(event)
+
+    def mouseReleaseEvent(self, event):
+        action = self.actionAt(event.pos())
+        if action and action.isEnabled() and not action.menu():
+            event.accept()
+            return
+
+        super().mouseReleaseEvent(event)
+
+
 class GerenciadorCores:
     def __init__(self, interface_principal):
         self.interface = interface_principal
@@ -129,9 +161,13 @@ class GerenciadorMenusUI:
         menu_bar = self.interface.menuBar()
         menu_bar.clear()
 
-        menu_arquivo = menu_bar.addMenu(self.loc.get_text("file_menu"))
-        menu_configuracoes = menu_bar.addMenu(self.loc.get_text("settings"))
-        menu_opcoes = menu_bar.addMenu(self.loc.get_text("options_menu"))
+        menu_arquivo = MenuPersistente(self.loc.get_text("file_menu"), self.interface)
+        menu_configuracoes = MenuPersistente(self.loc.get_text("settings"), self.interface)
+        menu_opcoes = MenuPersistente(self.loc.get_text("options_menu"), self.interface)
+
+        menu_bar.addMenu(menu_arquivo)
+        menu_bar.addMenu(menu_configuracoes)
+        menu_bar.addMenu(menu_opcoes)
 
         self._configurar_menu_arquivo(menu_arquivo)
         self._configurar_menu_configuracoes(menu_configuracoes)
@@ -154,7 +190,8 @@ class GerenciadorMenusUI:
             menu_arquivo.addAction(item_menu)
 
     def _configurar_menu_configuracoes(self, menu_configuracoes):
-        submenu_filtros = menu_configuracoes.addMenu(self.loc.get_text("filters"))
+        submenu_filtros = MenuPersistente(self.loc.get_text("filters"), self.interface)
+        menu_configuracoes.addMenu(submenu_filtros)
         grupo_filtros = QActionGroup(self.interface)
         grupo_filtros.setExclusive(False)
 
@@ -174,6 +211,7 @@ class GerenciadorMenusUI:
 
         self._criar_submenu_colunas(menu_configuracoes)
         self._criar_submenu_cores(menu_configuracoes)
+        self._criar_submenu_exportacao(menu_configuracoes)
 
     def _configurar_menu_opcoes(self, menu_opcoes):
         self._criar_submenu_idiomas(menu_opcoes)
@@ -184,13 +222,15 @@ class GerenciadorMenusUI:
         menu_opcoes.addAction(acao_sobre)
 
     def _criar_submenu_cores(self, menu_configuracoes):
-        submenu_cores = menu_configuracoes.addMenu(self.loc.get_text("configure_colors") 
-                                                   if "configure_colors" in self.loc.traducoes.get(self.loc.idioma_atual, {}) 
-                                                   else "Configurar Cores")
+        submenu_cores = MenuPersistente(self.loc.get_text("configure_colors") 
+                                       if "configure_colors" in self.loc.traducoes.get(self.loc.idioma_atual, {}) 
+                                       else "Configurar Cores", self.interface)
+        menu_configuracoes.addMenu(submenu_cores)
 
-        submenu_cores_operacoes = submenu_cores.addMenu(self.loc.get_text("operation_colors") 
-                                                        if "operation_colors" in self.loc.traducoes.get(self.loc.idioma_atual, {}) 
-                                                        else "Cores de Operações")
+        submenu_cores_operacoes = MenuPersistente(self.loc.get_text("operation_colors") 
+                                                if "operation_colors" in self.loc.traducoes.get(self.loc.idioma_atual, {}) 
+                                                else "Cores de Operações", self.interface)
+        submenu_cores.addMenu(submenu_cores_operacoes)
 
         tipos_operacoes = {
             "op_renamed": self.loc.get_text("op_renamed"),
@@ -251,7 +291,15 @@ class GerenciadorMenusUI:
                     self.gerenciador_cores.salvar_cores()
                     self.gerenciador_cores.atualizar_cores_no_sistema()
 
+                    exportar_colunas_ativas = self.acao_exportar_colunas_ativas.isChecked()
+                    exportar_filtros_ativos = self.acao_exportar_filtros_ativos.isChecked()
+                    exportar_selecao = self.acao_exportar_selecao.isChecked()
+
                     self.criar_menu_principal()
+
+                    self.acao_exportar_colunas_ativas.setChecked(exportar_colunas_ativas)
+                    self.acao_exportar_filtros_ativos.setChecked(exportar_filtros_ativos)
+                    self.acao_exportar_selecao.setChecked(exportar_selecao)
 
                     mensagem = self.loc.get_text("color_changed_success") if "color_changed_success" in self.loc.traducoes.get(self.loc.idioma_atual, {}) else "Cor alterada com sucesso!"
                     QMessageBox.information(self.interface, self.loc.get_text("success"), mensagem)
@@ -277,6 +325,10 @@ class GerenciadorMenusUI:
             resposta = QMessageBox.question(self.interface, self.loc.get_text("confirm"), mensagem, QMessageBox.Yes | QMessageBox.No)
 
             if resposta == QMessageBox.Yes:
+                exportar_colunas_ativas = self.acao_exportar_colunas_ativas.isChecked()
+                exportar_filtros_ativos = self.acao_exportar_filtros_ativos.isChecked()
+                exportar_selecao = self.acao_exportar_selecao.isChecked()
+
                 for tipo, cor in cores_padrao.items():
                     self.gerenciador_cores.definir_cor(tipo, cor)
 
@@ -284,6 +336,10 @@ class GerenciadorMenusUI:
                 self.gerenciador_cores.atualizar_cores_no_sistema()
 
                 self.criar_menu_principal()
+
+                self.acao_exportar_colunas_ativas.setChecked(exportar_colunas_ativas)
+                self.acao_exportar_filtros_ativos.setChecked(exportar_filtros_ativos)
+                self.acao_exportar_selecao.setChecked(exportar_selecao)
 
                 mensagem_sucesso = self.loc.get_text("colors_reset_success") if "colors_reset_success" in self.loc.traducoes.get(self.loc.idioma_atual, {}) else "Cores restauradas com sucesso!"
                 QMessageBox.information(self.interface, self.loc.get_text("success"), mensagem_sucesso)
@@ -295,7 +351,8 @@ class GerenciadorMenusUI:
             QMessageBox.critical(self.interface, self.loc.get_text("error"), f"{self.loc.get_text('error')}: {str(e)}")
 
     def _criar_submenu_colunas(self, menu_configuracoes):
-        submenu_colunas = menu_configuracoes.addMenu(self.loc.get_text("configure_columns"))
+        submenu_colunas = MenuPersistente(self.loc.get_text("configure_columns"), self.interface)
+        menu_configuracoes.addMenu(submenu_colunas)
         grupo_colunas = QActionGroup(self.interface)
         grupo_colunas.setExclusive(False)
 
@@ -350,8 +407,59 @@ class GerenciadorMenusUI:
             logger.error(f"Erro ao selecionar todas as colunas: {e}")
             QMessageBox.critical(self.interface, self.loc.get_text("error"), f"{self.loc.get_text('error')}: {str(e)}")
 
+    def _criar_submenu_exportacao(self, menu_configuracoes):
+        submenu_exportacao = MenuPersistente(self.loc.get_text("export_options") 
+                                            if "export_options" in self.loc.traducoes.get(self.loc.idioma_atual, {}) 
+                                            else "Opções de Exportação", self.interface)
+        menu_configuracoes.addMenu(submenu_exportacao)
+
+        self.acao_exportar_colunas_ativas = QAction(self.loc.get_text("export_active_columns") 
+                                                if "export_active_columns" in self.loc.traducoes.get(self.loc.idioma_atual, {}) 
+                                                else "Exportar apenas colunas ativas", self.interface)
+        self.acao_exportar_colunas_ativas.setCheckable(True)
+        self.acao_exportar_colunas_ativas.setChecked(False)
+        submenu_exportacao.addAction(self.acao_exportar_colunas_ativas)
+
+        self.acao_exportar_filtros_ativos = QAction(self.loc.get_text("export_active_filters") 
+                                                if "export_active_filters" in self.loc.traducoes.get(self.loc.idioma_atual, {}) 
+                                                else "Exportar apenas filtros ativos", self.interface)
+        self.acao_exportar_filtros_ativos.setCheckable(True)
+        self.acao_exportar_filtros_ativos.setChecked(False)
+        submenu_exportacao.addAction(self.acao_exportar_filtros_ativos)
+
+        self.acao_exportar_selecao = QAction(self.loc.get_text("export_selected_data") 
+                                            if "export_selected_data" in self.loc.traducoes.get(self.loc.idioma_atual, {}) 
+                                            else "Exportar apenas dados selecionados", self.interface)
+        self.acao_exportar_selecao.setCheckable(True)
+        self.acao_exportar_selecao.setChecked(False)
+        submenu_exportacao.addAction(self.acao_exportar_selecao)
+
+        submenu_exportacao.addSeparator()
+
+        acao_resetar_exportacao = QAction(self.loc.get_text("reset_export_options") 
+                                        if "reset_export_options" in self.loc.traducoes.get(self.loc.idioma_atual, {}) 
+                                        else "Restaurar Padrões", self.interface)
+        acao_resetar_exportacao.triggered.connect(self._resetar_opcoes_exportacao)
+        submenu_exportacao.addAction(acao_resetar_exportacao)
+
+    def _resetar_opcoes_exportacao(self):
+        try:
+            self.acao_exportar_colunas_ativas.setChecked(False)
+            self.acao_exportar_filtros_ativos.setChecked(False)
+            self.acao_exportar_selecao.setChecked(False)
+
+            mensagem_sucesso = self.loc.get_text("export_options_reset_success") if "export_options_reset_success" in self.loc.traducoes.get(self.loc.idioma_atual, {}) else "Opções de exportação restauradas para valores padrão!"
+            QMessageBox.information(self.interface, self.loc.get_text("success"), mensagem_sucesso)
+
+            logger.info("Opções de exportação restauradas para valores padrão")
+
+        except Exception as e:
+            logger.error(f"Erro ao restaurar opções de exportação: {e}")
+            QMessageBox.critical(self.interface, self.loc.get_text("error"), f"{self.loc.get_text('error')}: {str(e)}")
+
     def _criar_submenu_idiomas(self, menu_opcoes):
-        submenu_idiomas = menu_opcoes.addMenu(self.loc.get_text("language"))
+        submenu_idiomas = MenuPersistente(self.loc.get_text("language"), self.interface)
+        menu_opcoes.addMenu(submenu_idiomas)
         grupo_idiomas = QActionGroup(self.interface)
 
         for codigo, nome in self.loc.get_idiomas_disponiveis().items():

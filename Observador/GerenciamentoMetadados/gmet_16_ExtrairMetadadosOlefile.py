@@ -19,8 +19,13 @@ def extrair_metadados_olefile(caminho, loc):
 
                     tamanho = os.path.getsize(caminho)
                     paginas_estimadas = max(1, tamanho // 20000)
-                    metadados['paginas'] = paginas_estimadas
-                    metadados['dimensoes'] = f"{paginas_estimadas} {loc.get_text('pages_estimated')}"
+                    palavras_estimadas = paginas_estimadas * 300
+                    linhas_estimadas = paginas_estimadas * 40
+                    
+                    metadados['paginas'] = str(paginas_estimadas)
+                    metadados['paginas_estimadas'] = str(paginas_estimadas)
+                    metadados['palavras'] = str(palavras_estimadas)
+                    metadados['linhas'] = str(linhas_estimadas)
 
         elif ext == '.ppt':
             import olefile
@@ -34,17 +39,22 @@ def extrair_metadados_olefile(caminho, loc):
                 tamanho = os.path.getsize(caminho)
                 slides_estimados = max(1, tamanho // 100000)
                 metadados['slides'] = slides_estimados
-                metadados['dimensoes'] = f"{slides_estimados} {loc.get_text('slides_estimated')}"
 
     except Exception as e:
         print(f"Erro ao extrair metadados sem Tika: {e}")
         tamanho = os.path.getsize(caminho)
         if ext == '.doc':
             paginas_estimadas = max(1, tamanho // 20000)
-            metadados['dimensoes'] = f"{paginas_estimadas} {loc.get_text('pages_estimated')}"
+            palavras_estimadas = paginas_estimadas * 300
+            linhas_estimadas = paginas_estimadas * 40
+            
+            metadados['paginas'] = str(paginas_estimadas)
+            metadados['paginas_estimadas'] = str(paginas_estimadas)
+            metadados['palavras'] = str(palavras_estimadas)
+            metadados['linhas'] = str(linhas_estimadas)
 
         elif ext == '.ppt':
             slides_estimados = max(1, tamanho // 100000)
-            metadados['dimensoes'] = f"{slides_estimados} {loc.get_text('slides_estimated')}"
+            metadados['slides'] = str(slides_estimados)
 
     return metadados

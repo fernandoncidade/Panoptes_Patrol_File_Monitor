@@ -21,7 +21,7 @@ from .gmet_22_GetAtributosArquivo import get_atributos_arquivo
 from .gmet_23_GetAutorArquivo import get_autor_arquivo
 from .gmet_27_GetProtecaoArquivo import get_protecao_arquivo
 
-def extrair_metadados_completos(item, loc):
+def extrair_metadados_completos(item, loc=None, contexto=None):
     try:
         caminho = item.get("dir_atual") or item.get("dir_anterior")
         if not caminho or not os.path.exists(caminho):
@@ -30,14 +30,17 @@ def extrair_metadados_completos(item, loc):
         stats = os.stat(caminho)
 
         metadados = {
-            "tamanho": get_tamanho_diretorio_arquivo(item),
+            "tamanho": get_tamanho_diretorio_arquivo(contexto, item, loc) if contexto and loc else str(stats.st_size),
             "data_acesso": datetime.fromtimestamp(stats.st_atime).strftime("%Y-%m-%d %H:%M:%S"),
             "data_modificacao": datetime.fromtimestamp(stats.st_mtime).strftime("%Y-%m-%d %H:%M:%S"),
             "data_criacao": datetime.fromtimestamp(stats.st_ctime).strftime("%Y-%m-%d %H:%M:%S"),
-            "atributos": get_atributos_arquivo(item),
-            "autor": get_autor_arquivo(item),
-            "protegido": get_protecao_arquivo(item)
+            "atributos": get_atributos_arquivo(item, loc) if loc else "",
+            "autor": get_autor_arquivo(item, loc) if loc else "",
+            "protegido": get_protecao_arquivo(item, loc) if loc else ""
         }
+
+        if loc is None:
+            return metadados
 
         tipo_arquivo = identificar_tipo_arquivo(caminho, loc)
 

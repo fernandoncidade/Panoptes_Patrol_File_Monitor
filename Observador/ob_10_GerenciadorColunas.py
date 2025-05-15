@@ -185,6 +185,111 @@ class GerenciadorColunas:
                 "visivel": False,
                 "ordem": 15,
                 "getter": lambda item: get_protecao_arquivo(self, item, self.loc)
+            },
+            "paginas": {
+                "translation_key": "pages",
+                "nome": self.loc.get_text("pages"),
+                "visivel": False,
+                "ordem": 16,
+                "getter": lambda item: item.get("paginas", "")
+            },
+            "linhas": {
+                "translation_key": "lines",
+                "nome": self.loc.get_text("lines"),
+                "visivel": False,
+                "ordem": 17,
+                "getter": lambda item: item.get("linhas", "")
+            },
+            "palavras": {
+                "translation_key": "words",
+                "nome": self.loc.get_text("words"),
+                "visivel": False,
+                "ordem": 18,
+                "getter": lambda item: item.get("palavras", "")
+            },
+            "paginas_estimadas": {
+                "translation_key": "pages_estimated",
+                "nome": self.loc.get_text("pages_estimated"),
+                "visivel": False,
+                "ordem": 19,
+                "getter": lambda item: item.get("paginas_estimadas", "")
+            },
+            "linhas_codigo": {
+                "translation_key": "lines_code",
+                "nome": self.loc.get_text("lines_code"),
+                "visivel": False,
+                "ordem": 20,
+                "getter": lambda item: item.get("linhas_codigo", "")
+            },
+            "total_linhas": {
+                "translation_key": "total_lines",
+                "nome": self.loc.get_text("total_lines"),
+                "visivel": False,
+                "ordem": 21,
+                "getter": lambda item: item.get("total_linhas", "")
+            },
+            "slides_estimados": {
+                "translation_key": "slides_estimated",
+                "nome": self.loc.get_text("slides_estimated"),
+                "visivel": False,
+                "ordem": 22,
+                "getter": lambda item: item.get("slides_estimados", "")
+            },
+            "arquivos": {
+                "translation_key": "files",
+                "nome": self.loc.get_text("files"),
+                "visivel": False,
+                "ordem": 23,
+                "getter": lambda item: item.get("arquivos", "")
+            },
+            "descompactados": {
+                "translation_key": "unzipped",
+                "nome": self.loc.get_text("unzipped"),
+                "visivel": False,
+                "ordem": 24,
+                "getter": lambda item: item.get("descompactados", "")
+            },
+            "slides": {
+                "translation_key": "slides",
+                "nome": self.loc.get_text("slides"),
+                "visivel": False,
+                "ordem": 25,
+                "getter": lambda item: item.get("slides", "")
+            },
+            "binario": {
+                "translation_key": "binary_file",
+                "nome": self.loc.get_text("binary_file"),
+                "visivel": False,
+                "ordem": 26,
+                "getter": lambda item: item.get("binario", "")
+            },
+            "planilhas": {
+                "translation_key": "spreadsheets",
+                "nome": self.loc.get_text("spreadsheets"),
+                "visivel": False,
+                "ordem": 27,
+                "getter": lambda item: item.get("planilhas", "")
+            },
+            "colunas": {
+                "translation_key": "columns",
+                "nome": self.loc.get_text("columns"),
+                "visivel": False,
+                "ordem": 28,
+                "getter": lambda item: item.get("colunas", "")
+            },
+            "registros": {
+                "translation_key": "records",
+                "nome": self.loc.get_text("records"),
+                "visivel": False,
+                "ordem": 29,
+                "getter": lambda item: item.get("registros", "")
+            },
+            "tabelas": {
+                "translation_key": "tables",
+                "nome": self.loc.get_text("tables"),
+                "visivel": False,
+                "ordem": 30,
+                "getter": lambda item: item.get("tabelas", "")
             }
         }
 
@@ -320,6 +425,15 @@ class GerenciadorColunas:
 
             with self.lock_cache:
                 if caminho in self.cache_metadados:
+                    for campo in [
+                        "paginas", "linhas", "palavras", "paginas_estimadas",
+                        "linhas_codigo", "total_linhas", "slides_estimados",
+                        "arquivos", "descompactados", "slides", "binario",
+                        "planilhas", "colunas", "registros", "tabelas"
+                    ]:
+                        if campo in self.cache_metadados[caminho]:
+                            item[campo] = self.cache_metadados[caminho][campo]
+
                     return self.cache_metadados[caminho]
 
             if os.path.exists(caminho):
@@ -393,11 +507,28 @@ class GerenciadorColunas:
                     metadados["autor"] = get_autor_arquivo(item, self.loc)
                     metadados["protegido"] = get_protecao_arquivo(self, item, self.loc)
 
+                    get_dimensoes_arquivo(self, item, self.loc)
+
+                    with self.lock_cache:
+                        if caminho in self.cache_metadados:
+                            for campo in [
+                                "paginas", "linhas", "palavras", "paginas_estimadas",
+                                "linhas_codigo", "total_linhas", "slides_estimados",
+                                "arquivos", "descompactados", "slides", "binario",
+                                "planilhas", "colunas", "registros", "tabelas"
+                            ]:
+                                if campo in self.cache_metadados[caminho]:
+                                    metadados[campo] = self.cache_metadados[caminho][campo]
+                                    item[campo] = self.cache_metadados[caminho][campo]
+
                 except Exception as e:
                     print(f"Erro ao extrair metadados específicos: {e}")
 
                 with self.lock_cache:
                     self.cache_metadados[caminho] = metadados
+
+                for campo, valor in metadados.items():
+                    item[campo] = valor
 
                 return metadados
 

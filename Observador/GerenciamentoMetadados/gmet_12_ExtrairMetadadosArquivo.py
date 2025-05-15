@@ -25,7 +25,6 @@ def extrair_metadados_arquivo(caminho, loc):
                     metadados['arquivos'] = qtd_arquivos
                     metadados['tamanho_descompactado'] = get_formata_tamanho(tamanho_total)
                     metadados['taxa_compressao'] = f"{taxa_compressao:.1f}%"
-                    metadados['dimensoes'] = f"{qtd_arquivos} {loc.get_text('files')}, {get_formata_tamanho(tamanho_total)} {loc.get_text('unzipped')}"
 
                     if arquivos:
                         arquivos_top = sorted([a for a in arquivos if '/' not in a])[:5]
@@ -56,7 +55,6 @@ def extrair_metadados_arquivo(caminho, loc):
                     metadados['arquivos'] = qtd_arquivos
                     metadados['tamanho_descompactado'] = get_formata_tamanho(tamanho_total)
                     metadados['taxa_compressao'] = f"{taxa_compressao:.1f}%"
-                    metadados['dimensoes'] = f"{qtd_arquivos} {loc.get_text('files')}, {get_formata_tamanho(tamanho_total)} {loc.get_text('unzipped')}"
 
                     if arquivos:
                         arquivos_top = sorted([a for a in arquivos if '/' not in a])[:5]
@@ -88,7 +86,6 @@ def extrair_metadados_arquivo(caminho, loc):
                     metadados['arquivos'] = qtd_arquivos
                     metadados['tamanho_descompactado'] = get_formata_tamanho(tamanho_total)
                     metadados['taxa_compressao'] = f"{taxa_compressao:.1f}%"
-                    metadados['dimensoes'] = f"{qtd_arquivos} {loc.get_text('files')}, {get_formata_tamanho(tamanho_total)} {loc.get_text('unzipped')}"
 
                     if arquivos:
                         arquivos_top = sorted([a for a in arquivos if '/' not in a])[:5]

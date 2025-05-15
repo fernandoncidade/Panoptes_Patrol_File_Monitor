@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ET
 import pandas as pd
 from PySide6.QtGui import Qt
 from PySide6.QtCore import QMetaObject
-from PySide6.QtWidgets import QFileDialog, QMessageBox
+from PySide6.QtWidgets import QFileDialog, QMessageBox, QApplication
 from Observador.ob_01_Observador import Observador
 
 
@@ -55,10 +55,66 @@ class GerenciadorBotoes:
             QMessageBox.warning(None, self.loc.get_text("warning"), self.loc.get_text("no_data"))
             return False
 
+        apenas_colunas_ativas = False
+        apenas_filtros_ativos = False
+        apenas_selecao = False
+
+        for widget in QApplication.topLevelWidgets():
+            if hasattr(widget, 'gerenciador_menus_ui'):
+                apenas_colunas_ativas = widget.gerenciador_menus_ui.acao_exportar_colunas_ativas.isChecked()
+                apenas_filtros_ativos = widget.gerenciador_menus_ui.acao_exportar_filtros_ativos.isChecked()
+                apenas_selecao = widget.gerenciador_menus_ui.acao_exportar_selecao.isChecked()
+                break
+
         dados = []
-        for row in range(tabela_dados.rowCount()):
-            linha = {}
+
+        linhas_para_exportar = []
+        if apenas_selecao:
+            selecao = tabela_dados.selectedIndexes()
+            linhas_selecionadas = set()
+            for indice in selecao:
+                linhas_selecionadas.add(indice.row())
+
+            linhas_para_exportar = sorted(list(linhas_selecionadas))
+
+            if not linhas_para_exportar:
+                QMessageBox.warning(None, self.loc.get_text("warning"), 
+                    self.loc.get_text("no_selection") if "no_selection" in self.loc.traducoes.get(self.loc.idioma_atual, {}) 
+                    else "Nenhuma célula selecionada para exportação.")
+
+                return False
+
+        elif apenas_filtros_ativos:
+            linhas_para_exportar = [row for row in range(tabela_dados.rowCount()) 
+                                  if not tabela_dados.isRowHidden(row)]
+
+        else:
+            linhas_para_exportar = list(range(tabela_dados.rowCount()))
+
+        colunas_para_exportar = []
+        gerenciador_colunas = None
+
+        for widget in QApplication.topLevelWidgets():
+            if hasattr(widget, 'gerenciador_colunas'):
+                gerenciador_colunas = widget.gerenciador_colunas
+                break
+
+        if apenas_colunas_ativas and gerenciador_colunas:
+            headers_visiveis = {coluna["nome"]: key for key, coluna in 
+                               gerenciador_colunas.COLUNAS_DISPONIVEIS.items() 
+                               if coluna["visivel"]}
+
             for col in range(tabela_dados.columnCount()):
+                header_item = tabela_dados.horizontalHeaderItem(col)
+                if header_item and header_item.text() in headers_visiveis:
+                    colunas_para_exportar.append(col)
+
+        else:
+            colunas_para_exportar = list(range(tabela_dados.columnCount()))
+
+        for row in linhas_para_exportar:
+            linha = {}
+            for col in colunas_para_exportar:
                 header = tabela_dados.horizontalHeaderItem(col).text()
                 item = tabela_dados.item(row, col)
                 linha[header] = item.text() if item else ""

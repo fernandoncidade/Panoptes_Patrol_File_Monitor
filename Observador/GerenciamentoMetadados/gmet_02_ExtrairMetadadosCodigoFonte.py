@@ -96,8 +96,7 @@ def extrair_metadados_codigo_fonte(caminho, loc):
             'data_criacao': datetime.fromtimestamp(stats.st_ctime).strftime("%Y-%m-%d %H:%M:%S"),
             'data_modificacao': datetime.fromtimestamp(stats.st_mtime).strftime("%Y-%m-%d %H:%M:%S"),
             'data_acesso': datetime.fromtimestamp(stats.st_atime).strftime("%Y-%m-%d %H:%M:%S"),
-            'estruturas': f"Classes: {estruturas['classes']}, Funções: {estruturas['funcoes']}, Imports: {estruturas['imports']}",
-            'dimensoes': f"{linhas_codigo} {loc.get_text("lines_code")}, {total_linhas} {loc.get_text("total_lines")}"
+            'estruturas': f"Classes: {estruturas['classes']}, Funções: {estruturas['funcoes']}, Imports: {estruturas['imports']}"
         })
 
         if autores:

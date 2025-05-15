@@ -96,7 +96,22 @@ class GerenciadorEventosUI:
                 "dimensoes": False,
                 "duracao": False,
                 "taxa_bits": False,
-                "protegido": False
+                "protegido": False,
+                "paginas": False,
+                "linhas": False,
+                "palavras": False,
+                "paginas_estimadas": False,
+                "linhas_codigo": False,
+                "total_linhas": False,
+                "slides_estimados": False,
+                "arquivos": False,
+                "descompactados": False,
+                "slides": False,
+                "binario": False,
+                "planilhas": False,
+                "colunas": False,
+                "registros": False,
+                "tabelas": False
             }
 
             for coluna, visivel in colunas_padrao.items():

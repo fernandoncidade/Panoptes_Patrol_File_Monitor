@@ -25,8 +25,6 @@ def extrair_metadados_planilha(caminho, loc):
                             if sheet.max_column > colunas_total:
                                 colunas_total = sheet.max_column
 
-                    metadados['dimensoes'] = f"{planilhas} {loc.get_text("spreadsheets")}, ~{linhas_total} {loc.get_text("lines")}, {colunas_total} {loc.get_text("columns")}"
-
                     is_protected = False
                     for sheet_name in wb.sheetnames:
                         sheet = wb[sheet_name]
@@ -68,7 +66,8 @@ def extrair_metadados_planilha(caminho, loc):
                         if sheet.ncols > colunas_total:
                             colunas_total = sheet.ncols
 
-                    metadados['dimensoes'] = f"{planilhas} {loc.get_text("spreadsheets")}, ~{linhas_total} {loc.get_text("lines")}, {colunas_total} {loc.get_text("columns")}"
+                    metadados['total_linhas'] = str(linhas_total)
+                    metadados['colunas'] = str(colunas_total)
 
                     if hasattr(wb, 'protection_mode') and wb.protection_mode:
                         metadados['protegido'] = loc.get_text("yes")
@@ -94,9 +93,13 @@ def extrair_metadados_planilha(caminho, loc):
                     for _ in reader:
                         linhas += 1
 
-                metadados['linhas'] = linhas
+                metadados['planilhas'] = 1
+                nome_arquivo = os.path.basename(caminho)
+                nome_sem_ext = os.path.splitext(nome_arquivo)[0]
+                metadados['nomes_planilhas'] = nome_sem_ext
+
+                metadados['total_linhas'] = linhas
                 metadados['colunas'] = colunas
-                metadados['dimensoes'] = f"{linhas} {loc.get_text("lines")}, {colunas} {loc.get_text("columns")}"
 
             except Exception as e:
                 print(f"Erro ao extrair metadados do CSV {caminho}: {e}")

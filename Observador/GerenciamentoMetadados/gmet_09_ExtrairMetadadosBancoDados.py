@@ -33,7 +33,8 @@ def extrair_metadados_banco_dados(caminho, loc):
                             pass
 
                 metadados['linhas_estimadas'] = total_linhas
-                metadados['dimensoes'] = f"{num_tabelas} {loc.get_text("tables")}, ~{total_linhas} {loc.get_text("lines")}"
+                metadados['registros'] = str(total_linhas)  
+                metadados['linhas'] = str(total_linhas)
 
                 conexao.close()
 
@@ -53,7 +54,6 @@ def extrair_metadados_banco_dados(caminho, loc):
 
                 metadados['tabelas'] = len(tabelas)
                 metadados['nomes_tabelas'] = ", ".join(tabelas[:10])
-                metadados['dimensoes'] = f"{len(tabelas)} {loc.get_text("tables")}"
 
                 conn.close()
 

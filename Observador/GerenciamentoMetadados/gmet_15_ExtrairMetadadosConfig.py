@@ -119,7 +119,6 @@ def extrair_metadados_config(caminho, loc):
                     props += 1
 
             metadados['propriedades'] = props
-            metadados['dimensoes'] = f"{props} {loc.get_text("settings")}, {len(linhas_nao_vazias)} {loc.get_text("lines")}"
 
     except Exception as e:
         print(f"Erro ao extrair metadados da configuração {caminho}: {e}")

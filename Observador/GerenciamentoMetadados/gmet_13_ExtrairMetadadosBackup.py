@@ -79,23 +79,21 @@ def extrair_metadados_backup(caminho, loc):
         try:
             if eh_arquivo_texto(caminho):
                 num_linhas = contar_linhas(caminho)
-                metadados['dimensoes'] = f"{num_linhas} {loc.get_text('lines')}"
+                metadados['linhas'] = str(num_linhas)
 
             else:
                 tamanho = os.path.getsize(caminho)
-                metadados['dimensoes_tipo'] = 'binary_file'
-                metadados['dimensoes_valor'] = formata_tamanho(tamanho)
-                metadados['dimensoes'] = f"{loc.get_text('binary_file')}: {formata_tamanho(tamanho)}"
+                metadados['binario'] = formata_tamanho(tamanho)
 
         except Exception as e:
             print(f"Erro ao contar linhas do arquivo de backup {caminho}: {e}")
 
             try:
                 tamanho = os.path.getsize(caminho)
-                metadados['dimensoes'] = f"{loc.get_text('size')}: {formata_tamanho(tamanho)}"
+                metadados['tamanho'] = formata_tamanho(tamanho)
 
             except:
-                metadados['dimensoes'] = "Dimensões não disponíveis"
+                pass
 
     except Exception as e:
         print(f"Erro ao extrair metadados do backup {caminho}: {e}")
