@@ -68,29 +68,6 @@ class GerenciadorBotoes:
 
         dados = []
 
-        linhas_para_exportar = []
-        if apenas_selecao:
-            selecao = tabela_dados.selectedIndexes()
-            linhas_selecionadas = set()
-            for indice in selecao:
-                linhas_selecionadas.add(indice.row())
-
-            linhas_para_exportar = sorted(list(linhas_selecionadas))
-
-            if not linhas_para_exportar:
-                QMessageBox.warning(None, self.loc.get_text("warning"), 
-                    self.loc.get_text("no_selection") if "no_selection" in self.loc.traducoes.get(self.loc.idioma_atual, {}) 
-                    else "Nenhuma célula selecionada para exportação.")
-
-                return False
-
-        elif apenas_filtros_ativos:
-            linhas_para_exportar = [row for row in range(tabela_dados.rowCount()) 
-                                  if not tabela_dados.isRowHidden(row)]
-
-        else:
-            linhas_para_exportar = list(range(tabela_dados.rowCount()))
-
         colunas_para_exportar = []
         gerenciador_colunas = None
 
@@ -101,8 +78,8 @@ class GerenciadorBotoes:
 
         if apenas_colunas_ativas and gerenciador_colunas:
             headers_visiveis = {coluna["nome"]: key for key, coluna in 
-                               gerenciador_colunas.COLUNAS_DISPONIVEIS.items() 
-                               if coluna["visivel"]}
+                              gerenciador_colunas.COLUNAS_DISPONIVEIS.items() 
+                              if coluna["visivel"]}
 
             for col in range(tabela_dados.columnCount()):
                 header_item = tabela_dados.horizontalHeaderItem(col)
@@ -112,14 +89,61 @@ class GerenciadorBotoes:
         else:
             colunas_para_exportar = list(range(tabela_dados.columnCount()))
 
-        for row in linhas_para_exportar:
-            linha = {}
-            for col in colunas_para_exportar:
-                header = tabela_dados.horizontalHeaderItem(col).text()
-                item = tabela_dados.item(row, col)
-                linha[header] = item.text() if item else ""
+        if apenas_selecao:
+            selecao = tabela_dados.selectedIndexes()
 
-            dados.append(linha)
+            if not selecao:
+                QMessageBox.warning(None, self.loc.get_text("warning"), 
+                    self.loc.get_text("no_selection") if "no_selection" in self.loc.traducoes.get(self.loc.idioma_atual, {}) 
+                    else "Nenhuma célula selecionada para exportação.")
+
+                return False
+
+            selecao_mapa = {}
+            for indice in selecao:
+                row = indice.row()
+                col = indice.column()
+
+                if apenas_colunas_ativas and col not in colunas_para_exportar:
+                    continue
+
+                if row not in selecao_mapa:
+                    selecao_mapa[row] = set()
+
+                selecao_mapa[row].add(col)
+
+            for row, cols in sorted(selecao_mapa.items()):
+                if apenas_filtros_ativos and tabela_dados.isRowHidden(row):
+                    continue
+
+                linha = {}
+                for col in range(tabela_dados.columnCount()):
+                    header_item = tabela_dados.horizontalHeaderItem(col)
+                    if header_item and col in cols:
+                        header = header_item.text()
+                        item = tabela_dados.item(row, col)
+                        linha[header] = item.text() if item else ""
+
+                if linha:
+                    dados.append(linha)
+
+        else:
+            linhas_para_exportar = []
+            if apenas_filtros_ativos:
+                linhas_para_exportar = [row for row in range(tabela_dados.rowCount()) 
+                                      if not tabela_dados.isRowHidden(row)]
+
+            else:
+                linhas_para_exportar = list(range(tabela_dados.rowCount()))
+
+            for row in linhas_para_exportar:
+                linha = {}
+                for col in colunas_para_exportar:
+                    header = tabela_dados.horizontalHeaderItem(col).text()
+                    item = tabela_dados.item(row, col)
+                    linha[header] = item.text() if item else ""
+
+                dados.append(linha)
 
         df = pd.DataFrame(dados)
 
