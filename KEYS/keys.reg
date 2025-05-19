@@ -3,7 +3,7 @@ Windows Registry Editor Version 5.00
 ; Registro do aplicativo
 [HKEY_LOCAL_MACHINE\SOFTWARE\Panoptes Patrol]
 "InstallPath"="C:\\Program Files\\Panoptes Patrol"
-"Version"="0.0.1"
+"Version"="0.0.3"
 
 ; Menu de contexto para pastas
 [HKEY_CLASSES_ROOT\Directory\shell\Panoptes Patrol]
@@ -27,5 +27,5 @@ Windows Registry Editor Version 5.00
 "UninstallString"="C:\\Program Files\\Panoptes Patrol\\uninstall.exe"
 "DisplayIcon"="C:\\Program Files\\Panoptes Patrol\\_internal\\icones\\manager_files1.ico"
 "Publisher"="fernandoncidade"
-"DisplayVersion"="0.0.1"
+"DisplayVersion"="0.0.3"
 "EstimatedSize"=dword:23904256

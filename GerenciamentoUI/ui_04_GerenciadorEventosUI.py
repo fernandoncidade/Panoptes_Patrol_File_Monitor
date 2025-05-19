@@ -41,18 +41,21 @@ class GerenciadorEventosUI:
                                 painel_filtro.checkboxes_operacao[filtro].blockSignals(False)
                                 painel_filtro.administrador_filtros.aplicar_filtros()
 
+                chave_para_operacao = {
+                    "op_moved": self.loc.get_text("op_moved"),
+                    "op_renamed": self.loc.get_text("op_renamed"),
+                    "op_added": self.loc.get_text("op_added"),
+                    "op_deleted": self.loc.get_text("op_deleted"),
+                    "op_modified": self.loc.get_text("op_modified"),
+                    "op_scanned": self.loc.get_text("op_scanned")
+                }
+
                 for row in range(self.interface.tabela_dados.rowCount()):
                     tipo_op_cell = self.interface.tabela_dados.item(row, 0)
                     if tipo_op_cell:
-                        tipo_op = tipo_op_cell.text()
-                        chave_op = None
+                        tipo_op_texto = tipo_op_cell.text()
 
-                        for chave, texto in self.interface.tipos_operacao.items():
-                            if texto == tipo_op:
-                                chave_op = chave
-                                break
-
-                        if chave_op == filtro:
+                        if tipo_op_texto == chave_para_operacao.get(filtro):
                             self.interface.tabela_dados.setRowHidden(row, not esta_marcado)
 
                 self.interface.atualizar_status()
@@ -155,7 +158,7 @@ class GerenciadorEventosUI:
 
                         if hasattr(self.interface, 'gerenciador_tabela') and hasattr(self.interface, 'tabela_dados'):
                             self.interface.gerenciador_tabela.atualizar_dados_tabela(self.interface.tabela_dados)
-                        
+
                         from PySide6.QtWidgets import QApplication, QDialog
                         for widget in QApplication.topLevelWidgets():
                             if isinstance(widget, QDialog) and widget.windowTitle() == self.loc.get_text("statistics"):

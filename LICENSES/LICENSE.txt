@@ -1,5 +1,5 @@
 LICENÇA DE SOFTWARE PROPRIETÁRIO - Panoptes Patrol
-Versão 0.0.1, Abril de 2025
+Versão 0.0.3, Abril de 2025
 
 Copyright (c) 2025 Fernando Nillsson Cidade. Todos os direitos reservados.
 
@@ -68,7 +68,7 @@ nem use o Software.
 
 
 CONTRATO DE LICENCIAMENTO ASSOCIADO - PANOPTES PATROL
-Versão 0.0.1, Abril de 2025
+Versão 0.0.3, Abril de 2025
 
 Este Contrato de Licenciamento ("Contrato") é celebrado entre:
 
