@@ -11,38 +11,25 @@ class MovimentacaoWorker(QObject):
         self.interface = interface
         self.evento_base = interface.evento_base
         self.mutex = threading.Lock()
-        self.processando = False
-        self.eventos_pendentes = []
 
     def adicionar_evento(self, evento):
         with self.mutex:
-            self.eventos_pendentes.append(evento)
+            threading.Thread(target=self._processar_evento_individual, args=(evento,), daemon=True).start()
 
-    def processar_eventos(self):
-        if self.processando:
-            return
-
-        with self.mutex:
-            if not self.eventos_pendentes:
-                return
-
-            eventos = self.eventos_pendentes.copy()
-            self.eventos_pendentes = []
-            self.processando = True
-
-        threading.Thread(target=self._processar_lote, args=(eventos,), daemon=True).start()
-
-    def _processar_lote(self, eventos):
+    def _processar_evento_individual(self, evento):
         try:
-            if eventos:
-                self.atualizacao_progresso.emit(0, len(eventos))
-                def after_process():
-                    self.processamento_concluido.emit()
-                    if hasattr(self.interface, 'gerenciador_tabela'):
-                        self.interface.gerenciador_tabela.atualizacao_pendente = True
+            self.atualizacao_progresso.emit(0, 1)
+            self.evento_base.processar_eventos_movimentacao([evento], self._concluir_processamento)
+            self.atualizacao_progresso.emit(1, 1)
 
-                self.evento_base.processar_eventos_movimentacao(eventos, after_process)
+        except Exception as e:
+            print(f"Erro ao processar evento individual: {e}")
+            import traceback
+            traceback.print_exc()
 
-        finally:
-            with self.mutex:
-                self.processando = False
+            self._concluir_processamento()
+
+    def _concluir_processamento(self):
+        self.processamento_concluido.emit()
+        if hasattr(self.interface, 'gerenciador_tabela'):
+            self.interface.gerenciador_tabela.atualizacao_pendente = True

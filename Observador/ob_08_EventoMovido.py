@@ -33,10 +33,10 @@ def verificar_movimentacao(interfaceMonitor, evento):
         with QMutexLocker(interfaceMonitor.mutex):
             if evento["tipo_operacao"] == interfaceMonitor.loc.get_text("op_deleted"):
                 evento["exclusao_id"] = str(time.time())
-                if evento["nome"] not in interfaceMonitor.excluidos_recentemente:
-                    interfaceMonitor.excluidos_recentemente[evento["nome"]] = []
-
-                interfaceMonitor.excluidos_recentemente[evento["nome"]].append((time.time(), evento.get("dir_anterior", ""), evento))
+                interfaceMonitor.excluidos_recentemente.setdefault(evento["nome"], []).append(
+                    (time.time(), evento.get("dir_anterior", ""), evento)
+                )
+                evento["_temporario"] = True
                 return None
 
             elif evento["tipo_operacao"] == interfaceMonitor.loc.get_text("op_added"):
@@ -48,12 +48,16 @@ def verificar_movimentacao(interfaceMonitor, evento):
                         excl_time, excl_dir, evento_exclusao = exclusao
                         if time.time() - excl_time < 3:
                             if excl_dir != evento["dir_atual"]:
+                                lista_exclusoes.remove(exclusao)
+                                if not lista_exclusoes:
+                                    del interfaceMonitor.excluidos_recentemente[evento["nome"]]
+
+                                exclusao_id = evento_exclusao.get("exclusao_id")
+                                _remover_exclusao(interfaceMonitor, evento["nome"], excl_dir, exclusao_id)
+
                                 evento["tipo_operacao"] = interfaceMonitor.loc.get_text("op_moved")
                                 evento["dir_anterior"] = excl_dir
-                                exclusao_id = evento_exclusao.get("exclusao_id")
-                                QTimer.singleShot(0, lambda: _remover_exclusao(interfaceMonitor, evento["nome"], excl_dir, exclusao_id))
-                                lista_exclusoes.remove(exclusao)
-                                break
+                                return evento
 
                     if not lista_exclusoes:
                         del interfaceMonitor.excluidos_recentemente[evento["nome"]]
@@ -213,6 +217,7 @@ def _processar_exclusoes_pendentes(interfaceMonitor):
                     timestamp, dir_anterior, evento = registro
                     if tempo_atual - timestamp > 3:
                         novo_evento = evento.copy()
+                        novo_evento.pop("_temporario", None)
                         novo_evento["id_exclusao_unico"] = f"{nome}_{timestamp}_{id(registro)}"
                         eventos_para_processar.append(novo_evento)
                         eventos_a_remover.append(registro)
@@ -310,83 +315,36 @@ def adicionar_evento(interfaceMonitor, evento):
 class EventoBuffer:
     def __init__(self, interface_monitor):
         self.interface = interface_monitor
-        self.eventos = []
-        self.eventos_movidos = []
+        self.lock = QMutex()
         self.ultimo_update = 0
         self.timer = QTimer()
-        self.timer.timeout.connect(self.processar_lote)
-        self.timer.start(150)
-        self.max_eventos_lote = 40
-        self.lock = QMutex()
-        self.atualizacoes_pendentes = 0
+        self.timer.timeout.connect(self.atualizar_interface)
+        self.timer.start(500)
 
     def adicionar_evento(self, evento):
         with QMutexLocker(self.lock):
-            if evento.get("tipo_operacao") == self.interface.loc.get_text("op_moved"):
-                self.eventos_movidos.append(evento)
-                if len(self.eventos_movidos) > 5:
-                    self.timer.start(10)
+            self._processar_evento_imediato(evento)
 
-            else:
-                self.eventos.append(evento)
-
-            total_eventos = len(self.eventos) + len(self.eventos_movidos)
-            if total_eventos >= self.max_eventos_lote:
-                self.timer.start(5)
-
-    def processar_lote(self):
-        eventos_para_processar = []
-        with QMutexLocker(self.lock):
-            if self.eventos_movidos:
-                eventos_para_processar = self.eventos_movidos[:min(30, len(self.eventos_movidos))]
-                self.eventos_movidos = self.eventos_movidos[len(eventos_para_processar):]
-
-            elif self.eventos:
-                eventos_para_processar = self.eventos[:min(self.max_eventos_lote, len(self.eventos))]
-                self.eventos = self.eventos[len(eventos_para_processar):]
-
-            total_restante = len(self.eventos) + len(self.eventos_movidos)
-            if total_restante == 0:
-                self.timer.setInterval(150)
-
-            elif total_restante < 10:
-                self.timer.setInterval(50)
-
-            else:
-                self.timer.setInterval(10)
-
-            self.atualizacoes_pendentes += len(eventos_para_processar)
-
-        if not eventos_para_processar:
-            if self.atualizacoes_pendentes > 0:
-                self.interface.tabela_dados.viewport().update()
-                _atualizar_contador_eventos(self.interface)
-                self.interface.atualizar_status()
-                self.atualizacoes_pendentes = 0
-
-                if hasattr(self.interface, 'gerenciador_tabela'):
-                    self.interface.gerenciador_tabela.atualizacao_pendente = True
-                    
-            return
-
+    def _processar_evento_imediato(self, evento):
         ordenacao_habilitada = self.interface.tabela_dados.isSortingEnabled()
         self.interface.tabela_dados.setSortingEnabled(False)
-        self.interface.tabela_dados.setUpdatesEnabled(False)
 
         try:
-            for evento in eventos_para_processar:
-                _adicionar_item_tabela(self.interface, evento, atualizar_interface=False)
+            _adicionar_item_tabela(self.interface, evento, atualizar_interface=False)
 
-            if self.atualizacoes_pendentes >= 30 or (total_restante == 0 and self.atualizacoes_pendentes > 0):
-                _atualizar_contador_eventos(self.interface)
-                self.interface.atualizar_status()
-                self.atualizacoes_pendentes = 0
-
-                if hasattr(self.interface, 'gerenciador_tabela'):
-                    self.interface.gerenciador_tabela.atualizacao_pendente = True
+            if evento.get("tipo_operacao") == self.interface.loc.get_text("op_moved") and hasattr(self.interface, 'movimentacao_worker'):
+                self.interface.movimentacao_worker.adicionar_evento(evento)
 
         finally:
-            self.interface.tabela_dados.setUpdatesEnabled(True)
             self.interface.tabela_dados.setSortingEnabled(ordenacao_habilitada)
             self.interface.tabela_dados.viewport().update()
             QApplication.processEvents()
+
+    def atualizar_interface(self):
+        _atualizar_contador_eventos(self.interface)
+        self.interface.atualizar_status()
+
+        if hasattr(self.interface, 'gerenciador_tabela'):
+            self.interface.gerenciador_tabela.atualizacao_pendente = True
+
+        self.interface.tabela_dados.viewport().update()
