@@ -1,7 +1,7 @@
 import sys
 import logging
 from PySide6.QtWidgets import QApplication
-from InterfaceMonitor import InterfaceMonitor, Internacionalizador
+from InterfaceCore.ic_01_InterfaceMonitor import InterfaceMonitor, Internacionalizador
 from GerenciamentoUI.ui_12_Localizador import Localizador
 
 logger = logging.getLogger('FileManager')

@@ -2,7 +2,7 @@ import logging
 from PySide6.QtCore import Slot
 from PySide6.QtWidgets import QMainWindow, QApplication
 
-from InterfaceCore.ic_01_Inicializador import Inicializador
+from .ic_02_Inicializador import Inicializador
 log_file = Inicializador.configurar_logging()
 logger = logging.getLogger('FileManager')
 
@@ -15,11 +15,11 @@ from GerenciamentoUI.ui_09_GerenciadorMonitoramento import GerenciadorMonitorame
 from GerenciamentoUI.ui_10_GerenciadorLimpeza import GerenciadorLimpeza
 from GerenciamentoUI.ui_12_Localizador import Localizador
 
-from InterfaceCore.ic_02_Configurador import Configurador
-from InterfaceCore.ic_03_Atualizador import Atualizador
-from InterfaceCore.ic_04_GerenciadorProgresso import GerenciadorProgresso
-from InterfaceCore.ic_06_ManipuladorTabela import ManipuladorTabela
-from InterfaceCore.ic_07_Internacionalizador import Internacionalizador
+from .ic_03_Configurador import Configurador
+from .ic_04_Atualizador import Atualizador
+from .ic_05_GerenciadorProgresso import GerenciadorProgresso
+from .ic_07_ManipuladorTabela import ManipuladorTabela
+from .ic_08_Internacionalizador import Internacionalizador
 
 
 class InterfaceMonitor(QMainWindow):

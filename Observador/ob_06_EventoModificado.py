@@ -83,6 +83,29 @@ class EventoModificado(BaseEvento):
         if caminho_completo in self.arquivos_em_processamento:
             return False
 
+        if nome_arquivo in self.observador.arquivos_recem_renomeados:
+            tempo_renomeacao = self.observador.arquivos_recem_renomeados[nome_arquivo]
+
+            try:
+                tamanho = os.path.getsize(caminho_completo)
+                ext = os.path.splitext(nome_arquivo)[1].lower()
+
+                if ext in ['.mp4', '.mov', '.avi', '.mkv', '.wmv', '.flv', '.webm', '.mts', '.m2ts', '.mpeg', '.m4v']:
+                    tempo_espera = min(60, max(5.0, tamanho / (20 * 1024 * 1024)))
+
+                else:
+                    tempo_espera = self.tempo_espera_grande_arquivo
+
+                if (tempo_atual - tempo_renomeacao) < tempo_espera:
+                    return False
+
+                else:
+                    del self.observador.arquivos_recem_renomeados[nome_arquivo]
+
+            except Exception as e:
+                print(f"Erro ao processar arquivo renomeado: {e}")
+                del self.observador.arquivos_recem_renomeados[nome_arquivo]
+
         try:
             tamanho = os.path.getsize(caminho_completo)
             ext = os.path.splitext(nome_arquivo)[1].lower()

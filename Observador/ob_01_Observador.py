@@ -30,6 +30,7 @@ class Observador:
         self.eventos_ignorados = set()
         self.arquivos_recem_adicionados = {}
         self.arquivos_recem_excluidos = {}
+        self.arquivos_recem_renomeados = {}
         self.ultima_modificacao = {}
         self._lock = threading.Lock()
         self.loc = Localizador()
