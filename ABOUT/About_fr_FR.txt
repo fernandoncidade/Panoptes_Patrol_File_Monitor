@@ -1,7 +1,7 @@
 Français:
 
 Projet: PANOPTES PATROL
-Version: 0.0.6
+Version: 0.0.7
 Auteurs: Fernando Nillsson Cidade
 
 Description:

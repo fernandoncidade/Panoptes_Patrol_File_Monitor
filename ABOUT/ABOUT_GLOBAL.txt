@@ -1,7 +1,7 @@
 Português Brasileiro:
 
 Projeto: PANOPTES PATROL
-Versão: 0.0.6
+Versão: 0.0.7
 Autores: Fernando Nillsson Cidade
 
 Descrição:
@@ -128,7 +128,7 @@ Autores:
 English:
 
 Project: PANOPTES PATROL
-Version: 0.0.6
+Version: 0.0.7
 Authors: Fernando Nillsson Cidade
 
 Description:
@@ -255,7 +255,7 @@ Authors:
 Español:
 
 Proyecto: PANOPTES PATROL
-Versión: 0.0.6
+Versión: 0.0.7
 Autores: Fernando Nillsson Cidade
 
 Descripción:
@@ -382,7 +382,7 @@ Autores:
 Français:
 
 Projet: PANOPTES PATROL
-Version: 0.0.6
+Version: 0.0.7
 Auteurs: Fernando Nillsson Cidade
 
 Description:
@@ -509,7 +509,7 @@ Auteurs:
 Italiano:
 
 Progetto: PANOPTES PATROL
-Versione: 0.0.6
+Versione: 0.0.7
 Autori: Fernando Nillsson Cidade
 
 Descrizione:
@@ -636,7 +636,7 @@ Autori:
 Deutsch:
 
 Projekt: PANOPTES PATROL
-Version: 0.0.6
+Version: 0.0.7
 Autoren: Fernando Nillsson Cidade
 
 Beschreibung:

@@ -1,8 +1,8 @@
-# POLITICA SULLA PRIVACY DI PANOPTES PATROL (versione 0.0.6)
+# POLITICA SULLA PRIVACY DI PANOPTES PATROL (versione 0.0.7)
 
 ## 1. Introduzione
 
-Questa Politica sulla Privacy spiega come PANOPTES PATROL (versione 0.0.6) raccoglie, utilizza, conserva e protegge le informazioni ottenute durante l'uso del software. Utilizzando questo software, accetti le pratiche descritte in questo documento.
+Questa Politica sulla Privacy spiega come PANOPTES PATROL (versione 0.0.7) raccoglie, utilizza, conserva e protegge le informazioni ottenute durante l'uso del software. Utilizzando questo software, accetti le pratiche descritte in questo documento.
 
 ## 2. Raccolta di Informazioni
 
@@ -107,4 +107,4 @@ E-mail: fernando.n.cidade@outlook.com
 
 ---
 
-*PANOPTES PATROL versione 0.0.6*
+*PANOPTES PATROL versione 0.0.7*

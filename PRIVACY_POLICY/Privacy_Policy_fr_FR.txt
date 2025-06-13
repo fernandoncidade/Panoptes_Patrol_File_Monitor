@@ -1,8 +1,8 @@
-# POLITIQUE DE CONFIDENTIALITÉ DE PANOPTES PATROL (version 0.0.6)
+# POLITIQUE DE CONFIDENTIALITÉ DE PANOPTES PATROL (version 0.0.7)
 
 ## 1. Introduction
 
-Cette Politique de Confidentialité explique comment PANOPTES PATROL (version 0.0.6) collecte, utilise, stocke et protège les informations obtenues lors de l'utilisation du logiciel. En utilisant ce logiciel, vous acceptez les pratiques décrites dans ce document.
+Cette Politique de Confidentialité explique comment PANOPTES PATROL (version 0.0.7) collecte, utilise, stocke et protège les informations obtenues lors de l'utilisation du logiciel. En utilisant ce logiciel, vous acceptez les pratiques décrites dans ce document.
 
 ## 2. Collecte d'Informations
 
@@ -107,4 +107,4 @@ E-mail : fernando.n.cidade@outlook.com
 
 ---
 
-*PANOPTES PATROL version 0.0.6*
+*PANOPTES PATROL version 0.0.7*

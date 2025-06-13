@@ -1,8 +1,8 @@
-# DATENSCHUTZRICHTLINIE VON PANOPTES PATROL (Version 0.0.6)
+# DATENSCHUTZRICHTLINIE VON PANOPTES PATROL (Version 0.0.7)
 
 ## 1. Einleitung
 
-Diese Datenschutzrichtlinie erläutert, wie PANOPTES PATROL (Version 0.0.6) Informationen während der Nutzung der Software sammelt, verwendet, speichert und schützt. Durch die Nutzung dieser Software stimmen Sie den in diesem Dokument beschriebenen Praktiken zu.
+Diese Datenschutzrichtlinie erläutert, wie PANOPTES PATROL (Version 0.0.7) Informationen während der Nutzung der Software sammelt, verwendet, speichert und schützt. Durch die Nutzung dieser Software stimmen Sie den in diesem Dokument beschriebenen Praktiken zu.
 
 ## 2. Informationserfassung
 
@@ -107,4 +107,4 @@ E-Mail: fernando.n.cidade@outlook.com
 
 ---
 
-*PANOPTES PATROL Version 0.0.6*
+*PANOPTES PATROL Version 0.0.7*

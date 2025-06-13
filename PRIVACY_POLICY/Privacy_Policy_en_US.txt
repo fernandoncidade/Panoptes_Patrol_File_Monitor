@@ -1,8 +1,8 @@
-# PANOPTES PATROL Privacy Policy (version 0.0.6)
+# PANOPTES PATROL Privacy Policy (version 0.0.7)
 
 ## 1. Introduction
 
-This Privacy Policy explains how PANOPTES PATROL (version 0.0.6) collects, uses, stores, and protects information obtained during the use of the software. By using this software, you agree to the practices described in this document.
+This Privacy Policy explains how PANOPTES PATROL (version 0.0.7) collects, uses, stores, and protects information obtained during the use of the software. By using this software, you agree to the practices described in this document.
 
 ## 2. Information Collection
 
@@ -107,4 +107,4 @@ E-mail: fernando.n.cidade@outlook.com
 
 ---
 
-*PANOPTES PATROL version 0.0.6*
+*PANOPTES PATROL version 0.0.7*

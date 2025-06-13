@@ -519,7 +519,7 @@ class GerenciadorMenusUI:
                 titulo=f"{self.loc.get_text('about')} - PANOPTES PATROL",
                 cabecalho=(
                     "<h3>PANOPTES PATROL</h3>"
-                    f"<p><b>{self.loc.get_text('version')}:</b> 0.0.6</p>"
+                    f"<p><b>{self.loc.get_text('version')}:</b> 0.0.7</p>"
                     f"<p><b>{self.loc.get_text('authors')}:</b> Fernando Nillsson Cidade</p>"
                     f"<p><b>{self.loc.get_text('description')}:</b> {self.loc.get_text('description_text')}</p>"
                 ),
