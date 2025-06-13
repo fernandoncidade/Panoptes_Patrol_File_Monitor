@@ -1,7 +1,7 @@
 # **Português Brasileiro:**
 
 Projeto: PANOPTES PATROL
-Versão: 0.0.1
+Versão: 0.0.7
 Autores: Fernando Nillsson Cidade
 
 Descrição:
@@ -128,7 +128,7 @@ Autores:
 # **English:**
 
 Project: PANOPTES PATROL
-Version: 0.0.1
+Version: 0.0.7
 Authors: Fernando Nillsson Cidade
 
 Description:
