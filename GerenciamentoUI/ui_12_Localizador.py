@@ -7,18 +7,20 @@ from PySide6.QtCore import QObject, Signal
 def obter_caminho_persistente():
     if getattr(sys, 'frozen', False):
         base_path = os.path.dirname(sys.executable)
-        config_dir = os.path.join(base_path, "config")
-        if not os.path.exists(config_dir):
-            try:
-                os.makedirs(config_dir)
-
-            except Exception as e:
-                print(f"Erro ao criar diretório de configuração: {e}")
-
-        return config_dir
 
     else:
-        return os.path.dirname(__file__)
+        base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+    config_dir = os.path.join(base_path, "config")
+
+    if not os.path.exists(config_dir):
+        try:
+            os.makedirs(config_dir)
+
+        except Exception as e:
+            print(f"Erro ao criar diretório de configuração: {e}")
+
+    return config_dir
 
 from GerenciamentoUI.Localizacoes import todas_traducoes
 from GerenciamentoUI.Localizacoes.tr_07_TradutorMetadados import traduzir_tipo_operacao, traduzir_metadados
