@@ -626,6 +626,7 @@ class SobreDialog(QDialog):
         self.showing_details = False
         self.showing_licenses = False
         self.showing_notices = False
+        self.showing_privacy_policy = False
 
         self.setMinimumSize(500, 300)
 
@@ -637,6 +638,10 @@ class SobreDialog(QDialog):
         if self.showing_notices:
             self.showing_notices = False
             self.notices_button.setText(self.show_notices_text)
+
+        if hasattr(self, 'showing_privacy_policy') and self.showing_privacy_policy:
+            self.showing_privacy_policy = False
+            self.privacy_policy_button.setText(self.show_privacy_policy_text)
 
         self.showing_details = not self.showing_details
         self.details_edit.setVisible(self.showing_details)
@@ -658,6 +663,10 @@ class SobreDialog(QDialog):
         if self.showing_notices:
             self.showing_notices = False
             self.notices_button.setText(self.show_notices_text)
+
+        if hasattr(self, 'showing_privacy_policy') and self.showing_privacy_policy:
+            self.showing_privacy_policy = False
+            self.privacy_policy_button.setText(self.show_privacy_policy_text)
 
         self.showing_licenses = not self.showing_licenses
         self.details_edit.setVisible(self.showing_licenses)
@@ -690,6 +699,10 @@ class SobreDialog(QDialog):
         if self.showing_licenses:
             self.showing_licenses = False
             self.licenses_button.setText(self.show_licenses_text)
+
+        if hasattr(self, 'showing_privacy_policy') and self.showing_privacy_policy:
+            self.showing_privacy_policy = False
+            self.privacy_policy_button.setText(self.show_privacy_policy_text)
 
         self.showing_notices = not self.showing_notices
         self.details_edit.setVisible(self.showing_notices)
