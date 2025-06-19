@@ -1,11 +1,11 @@
 import os
 import gc
-import logging
+from utils.LogManager import LogManager
 import sqlite3
 from PySide6.QtCore import QMutexLocker
 from PySide6.QtWidgets import QApplication
 
-logger = logging.getLogger('FileManager')
+logger = LogManager.get_logger()
 
 
 class GerenciadorMonitoramento:

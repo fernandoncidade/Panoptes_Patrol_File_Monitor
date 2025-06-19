@@ -1,10 +1,10 @@
 import sys
-import logging
 from PySide6.QtWidgets import QApplication
 from InterfaceCore.ic_01_InterfaceMonitor import InterfaceMonitor, Internacionalizador
 from GerenciamentoUI.ui_12_Localizador import Localizador
+from utils.LogManager import LogManager
 
-logger = logging.getLogger('FileManager')
+logger = LogManager.get_logger()
 
 if __name__ == '__main__':
     try:

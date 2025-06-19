@@ -1,7 +1,7 @@
-import logging
+from utils.LogManager import LogManager
 from Observador.ob_08_EventoMovido import verificar_movimentacao, adicionar_evento
 
-logger = logging.getLogger('FileManager')
+logger = LogManager.get_logger()
 
 
 class GerenciadorEventosArquivo:

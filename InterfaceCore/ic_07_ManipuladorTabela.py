@@ -1,10 +1,10 @@
-import logging
+from utils.LogManager import LogManager
 
 
 class ManipuladorTabela:
     @staticmethod
     def configurar_tabela(interface):
-        logger = logging.getLogger('FileManager')
+        logger = LogManager.get_logger()
         try:
             logger.debug("Configurando tabela de dados")
             if hasattr(interface, 'gerenciador_tabela'):
@@ -15,11 +15,11 @@ class ManipuladorTabela:
                 logger.warning("Aviso: gerenciador_tabela não inicializado")
 
         except Exception as e:
-            logger.error(f"Erro ao configurar tabela: {e}")
+            logger.error(f"Erro ao configurar tabela: {e}", exc_info=True)
 
     @staticmethod
     def atualizar_visibilidade_colunas(interface):
-        logger = logging.getLogger('FileManager')
+        logger = LogManager.get_logger()
         try:
             logger.debug("Atualizando visibilidade das colunas")
             if hasattr(interface, 'gerenciador_tabela'):
@@ -31,4 +31,4 @@ class ManipuladorTabela:
                 logger.warning("gerenciador_tabela não está disponível para atualizar visibilidade das colunas")
 
         except Exception as e:
-            logger.error(f"Erro ao atualizar visibilidade das colunas: {e}")
+            logger.error(f"Erro ao atualizar visibilidade das colunas: {e}", exc_info=True)

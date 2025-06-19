@@ -1,6 +1,6 @@
 import os
 import sys
-import logging
+from utils.LogManager import LogManager
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QLabel, QProgressBar
 
@@ -8,7 +8,7 @@ from PySide6.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QLabel, QProgre
 class Configurador:
     @staticmethod
     def setup_ui(interface):
-        logger = logging.getLogger('FileManager')
+        logger = LogManager.get_logger()
         logger.debug("Configurando interface principal")
 
         widget_central = QWidget()
@@ -78,7 +78,7 @@ class Configurador:
 
     @staticmethod
     def setup_menu_bar(interface):
-        logger = logging.getLogger('FileManager')
+        logger = LogManager.get_logger()
         logger.debug("Configurando barra de menu")
         interface.gerenciador_menus_ui.criar_menu_principal()
         logger.debug("Barra de menu configurada com sucesso")

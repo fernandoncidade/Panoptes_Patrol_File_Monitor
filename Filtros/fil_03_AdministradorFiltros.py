@@ -2,14 +2,23 @@ import os
 from datetime import datetime
 from PySide6.QtCore import QDateTime
 from PySide6.QtGui import QAction
-import logging
-import traceback
+from utils.LogManager import LogManager
 
-logger = logging.getLogger('FileManager')
+logger = LogManager.get_logger()
 
 
 class AdministradorFiltros:
+    filtros_estado = {
+        "ignorar_mover": True,
+        "ignorar_renomeados": True,
+        "ignorar_adicionados": True,
+        "ignorar_excluidos": True,
+        "ignorar_data_modificados": True,
+        "ignorar_escaneados": True
+    }
+
     def __init__(self, parent):
+        logger.debug("Inicializando AdministradorFiltros")
         self.parent = parent
         self.contadores = {
             "op_moved": 0,
@@ -32,13 +41,18 @@ class AdministradorFiltros:
         for widget in QApplication.topLevelWidgets():
             if hasattr(widget, 'loc') and hasattr(widget.loc, 'idioma_alterado'):
                 widget.loc.idioma_alterado.connect(self.atualizar_contagem_apos_idioma)
+                logger.debug("Conectado sinal de idioma alterado da janela principal")
                 break
 
         if hasattr(self.parent, 'loc') and hasattr(self.parent.loc, 'idioma_alterado'):
             self.parent.loc.idioma_alterado.connect(self.atualizar_contagem_apos_idioma)
+            logger.debug("Conectado sinal de idioma alterado do componente pai")
 
     def aplicar_filtros(self):
         try:
+            logger.debug("Aplicando filtros")
+            self.salvar_estado_checkboxes()
+
             for chave in self.contadores:
                 self.contadores[chave] = 0
                 self.contadores_originais[chave] = 0
@@ -68,6 +82,7 @@ class AdministradorFiltros:
                     key=lambda x: x[1]["ordem"]) if col["visivel"]]
 
                 indices_colunas = {key: idx for idx, (key, _) in enumerate(colunas_visiveis)}
+                logger.debug(f"Índices de colunas obtidos do gerenciador: {indices_colunas}")
 
             else:
                 num_colunas = tabela.columnCount()
@@ -106,6 +121,8 @@ class AdministradorFiltros:
 
                 if "dir_atual" not in indices_colunas:
                     indices_colunas["dir_atual"] = 3
+
+                logger.debug(f"Índices de colunas inferidos dos cabeçalhos: {indices_colunas}")
 
             operacao_para_chave = {
                 self.parent.loc.get_text("op_moved"): "op_moved",
@@ -247,47 +264,58 @@ class AdministradorFiltros:
 
             self.sincronizar_menu_principal_com_filtros()
             self.parent.filtroAplicado.emit()
+            logger.debug("Filtros aplicados com sucesso")
 
         except Exception as e:
             logger.error(f"Erro ao aplicar filtros: {e}", exc_info=True)
-            traceback.print_exc()
-
             for row in range(self.parent.tabela_dados.rowCount()):
                 self.parent.tabela_dados.setRowHidden(row, False)
 
     def limpar_filtros(self):
-        for cb in self.parent.checkboxes_operacao.values():
-            cb.setChecked(True)
+        logger.info("Limpando todos os filtros")
+        try:
+            for cb in self.parent.checkboxes_operacao.values():
+                cb.setChecked(True)
 
-        self.parent.campo_busca.clear()
-        self.parent.campo_extensao.clear()
-        self.parent.data_inicial.setDateTime(QDateTime.currentDateTime().addDays(-30))
-        self.parent.data_final.setDateTime(QDateTime.currentDateTime())
+            self.parent.campo_busca.clear()
+            self.parent.campo_extensao.clear()
+            self.parent.data_inicial.setDateTime(QDateTime.currentDateTime().addDays(-30))
+            self.parent.data_final.setDateTime(QDateTime.currentDateTime())
 
-        if hasattr(self.parent, 'ignorar_mover'):
-            self.parent.ignorar_mover.setChecked(True)
+            # Redefinir as checkboxes e atualizar o estado salvo
+            if hasattr(self.parent, 'ignorar_mover'):
+                self.parent.ignorar_mover.setChecked(True)
+                AdministradorFiltros.filtros_estado["ignorar_mover"] = True
 
-        if hasattr(self.parent, 'ignorar_renomeados'):
-            self.parent.ignorar_renomeados.setChecked(True)
+            if hasattr(self.parent, 'ignorar_renomeados'):
+                self.parent.ignorar_renomeados.setChecked(True)
+                AdministradorFiltros.filtros_estado["ignorar_renomeados"] = True
 
-        if hasattr(self.parent, 'ignorar_adicionados'):
-            self.parent.ignorar_adicionados.setChecked(True)
+            if hasattr(self.parent, 'ignorar_adicionados'):
+                self.parent.ignorar_adicionados.setChecked(True)
+                AdministradorFiltros.filtros_estado["ignorar_adicionados"] = True
 
-        if hasattr(self.parent, 'ignorar_excluidos'):
-            self.parent.ignorar_excluidos.setChecked(True)
+            if hasattr(self.parent, 'ignorar_excluidos'):
+                self.parent.ignorar_excluidos.setChecked(True)
+                AdministradorFiltros.filtros_estado["ignorar_excluidos"] = True
 
-        if hasattr(self.parent, 'ignorar_data_modificados'):
-            self.parent.ignorar_data_modificados.setChecked(True)
+            if hasattr(self.parent, 'ignorar_data_modificados'):
+                self.parent.ignorar_data_modificados.setChecked(True)
+                AdministradorFiltros.filtros_estado["ignorar_data_modificados"] = True
 
-        if hasattr(self.parent, 'ignorar_escaneados'):
-            self.parent.ignorar_escaneados.setChecked(True)
+            if hasattr(self.parent, 'ignorar_escaneados'):
+                self.parent.ignorar_escaneados.setChecked(True)
+                AdministradorFiltros.filtros_estado["ignorar_escaneados"] = True
 
-        for row in range(self.parent.tabela_dados.rowCount()):
-            self.parent.tabela_dados.setRowHidden(row, False)
+            for row in range(self.parent.tabela_dados.rowCount()):
+                self.parent.tabela_dados.setRowHidden(row, False)
 
-        self.sincronizar_menu_principal_com_filtros()
+            self.sincronizar_menu_principal_com_filtros()
+            self.parent.filtroAplicado.emit()
+            logger.debug("Filtros limpos e visualização atualizada")
 
-        self.parent.filtroAplicado.emit()
+        except Exception as e:
+            logger.error(f"Erro ao limpar filtros: {e}", exc_info=True)
 
     def sincronizar_menu_principal_com_filtros(self):
         try:
@@ -326,6 +354,8 @@ class AdministradorFiltros:
                                 acao.setChecked(esta_marcado)
                                 acao.blockSignals(False)
 
+                    logger.debug("Sincronizado menu principal com filtros (via submenu)")
+
                 else:
                     for acao in main_window.findChildren(QAction):
                         if hasattr(acao, 'data') and callable(acao.data):
@@ -336,6 +366,8 @@ class AdministradorFiltros:
                                 acao.blockSignals(True)
                                 acao.setChecked(esta_marcado)
                                 acao.blockSignals(False)
+
+                    logger.debug("Sincronizado menu principal com filtros (via ações globais)")
 
         except Exception as e:
             logger.error(f"Erro ao sincronizar menu principal com filtros: {e}", exc_info=True)
@@ -359,43 +391,48 @@ class AdministradorFiltros:
                     return f"{main_loc.get_text('visible_filters')}: {visiveis} / {main_loc.get_text('total_monitored')}: {total}"
 
                 except RuntimeError:
-                    logging.getLogger('FileManager').debug("Tabela de dados não está mais disponível")
+                    logger.debug("Tabela de dados não está mais disponível")
 
             return f"{main_loc.get_text('visible_filters')}: 0 / {main_loc.get_text('total_monitored')}: 0"
 
         except Exception as e:
-            import logging
-            logging.getLogger('FileManager').error(f"Erro ao atualizar contagem: {e}")
+            logger.error(f"Erro ao atualizar contagem: {e}", exc_info=True)
             return "0 / 0"
 
     def verificar_filtro_operacao(self, tipo_operacao_traduzido):
-        operacao_para_checkbox = {
-            self.parent.loc.get_text("op_moved"): "op_moved",
-            self.parent.loc.get_text("op_renamed"): "op_renamed",
-            self.parent.loc.get_text("op_added"): "op_added",
-            self.parent.loc.get_text("op_deleted"): "op_deleted",
-            self.parent.loc.get_text("op_modified"): "op_modified",
-            self.parent.loc.get_text("op_scanned"): "op_scanned"
-        }
+        try:
+            operacao_para_checkbox = {
+                self.parent.loc.get_text("op_moved"): "op_moved",
+                self.parent.loc.get_text("op_renamed"): "op_renamed",
+                self.parent.loc.get_text("op_added"): "op_added",
+                self.parent.loc.get_text("op_deleted"): "op_deleted",
+                self.parent.loc.get_text("op_modified"): "op_modified",
+                self.parent.loc.get_text("op_scanned"): "op_scanned"
+            }
 
-        checkbox_key = operacao_para_checkbox.get(tipo_operacao_traduzido)
-        return not checkbox_key or self.parent.checkboxes_operacao[checkbox_key].isChecked()
+            checkbox_key = operacao_para_checkbox.get(tipo_operacao_traduzido)
+            resultado = not checkbox_key or self.parent.checkboxes_operacao[checkbox_key].isChecked()
+            return resultado
+
+        except Exception as e:
+            logger.error(f"Erro ao verificar filtro de operação '{tipo_operacao_traduzido}': {e}", exc_info=True)
+            return True
 
     def atualizar_contagem_apos_idioma(self, idioma=None):
         try:
             from PySide6.QtCore import QTimer
+            logger.debug(f"Agendando atualização após mudança de idioma para: {idioma}")
 
             self.parent.filtroAplicado.emit()
-
             QTimer.singleShot(100, self.notificar_alteracao_idioma)
 
         except Exception as e:
-            import logging
-            logging.getLogger('FileManager').warning(f"Erro ao agendar atualização após mudança de idioma: {e}")
+            logger.warning(f"Erro ao agendar atualização após mudança de idioma: {e}", exc_info=True)
 
     def notificar_alteracao_idioma(self):
         try:
             from PySide6.QtWidgets import QApplication
+            logger.debug("Notificando componentes sobre alteração de idioma")
 
             for widget in QApplication.topLevelWidgets():
                 if hasattr(widget, 'atualizar_status'):
@@ -408,9 +445,33 @@ class AdministradorFiltros:
                     try:
                         widget.gerenciador_eventos_ui.atualizar_interface()
 
-                    except:
-                        pass
+                    except Exception as e:
+                        logger.warning(f"Erro ao atualizar interface do gerenciador de eventos: {e}")
 
         except Exception as e:
-            import logging
-            logging.getLogger('FileManager').warning(f"Erro ao notificar alteração de idioma: {e}")
+            logger.warning(f"Erro ao notificar alteração de idioma: {e}", exc_info=True)
+
+    def salvar_estado_checkboxes(self):
+        try:
+            if hasattr(self.parent, 'ignorar_mover'):
+                AdministradorFiltros.filtros_estado["ignorar_mover"] = self.parent.ignorar_mover.isChecked()
+
+            if hasattr(self.parent, 'ignorar_renomeados'):
+                AdministradorFiltros.filtros_estado["ignorar_renomeados"] = self.parent.ignorar_renomeados.isChecked()
+
+            if hasattr(self.parent, 'ignorar_adicionados'):
+                AdministradorFiltros.filtros_estado["ignorar_adicionados"] = self.parent.ignorar_adicionados.isChecked()
+
+            if hasattr(self.parent, 'ignorar_excluidos'):
+                AdministradorFiltros.filtros_estado["ignorar_excluidos"] = self.parent.ignorar_excluidos.isChecked()
+
+            if hasattr(self.parent, 'ignorar_data_modificados'):
+                AdministradorFiltros.filtros_estado["ignorar_data_modificados"] = self.parent.ignorar_data_modificados.isChecked()
+
+            if hasattr(self.parent, 'ignorar_escaneados'):
+                AdministradorFiltros.filtros_estado["ignorar_escaneados"] = self.parent.ignorar_escaneados.isChecked()
+
+            logger.debug(f"Estado dos filtros salvos: {AdministradorFiltros.filtros_estado}")
+
+        except Exception as e:
+            logger.error(f"Erro ao salvar estado dos filtros: {e}", exc_info=True)

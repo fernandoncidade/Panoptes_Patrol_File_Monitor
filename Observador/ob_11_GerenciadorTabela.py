@@ -5,9 +5,9 @@ import textwrap
 from PySide6.QtWidgets import QHeaderView, QTableWidgetItem, QApplication, QMenu
 from PySide6.QtGui import QFontMetrics, QColor, QAction, QCursor
 from PySide6.QtCore import QTimer, Qt
-import logging
+from utils.LogManager import LogManager
 
-logger = logging.getLogger('FileManager')
+logger = LogManager.get_logger()
 
 
 class GerenciadorTabela:

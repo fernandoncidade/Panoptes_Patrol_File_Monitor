@@ -1,4 +1,4 @@
-import logging
+from utils.LogManager import LogManager
 from PySide6.QtCore import QLocale, QLibraryInfo, QTranslator
 from PySide6.QtWidgets import QApplication
 
@@ -6,7 +6,8 @@ from PySide6.QtWidgets import QApplication
 class Internacionalizador:
     @staticmethod
     def atualizar_tradutor_qt(interface, idioma):
-        logger = logging.getLogger('FileManager')
+        logger = LogManager.get_logger()
+
         try:
             logger.info(f"Atualizando traduções do Qt para {idioma}")
 
@@ -23,11 +24,12 @@ class Internacionalizador:
             logger.info(f"Traduções do Qt atualizadas para {idioma}: {'sucesso' if success else 'falha'}")
 
         except Exception as e:
-            logger.error(f"Erro ao atualizar tradutor Qt: {e}")
+            logger.error(f"Erro ao atualizar tradutor Qt: {e}", exc_info=True)
 
     @staticmethod
     def inicializar_tradutor_qt(app, idioma):
-        logger = logging.getLogger('FileManager')
+        logger = LogManager.get_logger()
+
         try:
             logger.info(f"Inicializando traduções do Qt para {idioma}")
 
@@ -42,5 +44,5 @@ class Internacionalizador:
             return qt_translator
 
         except Exception as e:
-            logger.error(f"Erro ao inicializar tradutor Qt: {e}")
+            logger.error(f"Erro ao inicializar tradutor Qt: {e}", exc_info=True)
             return None

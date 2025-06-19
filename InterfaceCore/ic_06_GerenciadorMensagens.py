@@ -1,11 +1,11 @@
-import logging
+from utils.LogManager import LogManager
 from Observador.ob_08_EventoMovido import _atualizar_contador_eventos
 
 
 class GerenciadorMensagens:
     @staticmethod
     def atualizar_rotulos(interface):
-        logger = logging.getLogger('FileManager')
+        logger = LogManager.get_logger()
         try:
             logger.debug("Atualizando rótulos da interface")
 
@@ -29,24 +29,24 @@ class GerenciadorMensagens:
             logger.debug("Rótulos atualizados com sucesso")
 
         except Exception as e:
-            logger.error(f"Erro ao atualizar rótulos: {e}")
+            logger.error(f"Erro ao atualizar rótulos: {e}", exc_info=True)
 
     @staticmethod
     def notificar_erro(interface, mensagem):
-        logger = logging.getLogger('FileManager')
+        logger = LogManager.get_logger()
         try:
             logger.error(f"Notificando erro: {mensagem}")
             interface.rotulo_resultado.setText(f"Erro: {mensagem}")
 
         except Exception as e:
-            logger.error(f"Erro ao notificar erro: {e}")
+            logger.error(f"Erro ao notificar erro: {e}", exc_info=True)
 
     @staticmethod
     def notificar_sucesso(interface, mensagem):
-        logger = logging.getLogger('FileManager')
+        logger = LogManager.get_logger()
         try:
             logger.info(f"Notificando sucesso: {mensagem}")
             interface.rotulo_resultado.setText(mensagem)
 
         except Exception as e:
-            logger.error(f"Erro ao notificar sucesso: {e}")
+            logger.error(f"Erro ao notificar sucesso: {e}", exc_info=True)

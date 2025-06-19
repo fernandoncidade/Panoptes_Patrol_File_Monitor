@@ -1,11 +1,11 @@
-import logging
+from utils.LogManager import LogManager
 from PySide6.QtWidgets import QApplication, QDialog, QVBoxLayout
 
 
 class Atualizador:
     @staticmethod
     def atualizar_interface(interface):
-        logger = logging.getLogger('FileManager')
+        logger = LogManager.get_logger()
         try:
             logger.debug("Atualizando interface")
             interface.setWindowTitle(interface.loc.get_text("window_title"))
@@ -41,11 +41,11 @@ class Atualizador:
             logger.debug("Interface atualizada com sucesso")
 
         except Exception as e:
-            logger.error(f"Erro ao atualizar interface: {e}")
+            logger.error(f"Erro ao atualizar interface: {e}", exc_info=True)
 
     @staticmethod
     def atualizar_status(interface, *args):
-        logger = logging.getLogger('FileManager')
+        logger = LogManager.get_logger()
         try:
             logger.debug("Atualizando status")
             if hasattr(interface, "label_contagem") and hasattr(interface, "painel_filtros"):
@@ -53,11 +53,11 @@ class Atualizador:
                 logger.debug("Status atualizado com sucesso")
 
         except Exception as e:
-            logger.error(f"Erro ao atualizar status: {e}")
+            logger.error(f"Erro ao atualizar status: {e}", exc_info=True)
 
     @staticmethod
     def abrir_janela_filtros(interface):
-        logger = logging.getLogger('FileManager')
+        logger = LogManager.get_logger()
         try:
             logger.debug("Abrindo janela de filtros")
             janela_filtros = QDialog(interface)
@@ -74,4 +74,4 @@ class Atualizador:
             logger.debug("Janela de filtros exibida")
 
         except Exception as e:
-            logger.error(f"Erro ao abrir janela de filtros: {e}")
+            logger.error(f"Erro ao abrir janela de filtros: {e}", exc_info=True)

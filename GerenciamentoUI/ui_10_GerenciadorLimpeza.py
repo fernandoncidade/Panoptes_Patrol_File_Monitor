@@ -1,8 +1,8 @@
-import logging
+from utils.LogManager import LogManager
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QApplication, QMessageBox
 
-logger = logging.getLogger('FileManager')
+logger = LogManager.get_logger()
 
 
 class GerenciadorLimpeza:

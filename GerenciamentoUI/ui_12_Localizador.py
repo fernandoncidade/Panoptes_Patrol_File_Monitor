@@ -3,8 +3,11 @@ import sys
 import json
 import locale
 from PySide6.QtCore import QObject, Signal
+from utils.LogManager import LogManager
 
 def obter_caminho_persistente():
+    logger = LogManager.get_logger()
+
     if getattr(sys, 'frozen', False):
         base_path = os.path.dirname(sys.executable)
 
@@ -16,9 +19,10 @@ def obter_caminho_persistente():
     if not os.path.exists(config_dir):
         try:
             os.makedirs(config_dir)
+            logger.debug(f"Diretório de configuração criado: {config_dir}")
 
         except Exception as e:
-            print(f"Erro ao criar diretório de configuração: {e}")
+            logger.error(f"Erro ao criar diretório de configuração: {e}", exc_info=True)
 
     return config_dir
 
@@ -30,68 +34,104 @@ class Localizador(QObject):
     idioma_alterado = Signal(str)
 
     def set_idioma(self, idioma: str):
+        logger = LogManager.get_logger()
         if idioma in self.traducoes:
+            logger.info(f"Alterando idioma de '{self.idioma_atual}' para '{idioma}'")
             self.idioma_atual = idioma
             self.salvar_preferencia_idioma(idioma)
             self.idioma_alterado.emit(idioma)
 
+        else:
+            logger.warning(f"Tentativa de definir idioma não suportado: {idioma}")
+
     def salvar_preferencia_idioma(self, idioma: str):
+        logger = LogManager.get_logger()
         try:
             config_path = os.path.join(obter_caminho_persistente(), "language_config.json")
             with open(config_path, 'w') as f:
                 json.dump({"idioma": idioma}, f)
 
-            print(f"Preferência de idioma salva em: {config_path}")
+            logger.info(f"Preferência de idioma salva em: {config_path}")
 
         except Exception as e:
-            print(f"Erro ao salvar preferência de idioma: {e}")
+            logger.error(f"Erro ao salvar preferência de idioma: {e}", exc_info=True)
 
     def carregar_preferencia_idioma(self):
+        logger = LogManager.get_logger()
         try:
             config_path = os.path.join(obter_caminho_persistente(), "language_config.json")
 
             if os.path.exists(config_path):
                 with open(config_path, 'r') as f:
                     config = json.load(f)
-                    return config.get("idioma", self.system_locale)
+                    idioma = config.get("idioma", self.system_locale)
+                    logger.info(f"Preferência de idioma carregada: {idioma}")
+                    return idioma
 
             else:
                 with open(config_path, 'w') as f:
                     json.dump({"idioma": self.system_locale}, f)
 
-                print(f"Arquivo de configuração de idioma criado em: {config_path}")
+                logger.info(f"Arquivo de configuração de idioma criado em: {config_path}")
                 return self.system_locale
 
         except Exception as e:
-            print(f"Erro ao carregar/criar preferência de idioma: {e}")
+            logger.error(f"Erro ao carregar/criar preferência de idioma: {e}", exc_info=True)
             return self.system_locale
 
     def __init__(self):
         super().__init__()
+        logger = LogManager.get_logger()
+        logger.debug("Inicializando Localizador")
+
         self.system_locale = locale.getdefaultlocale()[0]
+        logger.debug(f"Locale do sistema detectado: {self.system_locale}")
+
         self.idioma_atual = self.carregar_preferencia_idioma()
+        logger.info(f"Localizador inicializado com idioma: {self.idioma_atual}")
+
         self.traducoes = todas_traducoes
+        logger.debug(f"Carregadas traduções para {len(self.traducoes)} idiomas")
 
     def verificar_traducoes_ausentes(self):
+        logger = LogManager.get_logger()
+        logger.debug("Verificando traduções ausentes")
+
         todas_chaves = set()
         for traducoes in self.traducoes.values():
             todas_chaves.update(traducoes.keys())
 
+        total_ausentes = 0
         for idioma, traducoes in self.traducoes.items():
             ausentes = todas_chaves - set(traducoes.keys())
             if ausentes:
-                print(f"Traduções ausentes para {idioma}:")
+                logger.warning(f"Traduções ausentes para {idioma}: {len(ausentes)} chaves")
                 for chave in sorted(ausentes):
-                    print(f"  - {chave}")
+                    logger.debug(f"  - Chave ausente em {idioma}: '{chave}'")
+
+                total_ausentes += len(ausentes)
+
+        if total_ausentes == 0:
+            logger.info("Todas as traduções estão completas")
+
+        else:
+            logger.warning(f"Total de {total_ausentes} traduções ausentes em todos os idiomas")
 
     def get_text(self, key: str) -> str:
         try:
-            return self.traducoes.get(self.idioma_atual, {}).get(key, key)
+            texto = self.traducoes.get(self.idioma_atual, {}).get(key, key)
+            if texto == key and key not in self.traducoes.get("en_US", {}):
+                LogManager.get_logger().warning(f"Chave de tradução não encontrada: '{key}'")
 
-        except:
+            return texto
+
+        except Exception as e:
+            LogManager.get_logger().error(f"Erro ao obter tradução para chave '{key}': {e}", exc_info=True)
             return key
 
     def get_idiomas_disponiveis(self):
+        LogManager.get_logger().debug(f"Obtendo lista de idiomas para o idioma atual: {self.idioma_atual}")
+
         if self.idioma_atual == "pt_BR":
             return {
                 "pt_BR": "Português Brasileiro | Brazilian Portuguese",
@@ -153,6 +193,7 @@ class Localizador(QObject):
             }
 
         else:
+            LogManager.get_logger().warning(f"Idioma não reconhecido para lista de idiomas disponíveis: {self.idioma_atual}")
             return {
                 "pt_BR": "Brazilian Portuguese | Português Brasileiro",
                 "en_US": "English (US) | Inglês (US)",

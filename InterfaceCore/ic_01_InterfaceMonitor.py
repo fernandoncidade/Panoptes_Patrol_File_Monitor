@@ -1,10 +1,11 @@
-import logging
 from PySide6.QtCore import Slot
 from PySide6.QtWidgets import QMainWindow, QApplication
 
+from utils.LogManager import LogManager
+logger = LogManager.get_logger()
+log_file = LogManager.get_log_file()
+
 from .ic_02_Inicializador import Inicializador
-log_file = Inicializador.configurar_logging()
-logger = logging.getLogger('FileManager')
 
 import matplotlib
 matplotlib.use('QtAgg')

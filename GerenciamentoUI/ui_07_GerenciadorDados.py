@@ -1,9 +1,9 @@
 import os
-import logging
+from utils.LogManager import LogManager
 from datetime import datetime
 from PySide6.QtWidgets import QFileDialog, QMessageBox
 
-logger = logging.getLogger('FileManager')
+logger = LogManager.get_logger()
 
 
 class GerenciadorDados:
@@ -68,7 +68,7 @@ class GerenciadorDados:
                     logger.debug(f"Criado diretório: {dest_dir}")
 
                 except Exception as e:
-                    logger.error(f"Erro ao criar diretório: {e}")
+                    logger.error(f"Erro ao criar diretório: {e}", exc_info=True)
                     QMessageBox.warning(self.interface, self.interface.loc.get_text("error"), 
                                        self.interface.loc.get_text("dir_create_error"))
                     return

@@ -1,8 +1,8 @@
 import os
-import logging
 import sqlite3
 import pandas as pd
 import matplotlib.pyplot as plt
+from utils.LogManager import LogManager
 from .GeradorEstatisticas import (BaseGerador, GraficoPizza, GraficoBarras, GraficoTimeline, 
                                   GraficoTreemap, GraficoHistograma, GraficoPareto, GraficoLinha, 
                                   GraficoBoxplot, GraficoRadarEventos, GraficoHeatmap, GraficoScatter, 
@@ -13,14 +13,21 @@ class GeradorEstatisticas:
     __slots__ = ['db_path', 'loc', 'interface', '_geradores']
 
     def __init__(self, db_path, localizador=None, interface_principal=None):
+        logger = LogManager.get_logger()
+        logger.debug(f"Inicializando GeradorEstatisticas com banco de dados: {db_path}")
+
         self.db_path = db_path
         self.loc = localizador
         self.interface = interface_principal
         self._geradores = {}
 
         self._inicializar_geradores()
+        logger.info("GeradorEstatisticas inicializado com sucesso")
 
     def _inicializar_geradores(self):
+        logger = LogManager.get_logger()
+        logger.debug("Inicializando geradores de gráficos")
+
         geradores_classes = {
             'pizza': GraficoPizza,
             'barras': GraficoBarras,
@@ -38,94 +45,269 @@ class GeradorEstatisticas:
             'dotplot': GraficoDotplot
         }
 
-        for nome, classe in geradores_classes.items():
-            self._geradores[nome] = classe(self.db_path, self.loc, self.interface)
+        try:
+            for nome, classe in geradores_classes.items():
+                self._geradores[nome] = classe(self.db_path, self.loc, self.interface)
+                logger.debug(f"Gerador '{nome}' inicializado")
+
+        except Exception as e:
+            logger.error(f"Erro ao inicializar geradores: {e}", exc_info=True)
+
+        logger.info(f"Total de {len(self._geradores)} geradores inicializados")
 
     def _obter_dados(self):
-        if self._geradores:
-            primeiro_nome = next(iter(self._geradores))
-            return self._geradores[primeiro_nome]._obter_dados()
+        logger = LogManager.get_logger()
+        logger.debug("Obtendo dados para geração de gráficos")
 
-        query = """
-            SELECT tipo_operacao, tipo, timestamp, tamanho 
-            FROM monitoramento 
-            WHERE timestamp IS NOT NULL
-        """
-        with sqlite3.connect(self.db_path) as conn:
-            df = pd.read_sql_query(query, conn)
+        try:
+            if self._geradores:
+                primeiro_nome = next(iter(self._geradores))
+                logger.debug(f"Usando gerador '{primeiro_nome}' para obter dados")
+                return self._geradores[primeiro_nome]._obter_dados()
 
-        return df
+            query = """
+                SELECT tipo_operacao, tipo, timestamp, tamanho 
+                FROM monitoramento 
+                WHERE timestamp IS NOT NULL
+            """
+
+            logger.debug(f"Executando query SQL: {query}")
+
+            with sqlite3.connect(self.db_path) as conn:
+                df = pd.read_sql_query(query, conn)
+
+            logger.debug(f"Dados obtidos com sucesso: {len(df)} registros")
+            return df
+
+        except Exception as e:
+            logger.error(f"Erro ao obter dados: {e}", exc_info=True)
+            return pd.DataFrame()
 
     def atualizar_textos_traduzidos(self):
-        for gerador in self._geradores.values():
-            if hasattr(gerador, '_atualizar_textos_traduzidos'):
-                gerador._atualizar_textos_traduzidos()
+        logger = LogManager.get_logger()
+        logger.debug("Atualizando textos traduzidos nos geradores")
+
+        try:
+            for nome, gerador in self._geradores.items():
+                if hasattr(gerador, '_atualizar_textos_traduzidos'):
+                    gerador._atualizar_textos_traduzidos()
+                    logger.debug(f"Textos traduzidos atualizados para gerador '{nome}'")
+
+        except Exception as e:
+            logger.error(f"Erro ao atualizar textos traduzidos: {e}", exc_info=True)
 
     def adicionar_gerador(self, nome, classe_gerador):
-        if hasattr(classe_gerador, '__slots__'):
-            self._geradores[nome] = classe_gerador(self.db_path, self.loc, self.interface)
+        logger = LogManager.get_logger()
+        logger.debug(f"Adicionando novo gerador '{nome}'")
 
-        else:
-            raise ValueError("Gerador deve usar __slots__ para consistência")
+        try:
+            if hasattr(classe_gerador, '__slots__'):
+                self._geradores[nome] = classe_gerador(self.db_path, self.loc, self.interface)
+                logger.info(f"Gerador '{nome}' adicionado com sucesso")
+
+            else:
+                msg = "Gerador deve usar __slots__ para consistência"
+                logger.error(msg)
+                raise ValueError(msg)
+
+        except Exception as e:
+            logger.error(f"Erro ao adicionar gerador '{nome}': {e}", exc_info=True)
+            raise
 
     def remover_gerador(self, nome):
-        if nome in self._geradores:
-            del self._geradores[nome]
+        logger = LogManager.get_logger()
+
+        try:
+            if nome in self._geradores:
+                del self._geradores[nome]
+                logger.info(f"Gerador '{nome}' removido com sucesso")
+
+            else:
+                logger.warning(f"Tentativa de remover gerador inexistente: '{nome}'")
+
+        except Exception as e:
+            logger.error(f"Erro ao remover gerador '{nome}': {e}", exc_info=True)
 
     def listar_geradores(self):
+        logger = LogManager.get_logger()
+        logger.debug("Listando geradores disponíveis")
         return list(self._geradores.keys())
 
     def grafico_operacoes_pizza(self):
-        return self._geradores['pizza'].gerar()
+        logger = LogManager.get_logger()
+        logger.debug("Gerando gráfico de pizza de operações")
+
+        try:
+            return self._geradores['pizza'].gerar()
+
+        except Exception as e:
+            logger.error(f"Erro ao gerar gráfico de pizza: {e}", exc_info=True)
+            raise
 
     def grafico_tipos_arquivo_barras(self):
-        return self._geradores['barras'].gerar()
+        logger = LogManager.get_logger()
+        logger.debug("Gerando gráfico de barras de tipos de arquivo")
+
+        try:
+            return self._geradores['barras'].gerar()
+
+        except Exception as e:
+            logger.error(f"Erro ao gerar gráfico de barras: {e}", exc_info=True)
+            raise
 
     def grafico_timeline_operacoes(self):
-        return self._geradores['timeline'].gerar()
+        logger = LogManager.get_logger()
+        logger.debug("Gerando gráfico timeline de operações")
+
+        try:
+            return self._geradores['timeline'].gerar()
+
+        except Exception as e:
+            logger.error(f"Erro ao gerar gráfico timeline: {e}", exc_info=True)
+            raise
 
     def grafico_treemap_tipos(self):
-        return self._geradores['treemap'].gerar()
+        logger = LogManager.get_logger()
+        logger.debug("Gerando gráfico treemap de tipos")
+
+        try:
+            return self._geradores['treemap'].gerar()
+
+        except Exception as e:
+            logger.error(f"Erro ao gerar gráfico treemap: {e}", exc_info=True)
+            raise
 
     def grafico_histograma_horarios(self):
-        return self._geradores['histograma'].gerar()
+        logger = LogManager.get_logger()
+        logger.debug("Gerando histograma de horários")
+
+        try:
+            return self._geradores['histograma'].gerar()
+
+        except Exception as e:
+            logger.error(f"Erro ao gerar histograma: {e}", exc_info=True)
+            raise
 
     def grafico_pareto_operacoes(self):
-        return self._geradores['pareto'].gerar()
+        logger = LogManager.get_logger()
+        logger.debug("Gerando gráfico de pareto de operações")
+
+        try:
+            return self._geradores['pareto'].gerar()
+
+        except Exception as e:
+            logger.error(f"Erro ao gerar gráfico de pareto: {e}", exc_info=True)
+            raise
 
     def grafico_cluster_linha(self):
-        return self._geradores['linha'].gerar()
+        logger = LogManager.get_logger()
+        logger.debug("Gerando gráfico de linha de cluster")
+
+        try:
+            return self._geradores['linha'].gerar()
+
+        except Exception as e:
+            logger.error(f"Erro ao gerar gráfico de linha: {e}", exc_info=True)
+            raise
     
     def grafico_boxplot_distribuicao(self):
-        return self._geradores['boxplot'].gerar()
+        logger = LogManager.get_logger()
+        logger.debug("Gerando gráfico boxplot de distribuição")
+
+        try:
+            return self._geradores['boxplot'].gerar()
+
+        except Exception as e:
+            logger.error(f"Erro ao gerar boxplot: {e}", exc_info=True)
+            raise
 
     def grafico_boxplot_eventos(self):
-        return self._geradores['boxplot_eventos'].gerar()
+        logger = LogManager.get_logger()
+        logger.debug("Gerando gráfico boxplot de eventos")
+
+        try:
+            return self._geradores['boxplot_eventos'].gerar()
+
+        except Exception as e:
+            logger.error(f"Erro ao gerar boxplot de eventos: {e}", exc_info=True)
+            raise
 
     def grafico_heatmap(self):
-        return self._geradores['heatmap'].gerar()
+        logger = LogManager.get_logger()
+        logger.debug("Gerando gráfico heatmap")
+
+        try:
+            return self._geradores['heatmap'].gerar()
+
+        except Exception as e:
+            logger.error(f"Erro ao gerar heatmap: {e}", exc_info=True)
+            raise
 
     def grafico_scatter(self):
-        return self._geradores['scatter'].gerar()
+        logger = LogManager.get_logger()
+        logger.debug("Gerando gráfico scatter")
+
+        try:
+            return self._geradores['scatter'].gerar()
+
+        except Exception as e:
+            logger.error(f"Erro ao gerar scatter: {e}", exc_info=True)
+            raise
 
     def grafico_sankey(self):
-        return self._geradores['sankey'].gerar()
+        logger = LogManager.get_logger()
+        logger.debug("Gerando gráfico sankey")
+
+        try:
+            return self._geradores['sankey'].gerar()
+
+        except Exception as e:
+            logger.error(f"Erro ao gerar sankey: {e}", exc_info=True)
+            raise
 
     def grafico_radar(self):
-        return self._geradores['radar'].gerar()
+        logger = LogManager.get_logger()
+        logger.debug("Gerando gráfico radar")
+
+        try:
+            return self._geradores['radar'].gerar()
+
+        except Exception as e:
+            logger.error(f"Erro ao gerar radar: {e}", exc_info=True)
+            raise
 
     def grafico_dotplot(self):
-        return self._geradores['dotplot'].gerar()
+        logger = LogManager.get_logger()
+        logger.debug("Gerando gráfico dotplot")
+
+        try:
+            return self._geradores['dotplot'].gerar()
+
+        except Exception as e:
+            logger.error(f"Erro ao gerar dotplot: {e}", exc_info=True)
+            raise
 
     def gerar_grafico(self, tipo_grafico):
-        if tipo_grafico in self._geradores:
-            return self._geradores[tipo_grafico].gerar()
+        logger = LogManager.get_logger()
+        logger.debug(f"Solicitação para gerar gráfico do tipo: {tipo_grafico}")
+        
+        try:
+            if tipo_grafico in self._geradores:
+                logger.info(f"Gerando gráfico do tipo: {tipo_grafico}")
+                return self._geradores[tipo_grafico].gerar()
 
-        else:
-            raise ValueError(f"Tipo de gráfico '{tipo_grafico}' não encontrado")
+            else:
+                msg = f"Tipo de gráfico '{tipo_grafico}' não encontrado"
+                logger.error(msg)
+                raise ValueError(msg)
+
+        except Exception as e:
+            logger.error(f"Erro ao gerar gráfico '{tipo_grafico}': {e}", exc_info=True)
+            raise
 
     def salvar_graficos(self, diretorio):
-        logger = logging.getLogger('FileManager')
+        logger = LogManager.get_logger()
+        logger.info(f"Iniciando salvamento de todos os gráficos no diretório: {diretorio}")
 
         graficos = {
             self.loc.get_text("operations_pie") if self.loc else "operations_pie": self.grafico_operacoes_pizza,
@@ -145,6 +327,7 @@ class GeradorEstatisticas:
         }
 
         resultados = {}
+        logger.debug(f"Total de {len(graficos)} gráficos para salvar")
 
         if not os.path.exists(diretorio):
             try:
@@ -152,7 +335,7 @@ class GeradorEstatisticas:
                 logger.info(f"Diretório {diretorio} criado com sucesso")
 
             except Exception as e:
-                logger.error(f"Erro ao criar diretório {diretorio}: {e}")
+                logger.error(f"Erro ao criar diretório {diretorio}: {e}", exc_info=True)
                 return {nome: False for nome in graficos.keys()}
 
         if not os.access(diretorio, os.W_OK):
@@ -172,7 +355,7 @@ class GeradorEstatisticas:
                     resultados[nome] = True
 
                 except Exception as e:
-                    logger.error(f"Erro ao salvar {nome}: {e}")
+                    logger.error(f"Erro ao salvar gráfico {nome}: {e}", exc_info=True)
                     resultados[nome] = False
 
                 finally:
@@ -181,8 +364,9 @@ class GeradorEstatisticas:
                     plt.cla()
 
             except Exception as e:
-                logger.error(f"Erro ao processar gráfico {nome}: {e}")
+                logger.error(f"Erro ao processar gráfico {nome}: {e}", exc_info=True)
                 resultados[nome] = False
 
         plt.close('all')
+        logger.info(f"Processo de salvamento de gráficos concluído. {sum(resultados.values())} de {len(resultados)} salvos com sucesso.")
         return resultados

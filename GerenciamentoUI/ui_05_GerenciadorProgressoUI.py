@@ -1,9 +1,9 @@
-import logging
+from utils.LogManager import LogManager
 from datetime import datetime
 from PySide6.QtCore import QTimer
 from PySide6.QtWidgets import QApplication
 
-logger = logging.getLogger('FileManager')
+logger = LogManager.get_logger()
 
 
 class GerenciadorProgressoUI:

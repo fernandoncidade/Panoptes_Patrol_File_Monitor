@@ -1,33 +1,8 @@
-import os
-import logging
-from datetime import datetime
-
-
 class Inicializador:
     @staticmethod
-    def configurar_logging():
-        try:
-            log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'logs')
-            os.makedirs(log_dir, exist_ok=True)
-            log_file = os.path.join(log_dir, f'file_monitor_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log')
-            logging.basicConfig(level=logging.DEBUG, 
-                                format='%(asctime)s [%(levelname)s] %(name)s: %(message)s', 
-                                handlers=[logging.FileHandler(log_file), logging.StreamHandler()])
-            return log_file
-
-        except PermissionError:
-            user_data_dir = os.path.join(os.path.expanduser('~'), 'AppData', 'Local', 'File-Folder-Manager', 'logs')
-            os.makedirs(user_data_dir, exist_ok=True)
-            log_file = os.path.join(user_data_dir, f'file_monitor_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log')
-            logging.basicConfig(level=logging.DEBUG, 
-                                format='%(asctime)s [%(levelname)s] %(name)s: %(message)s', 
-                                handlers=[logging.FileHandler(log_file), logging.StreamHandler()])
-            print(f"Usando diretório alternativo para logs: {user_data_dir}")
-            return log_file
-
-    @staticmethod
     def inicializar_componentes(interface):
-        logger = logging.getLogger('FileManager')
+        from utils.LogManager import LogManager
+        logger = LogManager.get_logger()
         logger.info("Inicializando componentes básicos da UI")
 
         from PySide6.QtCore import QMutex
@@ -43,10 +18,10 @@ class Inicializador:
 
     @staticmethod
     def inicializar_gerenciadores(interface):
-        logger = logging.getLogger('FileManager')
+        from utils.LogManager import LogManager
+        logger = LogManager.get_logger()
         logger.debug("Inicializando gerenciadores")
 
-        from PySide6.QtCore import QMutex
         from Observador.ob_02_BaseEvento import BaseEvento
         from Observador.ob_10_GerenciadorColunas import GerenciadorColunas
         from Observador.ob_11_GerenciadorTabela import GerenciadorTabela
@@ -56,10 +31,6 @@ class Inicializador:
         from GerenciamentoUI.ui_04_GerenciadorEventosUI import GerenciadorEventosUI
         from GerenciamentoUI.ui_05_GerenciadorProgressoUI import GerenciadorProgressoUI
         from GerenciamentoUI.ui_06_GerenciadorEstatisticasUI import GerenciadorEstatisticasUI
-        from GerenciamentoUI.ui_08_GerenciadorEventosArquivo import GerenciadorEventosArquivo
-        from GerenciamentoUI.ui_07_GerenciadorDados import GerenciadorDados
-        from GerenciamentoUI.ui_09_GerenciadorMonitoramento import GerenciadorMonitoramento
-        from GerenciamentoUI.ui_10_GerenciadorLimpeza import GerenciadorLimpeza
         from Filtros.fil_01_Filtros import Filtros
 
         interface.evento_base = BaseEvento(interface)

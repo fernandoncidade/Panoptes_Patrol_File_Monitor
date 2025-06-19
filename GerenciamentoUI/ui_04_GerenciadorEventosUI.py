@@ -1,12 +1,12 @@
 import os
 import sys
-import logging
+from utils.LogManager import LogManager
 import subprocess
 from PySide6.QtGui import QAction
 from PySide6.QtWidgets import QMessageBox, QApplication, QDialog
 from Filtros.fil_01_Filtros import Filtros
 
-logger = logging.getLogger('FileManager')
+logger = LogManager.get_logger()
 
 
 class GerenciadorEventosUI:

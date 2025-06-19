@@ -1,4 +1,4 @@
-import logging
+from utils.LogManager import LogManager
 import os
 import sys
 import json
@@ -18,7 +18,7 @@ from GerenciamentoUI.Localizacoes.tr_08_OpcoesSobre import (
     Privacy_Policy_de_DE
 )
 
-logger = logging.getLogger('FileManager')
+logger = LogManager.get_logger()
 
 
 class MenuPersistente(QMenu):
@@ -88,7 +88,7 @@ class GerenciadorCores:
                 logger.info("Arquivo de configuração de cores não encontrado, usando valores padrão")
 
         except Exception as e:
-            logger.error(f"Erro ao carregar configurações de cores: {e}")
+            logger.error(f"Erro ao carregar configurações de cores: {e}", exc_info=True)
 
     def salvar_cores(self):
         try:
@@ -106,7 +106,7 @@ class GerenciadorCores:
             return True
 
         except Exception as e:
-            logger.error(f"Erro ao salvar configurações de cores: {e}")
+            logger.error(f"Erro ao salvar configurações de cores: {e}", exc_info=True)
             return False
 
     def _obter_diretorio_config(self):
@@ -307,7 +307,7 @@ class GerenciadorMenusUI:
                     logger.info(f"Cor de {tipo_operacao} alterada para {nova_cor.name()}")
 
         except Exception as e:
-            logger.error(f"Erro ao abrir diálogo de cor: {e}")
+            logger.error(f"Erro ao abrir diálogo de cor: {e}", exc_info=True)
             QMessageBox.critical(self.interface, self.loc.get_text("error"), f"{self.loc.get_text('error')}: {str(e)}")
 
     def _resetar_cores(self):
@@ -347,7 +347,7 @@ class GerenciadorMenusUI:
                 logger.info("Cores restauradas para valores padrão")
 
         except Exception as e:
-            logger.error(f"Erro ao restaurar cores padrão: {e}")
+            logger.error(f"Erro ao restaurar cores padrão: {e}", exc_info=True)
             QMessageBox.critical(self.interface, self.loc.get_text("error"), f"{self.loc.get_text('error')}: {str(e)}")
 
     def _criar_submenu_colunas(self, menu_configuracoes):
@@ -404,7 +404,7 @@ class GerenciadorMenusUI:
             msg_box.exec()
 
         except Exception as e:
-            logger.error(f"Erro ao selecionar todas as colunas: {e}")
+            logger.error(f"Erro ao selecionar todas as colunas: {e}", exc_info=True)
             QMessageBox.critical(self.interface, self.loc.get_text("error"), f"{self.loc.get_text('error')}: {str(e)}")
 
     def _criar_submenu_exportacao(self, menu_configuracoes):
@@ -454,7 +454,7 @@ class GerenciadorMenusUI:
             logger.info("Opções de exportação restauradas para valores padrão")
 
         except Exception as e:
-            logger.error(f"Erro ao restaurar opções de exportação: {e}")
+            logger.error(f"Erro ao restaurar opções de exportação: {e}", exc_info=True)
             QMessageBox.critical(self.interface, self.loc.get_text("error"), f"{self.loc.get_text('error')}: {str(e)}")
 
     def _criar_submenu_idiomas(self, menu_opcoes):
@@ -519,7 +519,7 @@ class GerenciadorMenusUI:
                 titulo=f"{self.loc.get_text('about')} - PANOPTES PATROL",
                 cabecalho=(
                     "<h3>PANOPTES PATROL</h3>"
-                    f"<p><b>{self.loc.get_text('version')}:</b> 0.0.7</p>"
+                    f"<p><b>{self.loc.get_text('version')}:</b> 0.0.8</p>"
                     f"<p><b>{self.loc.get_text('authors')}:</b> Fernando Nillsson Cidade</p>"
                     f"<p><b>{self.loc.get_text('description')}:</b> {self.loc.get_text('description_text')}</p>"
                 ),
@@ -548,7 +548,7 @@ class GerenciadorMenusUI:
             logger.info("Diálogo 'Sobre' exibido com sucesso")
 
         except Exception as e:
-            logger.error(f"Erro ao exibir o diálogo 'Sobre': {e}")
+            logger.error(f"Erro ao exibir o diálogo 'Sobre': {e}", exc_info=True)
             QMessageBox.critical(self.interface, self.loc.get_text("error"), f"{self.loc.get_text('error')}: {str(e)}")
 
 
