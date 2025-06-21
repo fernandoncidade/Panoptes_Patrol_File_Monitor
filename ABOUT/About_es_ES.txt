@@ -1,7 +1,7 @@
 Español:
 
 Proyecto: PANOPTES PATROL
-Versión: 0.0.8
+Versión: 0.0.9
 Autores: Fernando Nillsson Cidade
 
 Descripción:

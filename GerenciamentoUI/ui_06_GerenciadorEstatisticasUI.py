@@ -4,8 +4,8 @@ from utils.LogManager import LogManager
 import sqlite3
 import subprocess
 from datetime import datetime
-from PySide6.QtCore import Qt, QTimer
-from PySide6.QtGui import QIcon, QFontMetrics, QFont
+from PySide6.QtCore import Qt, QTimer, QSize
+from PySide6.QtGui import QIcon, QFontMetrics, QFont, QPainter
 from PySide6.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout,
                                QTabWidget, QWidget, QPushButton,
                                QMessageBox, QFileDialog, QApplication,
@@ -14,6 +14,58 @@ from PySide6.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout,
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 
 logger = LogManager.get_logger()
+
+
+class BotaoRotacionado(QPushButton):
+    def __init__(self, texto, parent=None):
+        super().__init__(texto, parent)
+        self.setText(texto)
+        self._calcular_tamanho()
+
+    def setText(self, texto):
+        super().setText(texto)
+        self._calcular_tamanho()
+
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.Antialiasing)
+        painter.save()
+
+        if self.isDown():
+            painter.fillRect(self.rect(), self.palette().button().color().darker(110))
+
+        else:
+            painter.fillRect(self.rect(), self.palette().button().color())
+
+        painter.setPen(self.palette().dark().color())
+        painter.drawRect(0, 0, self.width()-1, self.height()-1)
+        painter.translate(0, self.height())
+        painter.rotate(270)
+
+        fm = painter.fontMetrics()
+        texto_largura = fm.horizontalAdvance(self.text())
+        x = (self.height() - texto_largura) / 2
+        y = (self.width() + fm.ascent() - fm.descent()) / 2
+
+        if self.isEnabled():
+            painter.setPen(self.palette().buttonText().color())
+
+        else:
+            painter.setPen(self.palette().disabled().buttonText().color())
+
+        painter.drawText(x, y, self.text())
+
+        painter.restore()
+
+    def _calcular_tamanho(self):
+        fm = QFontMetrics(self.font())
+        texto_largura = fm.horizontalAdvance(self.text())
+        texto_altura = fm.height()
+
+        largura_botao = texto_altura + 5
+        altura_botao = texto_largura + 20
+
+        self.setFixedSize(QSize(largura_botao, altura_botao))
 
 
 class GerenciadorEstatisticasUI:
@@ -27,6 +79,9 @@ class GerenciadorEstatisticasUI:
         self.graficos_dados = {}
         self.painel_selecao = None
         self.splitter = None
+        self.painel_recolhido = False
+        self.btn_toggle_painel = None
+        self.tamanho_painel_original = 0
 
         if hasattr(self.loc, 'idioma_alterado'):
             self.loc.idioma_alterado.connect(self.atualizar_graficos_apos_mudanca_idioma)
@@ -58,8 +113,7 @@ class GerenciadorEstatisticasUI:
 
             except Exception as e:
                 logger.error(f"Erro ao verificar quantidade de dados: {e}", exc_info=True)
-                QMessageBox.critical(self.interface, self.loc.get_text("error"), 
-                                     f"{self.loc.get_text('stats_error')}: {str(e)}")
+                QMessageBox.critical(self.interface, self.loc.get_text("error"), f"{self.loc.get_text('stats_error')}: {str(e)}")
                 return
 
             self.dialog_estatisticas = QDialog(None)  
@@ -79,6 +133,8 @@ class GerenciadorEstatisticasUI:
             self.dialog_estatisticas.setMinimumSize(1000, 700)
 
             main_layout = QHBoxLayout()
+            main_layout.setContentsMargins(0, 0, 0, 0)
+            main_layout.setSpacing(0)
 
             self.splitter = QSplitter(Qt.Horizontal)
 
@@ -94,7 +150,8 @@ class GerenciadorEstatisticasUI:
             graphics_panel = self._criar_painel_graficos()
             self.splitter.addWidget(graphics_panel)
 
-            self.splitter.setSizes([300, 700])
+            largura_painel = self.painel_selecao.width()
+            self.splitter.setSizes([largura_painel, 700])
 
             main_layout.addWidget(self.splitter)
             self.dialog_estatisticas.setLayout(main_layout)
@@ -217,72 +274,116 @@ class GerenciadorEstatisticasUI:
         if self.dialog_estatisticas and self.dialog_estatisticas.isVisible():
             logger.debug(f"Atualizando interface para o idioma: {novo_idioma}")
 
-            self._ajustar_largura_painel_selecao()
-            self._atualizar_graficos(self.dialog_estatisticas)
+            self._atualizando_idioma = True
+            
+            try:
+                self.dialog_estatisticas.setWindowTitle(self.loc.get_text("statistics"))
+
+                if hasattr(self, 'btn_toggle_painel'):
+                    if self.painel_recolhido:
+                        texto_expandir = self.loc.get_text("expand_selection_panel") if "expand_selection_panel" in self.loc.traducoes.get(self.loc.idioma_atual, {}) else "Expandir Painel de Seleção"
+                        self.btn_toggle_painel.setText(texto_expandir)
+
+                    else:
+                        texto_ocultar = self.loc.get_text("hide_selection_panel") if "hide_selection_panel" in self.loc.traducoes.get(self.loc.idioma_atual, {}) else "Ocultar Painel de Seleção"
+                        self.btn_toggle_painel.setText(texto_ocultar)
+
+                    self._atualizar_layout_apos_mudanca_botao()
+
+                self._atualizar_textos_painel_selecao()
+                self._ajustar_largura_painel_selecao()
+                self._atualizar_graficos_sem_fechar()
+
+            finally:
+                self._atualizando_idioma = False
 
     def _criar_painel_selecao(self, graficos=None):
+        container = QWidget()
+        container_layout = QHBoxLayout()
+        container_layout.setContentsMargins(0, 0, 0, 0)
+        container_layout.setSpacing(0)
+
+        texto_ocultar = (self.loc.get_text("hide_selection_panel") if "hide_selection_panel" in self.loc.traducoes.get(self.loc.idioma_atual, {}) else "Ocultar Painel de Seleção")
+        self.btn_toggle_painel = self._criar_botao_toggle_painel(texto_ocultar)
+
+        largura_botao = 25
+        self.btn_toggle_painel.setFixedWidth(largura_botao)
+
+        container_layout.addWidget(self.btn_toggle_painel, 0, Qt.AlignLeft | Qt.AlignTop)
+
         panel = QFrame()
         panel.setFrameStyle(QFrame.StyledPanel)
-
         max_width = self._calcular_largura_ideal(graficos)
-
-        logger.debug(f"Largura calculada para o painel de seleção: {max_width}")
-        panel.setMaximumWidth(max_width)
+        self.tamanho_painel_original = max_width
+        panel.setFixedWidth(max_width)
 
         layout = QVBoxLayout()
+        layout.setContentsMargins(5, 5, 5, 5)
 
-        titulo = QLabel(self.loc.get_text("select_graphs") if "select_graphs" in self.loc.traducoes.get(self.loc.idioma_atual, {}) else "Selecionar Gráficos")
-        titulo.setStyleSheet("font-weight: bold; font-size: 14px; padding: 10px;")
-        layout.addWidget(titulo)
+        self.titulo_selecionar_graficos = QLabel(self.loc.get_text("select_graphs") if "select_graphs" in self.loc.traducoes.get(self.loc.idioma_atual, {}) else "Selecionar Gráficos")
+        layout.addWidget(self.titulo_selecionar_graficos)
 
         scroll_area = QScrollArea()
         scroll_widget = QWidget()
-        self.checkboxes_layout = QVBoxLayout()
 
+        self.checkboxes_layout = QVBoxLayout()
         self.checkbox_todos = QCheckBox(self.loc.get_text("select_all") if "select_all" in self.loc.traducoes.get(self.loc.idioma_atual, {}) else "Selecionar Todos")
         self.checkbox_todos.setChecked(True)
         self.checkbox_todos.setTristate(True)
         self.checkbox_todos.clicked.connect(self._alternar_todos_checkboxes)
-        self.checkbox_todos.setStyleSheet("font-weight: bold; margin: 5px;")
         self.checkboxes_layout.addWidget(self.checkbox_todos)
 
         separador = QFrame()
         separador.setFrameStyle(QFrame.HLine)
         self.checkboxes_layout.addWidget(separador)
+        self.checkboxes_layout.addStretch()
 
         scroll_widget.setLayout(self.checkboxes_layout)
         scroll_area.setWidget(scroll_widget)
         scroll_area.setWidgetResizable(True)
-        layout.addWidget(scroll_area)
+        scroll_area.setMinimumHeight(500)
+        layout.addWidget(scroll_area, 1)
 
         buttons_layout = QVBoxLayout()
+        buttons_layout.setSpacing(5)
 
         base_path = getattr(sys, "_MEIPASS", os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
         icon_path = os.path.join(base_path, "icones")
 
-        btn_salvar_selecionados = QPushButton(self.loc.get_text("save_selected") if "save_selected" in self.loc.traducoes.get(self.loc.idioma_atual, {}) else "Salvar Selecionados")
-        btn_salvar_selecionados.setIcon(QIcon(os.path.join(icon_path, "salvar.ico")))
-        btn_salvar_selecionados.clicked.connect(self._salvar_graficos_selecionados)
-        buttons_layout.addWidget(btn_salvar_selecionados)
+        self.btn_salvar_selecionados = QPushButton(self.loc.get_text("save_selected") if "save_selected" in self.loc.traducoes.get(self.loc.idioma_atual, {}) else "Salvar Selecionados")
+        self.btn_salvar_selecionados.setIcon(QIcon(os.path.join(icon_path, "salvar.ico")))
+        self.btn_salvar_selecionados.clicked.connect(self._salvar_graficos_selecionados)
+        buttons_layout.addWidget(self.btn_salvar_selecionados)
 
-        btn_salvar_todos = QPushButton(self.loc.get_text("save_all"))
-        btn_salvar_todos.setIcon(QIcon(os.path.join(icon_path, "salvar.ico")))
-        btn_salvar_todos.clicked.connect(lambda: self.salvar_todos_graficos(self.gerador_atual))
-        buttons_layout.addWidget(btn_salvar_todos)
+        self.btn_salvar_todos = QPushButton(self.loc.get_text("save_all"))
+        self.btn_salvar_todos.setIcon(QIcon(os.path.join(icon_path, "salvar.ico")))
+        self.btn_salvar_todos.clicked.connect(lambda: self.salvar_todos_graficos(self.gerador_atual))
+        buttons_layout.addWidget(self.btn_salvar_todos)
 
-        btn_atualizar = QPushButton(self.loc.get_text("refresh"))
-        btn_atualizar.setIcon(QIcon(os.path.join(icon_path, "atualizar.ico")))
-        btn_atualizar.clicked.connect(lambda: self._atualizar_graficos(self.dialog_estatisticas))
-        buttons_layout.addWidget(btn_atualizar)
+        self.btn_atualizar = QPushButton(self.loc.get_text("refresh"))
+        self.btn_atualizar.setIcon(QIcon(os.path.join(icon_path, "atualizar.ico")))
+        self.btn_atualizar.clicked.connect(lambda: self._atualizar_graficos(self.dialog_estatisticas))
+        buttons_layout.addWidget(self.btn_atualizar)
 
-        layout.addLayout(buttons_layout)
+        layout.addLayout(buttons_layout, 0)
         panel.setLayout(layout)
 
-        return panel
+        container_layout.addWidget(panel, 1, Qt.AlignTop)
+
+        largura_total = largura_botao + max_width
+        container.setFixedWidth(largura_total)
+        container.setLayout(container_layout)
+        self.painel_selecao_interno = panel
+        return container
 
     def _criar_painel_graficos(self):
         self.tab_widget = QTabWidget()
         return self.tab_widget
+
+    def _criar_botao_toggle_painel(self, texto):
+        rotated_btn = BotaoRotacionado(texto)
+        rotated_btn.clicked.connect(self._toggle_painel_selecao)
+        return rotated_btn
 
     def _criar_lista_graficos(self, gerador):
         return [
@@ -342,17 +443,30 @@ class GerenciadorEstatisticasUI:
         for i, grafico in enumerate(graficos):
             checkbox = QCheckBox(grafico["titulo"])
             checkbox.setChecked(True)
-
             checkbox.clicked.connect(self._verificar_estado_checkbox_todos)
-
-            self.checkboxes_graficos[grafico["titulo"]] = {
-                'checkbox': checkbox,
-                'grafico_data': grafico
-            }
-
+            self.checkboxes_graficos[grafico["titulo"]] = {'checkbox': checkbox, 'grafico_data': grafico}
             self.checkboxes_layout.addWidget(checkbox)
 
         self._verificar_estado_checkbox_todos()
+
+    def _gerar_todos_graficos(self, graficos):
+        self.graficos_dados.clear()
+        for grafico in graficos:
+            try:
+                logger.debug(f"Gerando gráfico: {grafico['titulo']}")
+                fig = grafico["func"]()
+
+                self.graficos_dados[grafico["titulo"]] = {'fig': fig, 'func': grafico["func"], 'titulo': grafico["titulo"]}
+
+                canvas = FigureCanvas(fig)
+                tab = QWidget()
+                tab_layout = QVBoxLayout()
+                tab_layout.addWidget(canvas)
+                tab.setLayout(tab_layout)
+                self.tab_widget.addTab(tab, grafico["titulo"])
+
+            except Exception as e:
+                logger.error(f"Erro ao gerar gráfico {grafico['titulo']}: {e}", exc_info=True)
 
     def _alternar_todos_checkboxes(self):
         if self.checkbox_todos.checkState() == Qt.PartiallyChecked:
@@ -395,60 +509,99 @@ class GerenciadorEstatisticasUI:
 
         self.checkbox_todos.blockSignals(False)
 
-    def _ajustar_largura_painel_selecao(self):
-        if not self.painel_selecao or not self.gerador_atual:
-            logger.debug("Painel de seleção ou gerador não disponíveis para ajuste de largura")
+    def _toggle_painel_selecao(self):
+        if not hasattr(self, 'painel_selecao_interno'):
             return
 
+        largura_botao = self.btn_toggle_painel.width()
+
+        if self.painel_recolhido:
+            self.painel_selecao_interno.setFixedWidth(self.tamanho_painel_original)
+            self.painel_selecao_interno.setVisible(True)
+
+            largura_total = largura_botao + self.tamanho_painel_original
+            self.painel_selecao.setFixedWidth(largura_total)
+
+            texto_ocultar = self.loc.get_text("hide_selection_panel") if "hide_selection_panel" in self.loc.traducoes.get(self.loc.idioma_atual, {}) else "Ocultar Painel de Seleção"
+            self.btn_toggle_painel.setText(texto_ocultar)
+
+        else:
+            self.painel_selecao_interno.setVisible(False)
+            self.painel_selecao_interno.setFixedWidth(0)
+
+            self.painel_selecao.setFixedWidth(largura_botao)
+
+            texto_expandir = self.loc.get_text("expand_selection_panel") if "expand_selection_panel" in self.loc.traducoes.get(self.loc.idioma_atual, {}) else "Expandir Painel de Seleção"
+            self.btn_toggle_painel.setText(texto_expandir)
+
+        self.painel_recolhido = not self.painel_recolhido
+
+        if self.splitter:
+            tamanhos = self.splitter.sizes()
+            total_largura = sum(tamanhos)
+            nova_largura_painel = self.painel_selecao.width()
+            nova_largura_graficos = total_largura - nova_largura_painel
+
+            self.splitter.setSizes([nova_largura_painel, nova_largura_graficos])
+
+    def _atualizar_graficos(self, dialog_atual):
         try:
-            graficos = self._criar_lista_graficos(self.gerador_atual)
-
-            nova_largura = self._calcular_largura_ideal(graficos)
-            logger.debug(f"Nova largura calculada para o painel após mudança de idioma: {nova_largura}")
-
-            self.painel_selecao.setMaximumWidth(nova_largura)
-            self._atualizar_textos_checkboxes(graficos)
-
-            if self.splitter:
-                tamanhos = self.splitter.sizes()
-                total = sum(tamanhos)
-                proporcao = nova_largura / total * 100
-                novo_tamanho_grafico = total - nova_largura
-                self.splitter.setSizes([nova_largura, novo_tamanho_grafico])
-                logger.debug(f"Ajustada largura do splitter: {nova_largura}/{novo_tamanho_grafico}")
+            self._atualizar_graficos_sem_fechar()
 
         except Exception as e:
-            logger.error(f"Erro ao ajustar largura do painel: {e}", exc_info=True)
+            logger.error(f"Erro ao atualizar gráficos: {e}", exc_info=True)
+            QMessageBox.critical(self.interface, self.loc.get_text("error"), self.loc.get_text("stats_error").format(str(e)))
 
-    def _calcular_largura_ideal(self, graficos):
+    def _atualizar_graficos_sem_fechar(self):
+        try:
+            if not self.dialog_estatisticas or not self.dialog_estatisticas.isVisible():
+                return
 
-        font = QFont()
-        font_metrics = QFontMetrics(font)
+            self.dialog_estatisticas.setWindowTitle(self.loc.get_text("statistics"))
 
-        max_text_width = 0
-        for grafico in graficos:
-            text_width = font_metrics.horizontalAdvance(grafico["titulo"])
-            max_text_width = max(max_text_width, text_width)
+            if self.gerador_atual and self.tab_widget:
+                self.gerador_atual.atualizar_textos_traduzidos()
 
-        botoes_textos = [
-            self.loc.get_text("save_selected") if "save_selected" in self.loc.traducoes.get(self.loc.idioma_atual, {}) else "Salvar Selecionados",
-            self.loc.get_text("save_all"),
-            self.loc.get_text("refresh"),
-            self.loc.get_text("select_all") if "select_all" in self.loc.traducoes.get(self.loc.idioma_atual, {}) else "Selecionar Todos"
-        ]
+                graficos_atualizados = self._criar_lista_graficos(self.gerador_atual)
+                estados_checkboxes = self._obter_estados_checkboxes()
+                mapeamento_funcoes = self._criar_mapeamento_funcoes(graficos_atualizados)
 
-        for texto in botoes_textos:
-            text_width = font_metrics.horizontalAdvance(texto)
-            max_text_width = max(max_text_width, text_width)
+                self._regenerar_graficos_existentes(graficos_atualizados, mapeamento_funcoes)
+                self._atualizar_checkboxes_graficos(graficos_atualizados, estados_checkboxes, mapeamento_funcoes)
 
-        checkbox_padding = 40
-        scroll_padding = 30 
-        min_panel_width = max_text_width + checkbox_padding + scroll_padding
+            logger.info("Gráficos atualizados com sucesso sem fechar a janela")
 
-        max_width = max(min_panel_width, 200)
-        max_width = min(max_width, 400)
+        except Exception as e:
+            logger.error(f"Erro ao atualizar gráficos sem fechar: {e}", exc_info=True)
 
-        return max_width
+    def _atualizar_textos_painel_selecao(self):
+        try:
+            if hasattr(self, 'titulo_selecionar_graficos'):
+                self.titulo_selecionar_graficos.setText(
+                    self.loc.get_text("select_graphs") if "select_graphs" in self.loc.traducoes.get(self.loc.idioma_atual, {}) 
+                    else "Selecionar Gráficos"
+                )
+
+            if hasattr(self, 'checkbox_todos'):
+                self.checkbox_todos.setText(
+                    self.loc.get_text("select_all") if "select_all" in self.loc.traducoes.get(self.loc.idioma_atual, {}) 
+                    else "Selecionar Todos"
+                )
+
+            if hasattr(self, 'btn_salvar_selecionados'):
+                self.btn_salvar_selecionados.setText(
+                    self.loc.get_text("save_selected") if "save_selected" in self.loc.traducoes.get(self.loc.idioma_atual, {}) 
+                    else "Salvar Selecionados"
+                )
+
+            if hasattr(self, 'btn_salvar_todos'):
+                self.btn_salvar_todos.setText(self.loc.get_text("save_all"))
+
+            if hasattr(self, 'btn_atualizar'):
+                self.btn_atualizar.setText(self.loc.get_text("refresh"))
+
+        except Exception as e:
+            logger.error(f"Erro ao atualizar textos do painel de seleção: {e}", exc_info=True)
 
     def _atualizar_textos_checkboxes(self, graficos):
         if not self.checkboxes_graficos:
@@ -468,39 +621,145 @@ class GerenciadorEstatisticasUI:
             if titulo_antigo in self.checkboxes_graficos:
                 self.checkboxes_graficos[titulo_antigo]['checkbox'].setText(novo_titulo)
 
-    def _gerar_todos_graficos(self, graficos):
-        self.graficos_dados.clear()
-        for grafico in graficos:
-            try:
-                logger.debug(f"Gerando gráfico: {grafico['titulo']}")
-                fig = grafico["func"]()
+    def _atualizar_layout_apos_mudanca_botao(self):
+        if not hasattr(self, 'painel_selecao_interno') or not self.btn_toggle_painel:
+            return
 
-                self.graficos_dados[grafico["titulo"]] = {
-                    'fig': fig,
-                    'func': grafico["func"],
-                    'titulo': grafico["titulo"]
-                }
-
-                canvas = FigureCanvas(fig)
-                tab = QWidget()
-                tab_layout = QVBoxLayout()
-                tab_layout.addWidget(canvas)
-                tab.setLayout(tab_layout)
-                self.tab_widget.addTab(tab, grafico["titulo"])
-
-            except Exception as e:
-                logger.error(f"Erro ao gerar gráfico {grafico['titulo']}: {e}", exc_info=True)
-
-    def _atualizar_graficos(self, dialog_atual):
         try:
-            if dialog_atual and dialog_atual.isVisible():
-                dialog_atual.close()
+            nova_largura_botao = self.btn_toggle_painel.width()
 
-            self.mostrar_estatisticas()
+            if not self.painel_recolhido:
+                largura_total = nova_largura_botao + self.tamanho_painel_original
+                self.painel_selecao.setFixedWidth(largura_total)
+
+            else:
+                self.painel_selecao.setFixedWidth(nova_largura_botao)
+
+            if self.splitter:
+                tamanhos = self.splitter.sizes()
+                total_largura = sum(tamanhos)
+                nova_largura_graficos = total_largura - self.painel_selecao.width()
+                self.splitter.setSizes([self.painel_selecao.width(), nova_largura_graficos])
 
         except Exception as e:
-            logger.error(f"Erro ao atualizar gráficos: {e}", exc_info=True)
-            QMessageBox.critical(self.interface, self.loc.get_text("error"), self.loc.get_text("stats_error").format(str(e)))
+            logger.error(f"Erro ao atualizar layout após mudança do botão: {e}", exc_info=True)
+
+    def _atualizar_checkboxes_graficos(self, graficos_atualizados, estados_checkboxes, mapeamento_funcoes):
+        try:
+            while self.checkboxes_layout.count() > 2:
+                child = self.checkboxes_layout.takeAt(2)
+                if child.widget():
+                    child.widget().deleteLater()
+
+            self.checkboxes_graficos.clear()
+
+            for grafico in graficos_atualizados:
+                checkbox = QCheckBox(grafico["titulo"])
+                checkbox_checked = estados_checkboxes.get(grafico['func'], True)
+                checkbox.setChecked(checkbox_checked)
+                checkbox.clicked.connect(self._verificar_estado_checkbox_todos)
+                self.checkboxes_graficos[grafico["titulo"]] = {'checkbox': checkbox, 'grafico_data': grafico}
+                self.checkboxes_layout.addWidget(checkbox)
+
+            self._verificar_estado_checkbox_todos()
+
+        except Exception as e:
+            logger.error(f"Erro ao atualizar checkboxes: {e}", exc_info=True)
+
+    def _atualizar_abas_graficos(self, graficos_atualizados, mapeamento_funcoes):
+        try:
+            if not self.tab_widget:
+                return
+
+            funcoes_para_indices = {}
+
+            for i in range(self.tab_widget.count()):
+                titulo_atual = self.tab_widget.tabText(i)
+
+                for titulo_antigo, data in self.checkboxes_graficos.items():
+                    if titulo_antigo == titulo_atual:
+                        funcoes_para_indices[data['grafico_data']['func']] = i
+                        break
+
+            for func, indice in funcoes_para_indices.items():
+                if func in mapeamento_funcoes:
+                    novo_titulo = mapeamento_funcoes[func]
+                    self.tab_widget.setTabText(indice, novo_titulo)
+
+        except Exception as e:
+            logger.error(f"Erro ao atualizar abas dos gráficos: {e}", exc_info=True)
+
+    def _atualizar_dados_graficos_com_novos_titulos(self, graficos_atualizados, mapeamento_funcoes):
+        try:
+            novos_dados = {}
+
+            for titulo_antigo, dados in self.graficos_dados.items():
+                func = dados['func']
+                if func in mapeamento_funcoes:
+                    novo_titulo = mapeamento_funcoes[func]
+                    novos_dados[novo_titulo] = {'fig': dados['fig'], 'func': func, 'titulo': novo_titulo}
+
+                else:
+                    novos_dados[titulo_antigo] = dados
+
+            self.graficos_dados = novos_dados
+
+        except Exception as e:
+            logger.error(f"Erro ao atualizar dados dos gráficos: {e}", exc_info=True)
+
+    def _regenerar_graficos_existentes(self, graficos_atualizados, mapeamento_funcoes):
+        try:
+            if not self.tab_widget:
+                return
+
+            for i in range(self.tab_widget.count()):
+                titulo_atual = self.tab_widget.tabText(i)
+
+                func_correspondente = None
+                for titulo_antigo, data in self.checkboxes_graficos.items():
+                    if titulo_antigo == titulo_atual or mapeamento_funcoes.get(data['grafico_data']['func']) == titulo_atual:
+                        func_correspondente = data['grafico_data']['func']
+                        break
+
+                if func_correspondente:
+                    grafico_atualizado = None
+                    for grafico in graficos_atualizados:
+                        if grafico['func'] == func_correspondente:
+                            grafico_atualizado = grafico
+                            break
+
+                    if grafico_atualizado:
+                        try:
+                            logger.debug(f"Regenerando gráfico: {grafico_atualizado['titulo']}")
+                            nova_fig = grafico_atualizado["func"]()
+
+                            self.graficos_dados[grafico_atualizado["titulo"]] = {'fig': nova_fig, 'func': grafico_atualizado["func"], 'titulo': grafico_atualizado["titulo"]}
+
+                            novo_canvas = FigureCanvas(nova_fig)
+
+                            tab_atual = self.tab_widget.widget(i)
+                            if tab_atual:
+                                layout_atual = tab_atual.layout()
+                                if layout_atual:
+                                    while layout_atual.count():
+                                        child = layout_atual.takeAt(0)
+                                        if child.widget():
+                                            child.widget().deleteLater()
+
+                                    layout_atual.addWidget(novo_canvas)
+
+                                else:
+                                    novo_layout = QVBoxLayout()
+                                    novo_layout.addWidget(novo_canvas)
+                                    tab_atual.setLayout(novo_layout)
+
+                            self.tab_widget.setTabText(i, grafico_atualizado["titulo"])
+
+                        except Exception as e:
+                            logger.error(f"Erro ao regenerar gráfico {grafico_atualizado['titulo']}: {e}", exc_info=True)
+
+        except Exception as e:
+            logger.error(f"Erro ao regenerar gráficos existentes: {e}", exc_info=True)
 
     def _salvar_graficos_selecionados(self):
         try:
@@ -523,12 +782,7 @@ class GerenciadorEstatisticasUI:
 
             logger.info(f"Iniciando salvamento de {len(graficos_selecionados)} gráficos selecionados")
 
-            diretorio = QFileDialog.getExistingDirectory(
-                self.interface, 
-                self.loc.get_text("select_save_dir"), 
-                "", 
-                QFileDialog.ShowDirsOnly
-            )
+            diretorio = QFileDialog.getExistingDirectory(self.interface, self.loc.get_text("select_save_dir"), "", QFileDialog.ShowDirsOnly)
 
             if not diretorio:
                 logger.debug("Operação de salvamento cancelada pelo usuário")
@@ -603,19 +857,80 @@ class GerenciadorEstatisticasUI:
                 self.loc.get_text("save_graphs_error").format(str(e))
             )
 
-    def _abrir_diretorio(self, caminho):
+    def _calcular_largura_ideal(self, graficos):
+        font = QFont()
+        font_metrics = QFontMetrics(font)
+
+        max_text_width = 0
+
+        for grafico in graficos:
+            text_width = font_metrics.horizontalAdvance(grafico["titulo"])
+            max_text_width = max(max_text_width, text_width)
+
+        textos_interface = [
+            self.loc.get_text("save_selected") if "save_selected" in self.loc.traducoes.get(self.loc.idioma_atual, {}) else "Salvar Selecionados",
+            self.loc.get_text("save_all"),
+            self.loc.get_text("refresh"),
+            self.loc.get_text("select_all") if "select_all" in self.loc.traducoes.get(self.loc.idioma_atual, {}) else "Selecionar Todos",
+            self.loc.get_text("select_graphs") if "select_graphs" in self.loc.traducoes.get(self.loc.idioma_atual, {}) else "Selecionar Gráficos"
+        ]
+
+        for texto in textos_interface:
+            text_width = font_metrics.horizontalAdvance(texto)
+            max_text_width = max(max_text_width, text_width)
+
+        checkbox_padding = 40
+        scroll_padding = 30 
+        min_panel_width = max_text_width + checkbox_padding + scroll_padding
+
+        max_width = max(min_panel_width, 200)
+        max_width = min(max_width, 400)
+
+        return max_width
+
+    def _ajustar_largura_painel_selecao(self):
+        if not self.painel_selecao or not self.gerador_atual:
+            logger.debug("Painel de seleção ou gerador não disponíveis para ajuste de largura")
+            return
+
         try:
-            if sys.platform == 'win32':
-                os.startfile(caminho)
+            graficos = self._criar_lista_graficos(self.gerador_atual)
+            largura_botao = 25
 
-            elif sys.platform == 'darwin':
-                subprocess.call(['open', caminho])
+            nova_largura = self._calcular_largura_ideal(graficos)
+            logger.debug(f"Nova largura calculada para o painel após mudança de idioma: {nova_largura}")
 
-            else:
-                subprocess.call(['xdg-open', caminho])
+            if hasattr(self, 'painel_selecao_interno') and not self.painel_recolhido:
+                self.painel_selecao_interno.setFixedWidth(nova_largura)
+                largura_total = largura_botao + nova_largura
+                self.painel_selecao.setFixedWidth(largura_total)
+
+            self.tamanho_painel_original = nova_largura
+            self._atualizar_textos_checkboxes(graficos)
+
+            if self.splitter and not self.painel_recolhido:
+                tamanhos = self.splitter.sizes()
+                total = sum(tamanhos)
+                nova_largura_graficos = total - self.painel_selecao.width()
+                self.splitter.setSizes([self.painel_selecao.width(), nova_largura_graficos])
+                logger.debug(f"Ajustada largura do splitter: {self.painel_selecao.width()}/{nova_largura_graficos}")
 
         except Exception as e:
-            logger.error(f"Erro ao abrir diretório: {e}", exc_info=True)
+            logger.error(f"Erro ao ajustar largura do painel: {e}", exc_info=True)
+
+    def _obter_estados_checkboxes(self):
+        estados = {}
+        for titulo, data in self.checkboxes_graficos.items():
+            estados[data['grafico_data']['func']] = data['checkbox'].isChecked()
+
+        return estados
+
+    def _criar_mapeamento_funcoes(self, graficos_atualizados):
+        mapeamento = {}
+        for grafico in graficos_atualizados:
+            mapeamento[grafico['func']] = grafico['titulo']
+
+        return mapeamento
 
     def _traduzir_botoes_detalhes(self, msg):
         for botao in msg.buttons():
@@ -633,3 +948,17 @@ class GerenciadorEstatisticasUI:
 
                 botao.setMinimumWidth(largura_minima)
                 botao.adjustSize()
+
+    def _abrir_diretorio(self, caminho):
+        try:
+            if sys.platform == 'win32':
+                os.startfile(caminho)
+
+            elif sys.platform == 'darwin':
+                subprocess.call(['open', caminho])
+
+            else:
+                subprocess.call(['xdg-open', caminho])
+
+        except Exception as e:
+            logger.error(f"Erro ao abrir diretório: {e}", exc_info=True)

@@ -290,6 +290,8 @@ traducoes_de_DE = {
     "selected": "Ausgewählt",
     "no_graphs_selected": "Keine Diagramme ausgewählt",
     "selected_graphs_saved_detail": "Ausgewählte Diagramme gespeichert: {}/{} in {}",
+    "hide_selection_panel": "Auswahlbereich Ausblenden",
+    "expand_selection_panel": "Auswahlbereich Erweitern",
     "notice_text": NOTICE_TEXT_DE_DE,
     "about_text": ABOUT_TEXT_DE_DE,
     "license_text": LICENSE_TEXT_DE_DE,

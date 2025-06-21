@@ -22,6 +22,11 @@ class GerenciadorTabela:
         self.atualizacao_pendente = False
         self.texto_original_cabecalhos = {}
 
+    def calcular_cor_texto_ideal(self, cor_fundo):
+        r, g, b = cor_fundo.red(), cor_fundo.green(), cor_fundo.blue()
+        luminosidade = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+        return QColor(255, 255, 255) if luminosidade < 0.5 else QColor(0, 0, 0)
+
     def atualizar_visualizacao_tabela(self):
         if hasattr(self.interface, 'tabela_dados') and self.atualizacao_pendente:
             self.interface.tabela_dados.viewport().update()
@@ -251,6 +256,8 @@ class GerenciadorTabela:
                                         if key == "tipo_operacao":
                                             cor = cores.get(valor, cor_padrao)
                                             item.setBackground(cor)
+                                            cor_texto = self.calcular_cor_texto_ideal(cor)
+                                            item.setForeground(cor_texto)
 
                                         tabela_dados.setItem(row, col, item)
 
@@ -262,6 +269,8 @@ class GerenciadorTabela:
                                             nova_cor = cores.get(valor, cor_padrao)
                                             if item.background().color() != nova_cor:
                                                 item.setBackground(nova_cor)
+                                                cor_texto = self.calcular_cor_texto_ideal(nova_cor)
+                                                item.setForeground(cor_texto)
 
                                 except Exception as e:
                                     print(f"Erro ao processar coluna {key}: {e}")
@@ -352,6 +361,8 @@ class GerenciadorTabela:
                             if key == "tipo_operacao":
                                 cor = cores.get(valor, cor_padrao)
                                 item.setBackground(cor)
+                                cor_texto = self.calcular_cor_texto_ideal(cor)
+                                item.setForeground(cor_texto)
 
                             tabela_dados.setItem(0, col, item)
 

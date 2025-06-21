@@ -290,6 +290,8 @@ traducoes_fr_FR = {
     "selected": "Sélectionnés",
     "no_graphs_selected": "Aucun graphique sélectionné",
     "selected_graphs_saved_detail": "Graphiques sélectionnés enregistrés: {}/{} dans {}",
+    "hide_selection_panel": "Masquer Panneau de Sélection",
+    "expand_selection_panel": "Étendre Panneau de Sélection",
     "notice_text": NOTICE_TEXT_FR_FR,
     "about_text": ABOUT_TEXT_FR_FR,
     "license_text": LICENSE_TEXT_FR_FR,
