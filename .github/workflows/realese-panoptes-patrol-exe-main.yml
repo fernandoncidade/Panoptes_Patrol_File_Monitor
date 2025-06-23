@@ -1,0 +1,57 @@
+name: Update README Version from Latest Release
+
+permissions:
+  contents: write
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get latest release version
+        id: get_release
+        run: |
+          if [[ "${{ github.event_name }}" == "release" ]]; then
+            # If triggered by a release event, use the tag from the event
+            RELEASE_VERSION="${GITHUB_REF#refs/tags/}"
+          else
+            # If manually triggered, fetch the latest release from the GitHub API
+            RELEASE_VERSION=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r .tag_name)
+            
+            # If no releases found, set a default or error message
+            if [[ "$RELEASE_VERSION" == "null" || -z "$RELEASE_VERSION" ]]; then
+              echo "No release version found. Please create a release first."
+              exit 1
+            fi
+          fi
+          echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
+          echo "Release version: $RELEASE_VERSION"
+
+      - name: Replace version in README.md
+        run: |
+          # Make sure RELEASE_VERSION is properly escaped for sed
+          RELEASE_VERSION_ESCAPED=$(echo "$RELEASE_VERSION" | sed 's/\//\\\//g')
+          echo "Updating README.md with version: $RELEASE_VERSION_ESCAPED"
+          
+          # Update version in Portuguese section
+          sed -i -E "s/(Versão: )[0-9]+\.[0-9]+\.[0-9]+/\1${RELEASE_VERSION_ESCAPED}/" README.md
+          
+          # Update version in English section
+          sed -i -E "s/(Version: )[0-9]+\.[0-9]+\.[0-9]+/\1${RELEASE_VERSION_ESCAPED}/" README.md
+          
+          # Verify changes were made
+          grep -E "Versão: [0-9]+\.[0-9]+\.[0-9]+" README.md || echo "Portuguese version not updated"
+          grep -E "Version: [0-9]+\.[0-9]+\.[0-9]+" README.md || echo "English version not updated"
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs: update version in README.md to ${{ env.RELEASE_VERSION }}"
+          branch: ${{ github.ref_name }}
