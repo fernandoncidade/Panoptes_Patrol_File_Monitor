@@ -1,0 +1,122 @@
+{
+    "tipo_operacao": {
+        "visivel": true,
+        "ordem": 0
+    },
+    "nome": {
+        "visivel": true,
+        "ordem": 1
+    },
+    "dir_anterior": {
+        "visivel": true,
+        "ordem": 2
+    },
+    "dir_atual": {
+        "visivel": true,
+        "ordem": 3
+    },
+    "data_criacao": {
+        "visivel": false,
+        "ordem": 4
+    },
+    "data_modificacao": {
+        "visivel": true,
+        "ordem": 6
+    },
+    "data_acesso": {
+        "visivel": false,
+        "ordem": 7
+    },
+    "tipo": {
+        "visivel": true,
+        "ordem": 8
+    },
+    "tamanho": {
+        "visivel": false,
+        "ordem": 9
+    },
+    "atributos": {
+        "visivel": false,
+        "ordem": 10
+    },
+    "autor": {
+        "visivel": false,
+        "ordem": 11
+    },
+    "dimensoes": {
+        "visivel": false,
+        "ordem": 12
+    },
+    "duracao": {
+        "visivel": false,
+        "ordem": 13
+    },
+    "taxa_bits": {
+        "visivel": false,
+        "ordem": 14
+    },
+    "protegido": {
+        "visivel": false,
+        "ordem": 15
+    },
+    "paginas": {
+        "visivel": false,
+        "ordem": 16
+    },
+    "linhas": {
+        "visivel": false,
+        "ordem": 17
+    },
+    "palavras": {
+        "visivel": false,
+        "ordem": 18
+    },
+    "paginas_estimadas": {
+        "visivel": false,
+        "ordem": 19
+    },
+    "linhas_codigo": {
+        "visivel": false,
+        "ordem": 20
+    },
+    "total_linhas": {
+        "visivel": false,
+        "ordem": 21
+    },
+    "slides_estimados": {
+        "visivel": false,
+        "ordem": 22
+    },
+    "arquivos": {
+        "visivel": false,
+        "ordem": 23
+    },
+    "descompactados": {
+        "visivel": false,
+        "ordem": 24
+    },
+    "slides": {
+        "visivel": false,
+        "ordem": 25
+    },
+    "binario": {
+        "visivel": false,
+        "ordem": 26
+    },
+    "planilhas": {
+        "visivel": false,
+        "ordem": 27
+    },
+    "colunas": {
+        "visivel": false,
+        "ordem": 28
+    },
+    "registros": {
+        "visivel": false,
+        "ordem": 29
+    },
+    "tabelas": {
+        "visivel": false,
+        "ordem": 30
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "cores_operacoes": {
+        "op_renamed": "#00ff00",
+        "op_added": "#0000ff",
+        "op_deleted": "#ff0000",
+        "op_modified": "#ff6200",
+        "op_moved": "#ff00ff",
+        "op_scanned": "#808080"
+    }
+}
