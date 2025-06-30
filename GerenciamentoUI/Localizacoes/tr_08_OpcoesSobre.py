@@ -1591,7 +1591,7 @@ Eine vollständige Liste aller Bibliotheken und ihrer spezifischen Lizenzen find
 
 ABOUT_TEXT_PT_BR = """
 Projeto: PANOPTES PATROL
-Versão: 0.1.0
+Versão: 0.1.1
 Autores: Fernando Nillsson Cidade
 
 Descrição:
@@ -1717,7 +1717,7 @@ Autores:
 
 ABOUT_TEXT_EN_US = """
 Project: PANOPTES PATROL
-Version: 0.1.0
+Version: 0.1.1
 Authors: Fernando Nillsson Cidade
 
 Description:
@@ -1843,7 +1843,7 @@ Authors:
 
 ABOUT_TEXT_ES_ES = """
 Proyecto: PANOPTES PATROL
-Versión: 0.1.0
+Versión: 0.1.1
 Autores: Fernando Nillsson Cidade
 
 Descripción:
@@ -1969,7 +1969,7 @@ Autores:
 
 ABOUT_TEXT_FR_FR = """
 Projet: PANOPTES PATROL
-Version: 0.1.0
+Version: 0.1.1
 Auteurs: Fernando Nillsson Cidade
 
 Description:
@@ -2095,7 +2095,7 @@ Auteurs:
 
 ABOUT_TEXT_IT_IT = """
 Progetto: PANOPTES PATROL
-Versione: 0.1.0
+Versione: 0.1.1
 Autori: Fernando Nillsson Cidade
 
 Descrizione:
@@ -2221,7 +2221,7 @@ Autori:
 
 ABOUT_TEXT_DE_DE = """
 Projekt: PANOPTES PATROL
-Version: 0.1.0
+Version: 0.1.1
 Autoren: Fernando Nillsson Cidade
 
 Beschreibung:
@@ -2346,11 +2346,11 @@ Autoren:
 """
 
 Privacy_Policy_pt_BR = """
-# POLÍTICA DE PRIVACIDADE DO PANOPTES PATROL (versão 0.1.0)
+# POLÍTICA DE PRIVACIDADE DO PANOPTES PATROL (versão 0.1.1)
 
 ## 1. Introdução
 
-Esta Política de Privacidade explica como o PANOPTES PATROL (versão 0.1.0) coleta, usa, armazena e protege as informações obtidas durante o uso do software. Ao utilizar este software, você concorda com as práticas descritas neste documento.
+Esta Política de Privacidade explica como o PANOPTES PATROL (versão 0.1.1) coleta, usa, armazena e protege as informações obtidas durante o uso do software. Ao utilizar este software, você concorda com as práticas descritas neste documento.
 
 ## 2. Coleta de Informações
 
@@ -2455,15 +2455,15 @@ E-mail: fernando.n.cidade@outlook.com
 
 ---
 
-*PANOPTES PATROL versão 0.1.0*
+*PANOPTES PATROL versão 0.1.1*
 """
 
 Privacy_Policy_en_US = """
-# PANOPTES PATROL Privacy Policy (version 0.1.0)
+# PANOPTES PATROL Privacy Policy (version 0.1.1)
 
 ## 1. Introduction
 
-This Privacy Policy explains how PANOPTES PATROL (version 0.1.0) collects, uses, stores, and protects information obtained during the use of the software. By using this software, you agree to the practices described in this document.
+This Privacy Policy explains how PANOPTES PATROL (version 0.1.1) collects, uses, stores, and protects information obtained during the use of the software. By using this software, you agree to the practices described in this document.
 
 ## 2. Information Collection
 
@@ -2568,15 +2568,15 @@ E-mail: fernando.n.cidade@outlook.com
 
 ---
 
-*PANOPTES PATROL version 0.1.0*
+*PANOPTES PATROL version 0.1.1*
 """
 
 Privacy_Policy_es_ES = """
-# POLÍTICA DE PRIVACIDAD DE PANOPTES PATROL (versión 0.1.0)
+# POLÍTICA DE PRIVACIDAD DE PANOPTES PATROL (versión 0.1.1)
 
 ## 1. Introducción
 
-Esta Política de Privacidad explica cómo PANOPTES PATROL (versión 0.1.0) recopila, utiliza, almacena y protege la información obtenida durante el uso del software. Al utilizar este software, usted acepta las prácticas descritas en este documento.
+Esta Política de Privacidad explica cómo PANOPTES PATROL (versión 0.1.1) recopila, utiliza, almacena y protege la información obtenida durante el uso del software. Al utilizar este software, usted acepta las prácticas descritas en este documento.
 
 ## 2. Recopilación de Información
 
@@ -2681,15 +2681,15 @@ E-mail: fernando.n.cidade@outlook.com
 
 ---
 
-*PANOPTES PATROL versión 0.1.0*
+*PANOPTES PATROL versión 0.1.1*
 """
 
 Privacy_Policy_fr_FR = """
-# POLITIQUE DE CONFIDENTIALITÉ DE PANOPTES PATROL (version 0.1.0)
+# POLITIQUE DE CONFIDENTIALITÉ DE PANOPTES PATROL (version 0.1.1)
 
 ## 1. Introduction
 
-Cette Politique de Confidentialité explique comment PANOPTES PATROL (version 0.1.0) collecte, utilise, stocke et protège les informations obtenues lors de l'utilisation du logiciel. En utilisant ce logiciel, vous acceptez les pratiques décrites dans ce document.
+Cette Politique de Confidentialité explique comment PANOPTES PATROL (version 0.1.1) collecte, utilise, stocke et protège les informations obtenues lors de l'utilisation du logiciel. En utilisant ce logiciel, vous acceptez les pratiques décrites dans ce document.
 
 ## 2. Collecte d'Informations
 
@@ -2794,15 +2794,15 @@ E-mail : fernando.n.cidade@outlook.com
 
 ---
 
-*PANOPTES PATROL version 0.1.0*
+*PANOPTES PATROL version 0.1.1*
 """
 
 Privacy_Policy_it_IT = """
-# POLITICA SULLA PRIVACY DI PANOPTES PATROL (versione 0.1.0)
+# POLITICA SULLA PRIVACY DI PANOPTES PATROL (versione 0.1.1)
 
 ## 1. Introduzione
 
-Questa Politica sulla Privacy spiega come PANOPTES PATROL (versione 0.1.0) raccoglie, utilizza, conserva e protegge le informazioni ottenute durante l'uso del software. Utilizzando questo software, accetti le pratiche descritte in questo documento.
+Questa Politica sulla Privacy spiega come PANOPTES PATROL (versione 0.1.1) raccoglie, utilizza, conserva e protegge le informazioni ottenute durante l'uso del software. Utilizzando questo software, accetti le pratiche descritte in questo documento.
 
 ## 2. Raccolta di Informazioni
 
@@ -2907,15 +2907,15 @@ E-mail: fernando.n.cidade@outlook.com
 
 ---
 
-*PANOPTES PATROL versione 0.1.0*
+*PANOPTES PATROL versione 0.1.1*
 """
 
 Privacy_Policy_de_DE = """
-# DATENSCHUTZRICHTLINIE VON PANOPTES PATROL (Version 0.1.0)
+# DATENSCHUTZRICHTLINIE VON PANOPTES PATROL (Version 0.1.1)
 
 ## 1. Einleitung
 
-Diese Datenschutzrichtlinie erläutert, wie PANOPTES PATROL (Version 0.1.0) Informationen während der Nutzung der Software sammelt, verwendet, speichert und schützt. Durch die Nutzung dieser Software stimmen Sie den in diesem Dokument beschriebenen Praktiken zu.
+Diese Datenschutzrichtlinie erläutert, wie PANOPTES PATROL (Version 0.1.1) Informationen während der Nutzung der Software sammelt, verwendet, speichert und schützt. Durch die Nutzung dieser Software stimmen Sie den in diesem Dokument beschriebenen Praktiken zu.
 
 ## 2. Informationserfassung
 
@@ -3020,5 +3020,5 @@ E-Mail: fernando.n.cidade@outlook.com
 
 ---
 
-*PANOPTES PATROL Version 0.1.0*
+*PANOPTES PATROL Version 0.1.1*
 """
